@@ -1,7 +1,13 @@
 package hudlmo.models;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -9,7 +15,7 @@ import java.util.ArrayList;
  * Created by chashika on 7/27/17.
  */
 
-public class ContactAdapter extends BaseAdapter {
+public class ContactsAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<Contac> contact;
@@ -56,7 +62,7 @@ public class ContactAdapter extends BaseAdapter {
         //get data
 
 
-        Contacts contacts=contact.get(position);
+        Contac contacts=contact.get(position);
         imgContact.setImageResource(contacts.getImageId());
         contactName.setText(contacts.getName());
         System.getProperty("line.separator");
