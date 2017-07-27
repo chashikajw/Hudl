@@ -48,7 +48,7 @@ public class ContactsAdapter extends BaseAdapter {
         if(convertView==null)
         {
             LayoutInflater layoutInflater= LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.lay_conatct,null);
+           // view = layoutInflater.inflate(R.layout.lay_conatct,null);
         }
 
         else
@@ -56,15 +56,15 @@ public class ContactsAdapter extends BaseAdapter {
             view=convertView;
         }
 
-        ImageView imgContact= (ImageView) view.findViewById(R.id.contactImage);
-        TextView contactName= (TextView) view.findViewById(R.id.contactName);
+       // ImageView imgContact= (ImageView) view.findViewById(R.id.contactImage);
+        //TextView contactName= (TextView) view.findViewById(R.id.contactName);
 
         //get data
 
 
         Contac contacts=contact.get(position);
-        imgContact.setImageResource(contacts.getImageId());
-        contactName.setText(contacts.getName());
+        //imgContact.setImageResource(contacts.getImageId());
+       // contactName.setText(contacts.getName());
         System.getProperty("line.separator");
         Log.e("name", contacts.getName() + " ");
 
