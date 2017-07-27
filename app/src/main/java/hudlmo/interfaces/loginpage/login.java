@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import hudlmo.interfaces.Mainmenu;
 import hudlmo.interfaces.registerPage.Register;
 
 public class login extends AppCompatActivity {
@@ -45,5 +46,7 @@ public class login extends AppCompatActivity {
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type,username, password );
+        Intent intent = new Intent(this, Mainmenu.class);
+        startActivity(intent);
     }
 }
