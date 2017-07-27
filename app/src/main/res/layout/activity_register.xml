@@ -75,7 +75,7 @@
         android:hint="Password"
         android:paddingBottom="20dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -94,7 +94,7 @@
         android:hint="Confirm Password"
         android:paddingBottom="20dp"
         android:ems="10"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
