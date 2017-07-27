@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.models.Contac;
 import hudlmo.models.ContacDetails;
+import hudlmo.models.ContactsAdapter;
 
 public class ContacView extends AppCompatActivity {
 
     Button  contactAddButton;
-    ListView listContcts;
+    ListView listContacts;
 
     ArrayList<Contac> arrayListContac;
     ContactsAdapter contactsAdapter;
@@ -35,7 +36,7 @@ public class ContacView extends AppCompatActivity {
         setContentView(R.layout.activity_contac_view);
 
         arrayListContac = new ArrayList<Contac>();
-        listContcts = (ListView)findViewById(R.id.listView);
+        listContacts = (ListView)findViewById(R.id.listView);
         contactAddButton = (Button)findViewById(R.id.contacAddBtn);
 
         contactAddButton.setOnClickListener(new View.OnClickListener(){
@@ -45,15 +46,15 @@ public class ContacView extends AppCompatActivity {
             }
         });
 
-        contactAdapter=new ContactsAdapter(MainActivity.this,arrayListContact);
+        contactsAdapter=new ContactsAdapter(ContacView.this,arrayListContac);
 
-        listContacts.setAdapter(contactAdapter);
+        listContacts.setAdapter(contactsAdapter);
 
-        listContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       listContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                registerForContextMenu(listContacts);
+                //registerForContextMenu(listContacts);
 
             }
         });
@@ -98,7 +99,7 @@ public class ContacView extends AppCompatActivity {
 
                 Log.e("index",index+" ");
                 arrayListContac.remove(index);
-                contactAdapter.notifyDataSetChanged();
+                contactsAdapter.notifyDataSetChanged();
 
                 break;
 
@@ -116,7 +117,7 @@ public class ContacView extends AppCompatActivity {
             contacts = (Contac) data.getSerializableExtra("data");
 
             arrayListContac.add(contacts);
-            contactAdapter.notifyDataSetChanged();
+            contactsAdapter.notifyDataSetChanged();
         }
 
 
