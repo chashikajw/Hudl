@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import hudlmo.interfaces.loginpage.R;
 
-public class Hudl extends AppCompatActivity {
+public class Mainmenu extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
