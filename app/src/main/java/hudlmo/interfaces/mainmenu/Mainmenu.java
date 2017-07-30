@@ -1,4 +1,4 @@
-package hudlmo.interfaces;
+package hudlmo.interfaces.mainmenu;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;

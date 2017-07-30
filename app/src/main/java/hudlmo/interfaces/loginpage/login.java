@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import hudlmo.interfaces.Mainmenu;
+import hudlmo.interfaces.mainmenu.Mainmenu;
 import hudlmo.interfaces.registerPage.Register;
 
 public class login extends AppCompatActivity {

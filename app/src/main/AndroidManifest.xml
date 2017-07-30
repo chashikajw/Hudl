@@ -25,36 +25,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="hudlmo.interfaces.contacview.ContacView">
-            <intent-filter>
-                <action android:name="hudlmo.interfaces.contacview.ContacView" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="hudlmo.interfaces.contacview.ContacData">
-            <intent-filter>
-                <action android:name="hudlmo.interfaces.contacview.ContacData" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="hudlmo.interfaces.contacview.Image">
-            <intent-filter>
-                <action android:name="hudlmo.interfaces.contacview.Image" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="hudlmo.models.ContacDetails">
-            <intent-filter>
-                <action android:name="hudlmo.models.ContacDetails" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
-            android:name="hudlmo.interfaces.Mainmenu"
+            android:name="hudlmo.interfaces.mainmenu.Mainmenu"
             android:label="@string/title_activity_mainmenu"
             android:theme="@style/AppTheme"></activity>
     </application>
