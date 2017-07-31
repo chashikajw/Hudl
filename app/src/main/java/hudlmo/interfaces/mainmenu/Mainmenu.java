@@ -1,5 +1,6 @@
 package hudlmo.interfaces.mainmenu;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import hudlmo.interfaces.createMeeting.CreateMeeting;
 import hudlmo.interfaces.loginpage.R;
 
 public class Mainmenu extends AppCompatActivity {
@@ -60,8 +62,8 @@ public class Mainmenu extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Create a new hudle", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(Mainmenu.this, CreateMeeting.class);
+                startActivity(intent);
             }
         });
 
