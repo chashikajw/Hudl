@@ -125,7 +125,7 @@ public class Mainmenu extends AppCompatActivity {
                 textView.setText("Upcoming conferences");
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER)==2){
-                textView.setText("Recent Conference");
+                textView.setText("Groups");
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER)==3){
                 textView.setText("History");
@@ -167,7 +167,7 @@ public class Mainmenu extends AppCompatActivity {
                 case 0:
                     return "Upcoming";
                 case 1:
-                    return "Recent";
+                    return "Groups";
                 case 2:
                     return "History";
                 case 3:

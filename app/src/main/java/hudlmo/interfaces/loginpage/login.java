@@ -44,8 +44,7 @@ public class login extends AppCompatActivity {
         String password = passwordEt.getText().toString();
         String type = "login";
 
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        backgroundWorker.execute(type,username, password );
+
         Intent intent = new Intent(this, Mainmenu.class);
         startActivity(intent);
     }
