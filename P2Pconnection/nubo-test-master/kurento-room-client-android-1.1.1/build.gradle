@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('kurento-room-client-android-1.1.1.aar'))

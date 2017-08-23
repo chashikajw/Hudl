@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PeerVideoActivity">
+
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/gl_surface"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/gl_surface_local"
+        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignBottom="@+id/gl_surface"
+        android:layout_alignRight="@+id/gl_surface" />
+
+    <TextView
+        android:id="@+id/call_status"
+        android:text="@string/connecting"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageButton2"
+        android:layout_toEndOf="@+id/imageButton2" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_action_end_call"
+        android:background="@drawable/round_button"
+        android:onClick="hangup"
+        android:contentDescription="Hang up"
+        android:id="@+id/imageButton2" />
+
+</RelativeLayout>
