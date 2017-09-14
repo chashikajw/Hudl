@@ -13,6 +13,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_create_meeting" />
+    <include layout="@layout/content_create_meeting"
+             android:layout_height="wrap_content"/>
 
 </android.support.design.widget.CoordinatorLayout>
