@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/libs/vidyoclient.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="9bd31ee7069fcc5b93518f2f9b612ab85c9536f9">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/vidyoclient_ea8e73b59e5802aaf4473387426d2890c44a09b5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/60c8f6e4e61f493a1e658e61446cb53c89bf794c/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="aee64634871d88a419d59eb743c1258a60f19700">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_8d1048e023a0bd5013e3567f0c933d765ec72d0b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/64d50f700d681f0ab087cf183156b647e219d7f9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_9ef92c5b17d12ccc0af8cec48f37b5a9564af7dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/add1561b6c57fa2b774ca189bba908c7fabf638b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_4c30550e4c2a67ba161c10a1f4f97eabd5493b68.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/support-annotations-25.1.0_161d354e6183ae8161a5a4bc5df150ba6e25a412.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/8aa0c148a9199e29dbb6dc2042395481af55a287/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_b7526ff85032579d05a4077f59a2a6f1625b1987.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/2c2a4501e59326c496dea882655829a0f8433e88/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_2bd52ceb60342049f08b27d0e00d8145497b641c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/4859a2fa983a4e57390500f88b92a57c94c3fec3/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_2618fb5a34bbe16a677f7ab06ccb2db0c316d5fd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/7817e082f928f4eb2c36c66c94d7592ae154bab0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_0db47921dff35c20f8e694bee8cbdee13ea8406e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/7905114190f924df5afd9b754898788d76b85327/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_e860354a704184801202b72a13d3c39bfb8df541.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/chashika/.android/build-cache/eb8f73c0092bf87ce90534e7a01c967536e1a967/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/home/chashika/Documents/helloworld-vidyo.io-android-master/VidyoIODemo/app/build/intermediates/pre-dexed/debug/classes_e6afd97d8f385940ced88e3895cfb85cf9c31751.jar" />
+    </item>
+
+</items>
