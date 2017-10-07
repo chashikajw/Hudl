@@ -25,15 +25,15 @@ public class VideoMain extends AppCompatActivity implements VidyoConnector.IConn
         Connector.Initialize();
         videoFrame = (FrameLayout)findViewById(R.id.videoFrame);
     }
-
+        //
     public void Start(View v) {
         vc = new VidyoConnector(videoFrame, VidyoConnector.VidyoConnectorViewStyle.VIDYO_CONNECTORVIEWSTYLE_Default, 16, "", "", 0);
         vc.ShowViewAt(videoFrame, 0, 0, videoFrame.getWidth(), videoFrame.getHeight());
     }
 
     public void Connect(View v) {
-        String token = "cHJvdmlzaW9uAHVzZXJAMThmMGJkLnZpZHlvLmlvADY0Njc0MDk4NTc3AAAyNGMzNGUzYWVkMzliMDAxYjNmZjdhNWNjNjYyODA0MzExZmNhYWE1MGQ4YzAyYjk0ZDZmMTk0OTkxOTM5ZDQ5OWNiMTQ4ZmI3MTUzMWFlYzhlYmFmMTE2Y2IxZGFlZTM=\n";
-        vc.Connect("prod.vidyo.io", token, "user", "DemoRoom", this);
+        String token = "cHJvdmlzaW9uAGNoYXNoaWthancwMDdAZ21haWwuY29tQDE4ZjBiZC52aWR5by5pbwA2NDY3NDQ0NTExNQAAMThhZTEzZjFlMTUwM2JiZGE5NDk3YmNjYzhkZTk4ZGI3NWM0OGNmM2FhMDI1NDcwMDVmMjY0MmM4N2QxZWQwNGNmMDRkYzc5NjFiYTE0NzAzZTY4YThlYWE1NzQxMzk5";
+        vc.Connect("prod.vidyo.io", token, "chashikajw007@gmail.com", "DemoRoom", this);
     }
 
     public void Disconnect(View v) {

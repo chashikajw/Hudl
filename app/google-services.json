@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "874770896035",
+    "firebase_url": "https://hudl-007.firebaseio.com",
+    "project_id": "hudl-007",
+    "storage_bucket": "hudl-007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874770896035:android:b3accdd2e0a7fc7f",
+        "android_client_info": {
+          "package_name": "hudlmo.interfaces.loginpage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874770896035-qs0rm81no8g4pc7oj7l1364tbf9tda52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hudlmo.interfaces.loginpage",
+            "certificate_hash": "7eee8885fb79050c4cd0bff8c8e9ba8d1130cd7e"
+          }
+        },
+        {
+          "client_id": "874770896035-d86aq6m1gubm4p52uk63iugo702b6s04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnq8RabMQ8uu2NSV_Gjs2WzvnuCIB7b3w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874770896035-d86aq6m1gubm4p52uk63iugo702b6s04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
