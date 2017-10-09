@@ -25,7 +25,7 @@ public class login extends AppCompatActivity {
     private static Button login_btn;
     private static Button register_btn;
 
-    private FirebaseAuth mAuth;
+    public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
 
 
@@ -89,12 +89,8 @@ public class login extends AppCompatActivity {
     }
 
     public void RegisterButton(View v){
-        emailEt =(EditText)findViewById(R.id.emailText);
-        passwordEt = (EditText)findViewById(R.id.passwordText);
-        login_btn = (Button)findViewById(R.id.loginBtn);
-        register_btn = (Button)findViewById(R.id.registerBtn);
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+
+        startActivity(new Intent(login.this,Register.class));
     }
 
     public void LoginButton(View v){
