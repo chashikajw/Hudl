@@ -1,5 +1,6 @@
 package hudlmo.interfaces.mainmenu;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,7 +20,9 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
+import hudlmo.interfaces.loginpage.login;
 
 public class Mainmenu extends AppCompatActivity {
 
@@ -86,8 +89,18 @@ public class Mainmenu extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_addcontact) {
+            startActivity(new Intent(Mainmenu.this, AddContacts.class));
+        }
+        if (id == R.id.action_Logout) {
+            startActivity(new Intent(Mainmenu.this, login.class));
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void signOut(){
+
     }
 
     /**
@@ -119,22 +132,34 @@ public class Mainmenu extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_mainmenu, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            if (getArguments().getInt(ARG_SECTION_NUMBER)==1){
-                textView.setText("Upcoming conferences");
+
+            View rootViewm = inflater.inflate(R.layout.fragment_mainmenu, container, false);
+            if (getArguments().getInt(ARG_SECTION_NUMBER)==0){
+
+                View rootView = inflater.inflate(R.layout.fragment_mainmenu, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                return rootView;
+            }
+            else if (getArguments().getInt(ARG_SECTION_NUMBER)==1){
+
+                View rootView = inflater.inflate(R.layout.fragment_groups, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER)==2){
-                textView.setText("Groups");
+
+                View rootView = inflater.inflate(R.layout.fragment_history, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER)==3){
-                textView.setText("History");
-            }
-            else if (getArguments().getInt(ARG_SECTION_NUMBER)==4){
-                textView.setText("Contacts");
+
+                View rootView = inflater.inflate(R.layout.fragment_contacts, container, false);
+                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                return rootView;
             }
 
-            return rootView;
+            return rootViewm;
         }
     }
 

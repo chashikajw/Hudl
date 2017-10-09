@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="login">
+        <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,11 @@
             android:theme="@style/AppTheme" />
         <activity android:name="hudlmo.interfaces.VideoMain" />
         <activity android:name="hudlmo.interfaces.CreateMeeting.AddParticipants" />
-        <activity android:name="hudlmo.interfaces.CreateMeeting.CreateMeeting"></activity>
+        <activity android:name="hudlmo.interfaces.CreateMeeting.CreateMeeting" />
+        <activity
+            android:name=".AddContacts"
+            android:label="@string/title_activity_add_contacts"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
