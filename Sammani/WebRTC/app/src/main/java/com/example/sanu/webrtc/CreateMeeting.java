@@ -18,7 +18,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
 import android.widget.TimePicker;
+
+import static com.example.sanu.webrtc.R.id.contactsListView1;
 
 public class CreateMeeting extends AppCompatActivity implements OnClickListener {
 
@@ -58,6 +61,7 @@ public class CreateMeeting extends AppCompatActivity implements OnClickListener 
         nextButton.setOnClickListener ( new OnClickListener () {
             @Override
             public void onClick(View v) {
+
                 Intent toy = new Intent ( CreateMeeting.this,AddParticipants.class);
                 startActivity ( toy );
             }
