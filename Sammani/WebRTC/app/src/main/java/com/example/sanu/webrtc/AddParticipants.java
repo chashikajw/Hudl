@@ -25,6 +25,7 @@ import java.util.List;
 public class AddParticipants extends AppCompatActivity implements OnClickListener {
 
     Button createButton , contactsButton ;
+    int index;
     ListView emailListView , contactsListView1;
     private ArrayList<String> arrayList;
     private ArrayList<String> arrayList2;
@@ -36,31 +37,12 @@ public class AddParticipants extends AppCompatActivity implements OnClickListene
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_add_participants );
 
-        //add emails to emailListView
-        emailListView = (ListView)findViewById ( R.id.emailListView );
-        String[] items = {};
-        arrayList = new ArrayList<> ( Arrays.asList(items) );
-        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList);////
-        emailListView.setAdapter(adapter);
-        addEmailText = (EditText)findViewById ( R.id.addEmailText );///////////
-        Button addEmailButton = (Button)findViewById ( R.id.addEmailButton );
-        // ADD EMAIL Button
-        addEmailButton.setOnClickListener ( new OnClickListener () {
-            @Override
-            public void onClick(View v) {
-                String newItem = addEmailText.getText ().toString ();
-                arrayList.add ( newItem );
-                adapter.notifyDataSetChanged ();
-                Toast.makeText (getBaseContext (),"Email Added",Toast.LENGTH_SHORT).show ();
-                addEmailText.setText ( " " );
-            }
-        } );
-
         //Contact ListView
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
-        String[] contacts = {"Sammani","Chashika","Piyumi","Aravind","Shalini"};
+        final String[] contacts = {"Sammani","Chashika","Piyumi","Aravind","Shalini","Prabhath"};
+        final String[] contactsMails = {"Sammanianu123@gmail.com","chashikajw007@gmail.com","piyumisenevirathne@gmail.com","aravinth9611991@gmail.com","nimeshika94@gmail.com","DRAPIROSHAN@gmail.com"};
         arrayList2 = new ArrayList<> ( Arrays.asList(contacts) );
-        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList2);////
+        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList2);
         contactsListView1.setAdapter(adapter); //same adapter?
 
         // ListView Buttons
@@ -70,7 +52,34 @@ public class AddParticipants extends AppCompatActivity implements OnClickListene
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView textView = (TextView) view;
                 String message = textView.getText ().toString ();
-                addEmailText.setText ( message );
+                for (int i=0;i<contacts.length;i++){
+                    if (message.equals ( contacts[i] )){
+                        index = i;
+                    }
+                }
+
+                addEmailText.setText ( contactsMails[index] );
+            }
+        } );
+
+        //add emails to emailListView
+        emailListView = (ListView)findViewById ( R.id.emailListView );
+        String[] items = {};
+        arrayList = new ArrayList<> ( Arrays.asList(items) );
+        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList);////
+        emailListView.setAdapter(adapter);
+
+        // addEmailButton Button
+        addEmailText = (EditText)findViewById ( R.id.addEmailText );
+        Button addEmailButton = (Button)findViewById ( R.id.addEmailButton );
+        addEmailButton.setOnClickListener ( new OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                String newItem = addEmailText.getText ().toString ();
+                arrayList.add ( newItem );
+                adapter.notifyDataSetChanged ();
+                Toast.makeText (getBaseContext (),"Email Added",Toast.LENGTH_SHORT).show ();
+                addEmailText.setText ( " " );
             }
         } );
 
