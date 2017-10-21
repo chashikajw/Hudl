@@ -95,7 +95,7 @@ public class Register extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        System.out.print("yep");
+
                         String userId = mAuth.getCurrentUser().getUid();
 
                         DatabaseReference currnt_userDB = mDatabase.child(userId);

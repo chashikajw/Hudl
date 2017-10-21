@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import hudlmo.interfaces.VideoMain;
 import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.login;
@@ -78,6 +79,10 @@ public class Mainmenu extends AppCompatActivity {
         return true;
     }
 
+    public void callStart(){
+        startActivity(new Intent(Mainmenu.this,VideoMain.class));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -96,12 +101,15 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, login.class));
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
     public void signOut(){
 
     }
+
+
 
     /**
      * A placeholder fragment containing a simple view.
