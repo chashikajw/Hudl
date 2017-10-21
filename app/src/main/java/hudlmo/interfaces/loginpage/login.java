@@ -1,5 +1,6 @@
 package hudlmo.interfaces.loginpage;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class login extends AppCompatActivity {
 
     public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
+    private ProgressDialog mProgress;
 
 
     @Override
@@ -37,6 +39,7 @@ public class login extends AppCompatActivity {
         passwordEt = (EditText)findViewById(R.id.passwordText);
         login_btn = (Button)findViewById(R.id.loginBtn);
         register_btn = (Button)findViewById(R.id.registerBtn);
+        mProgress = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
@@ -75,13 +78,19 @@ public class login extends AppCompatActivity {
         }
 
         else{
+
+            mProgress.setMessage("Signing up....");
+            mProgress.show();
             //sign in with email and password
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
+                        mProgress.dismiss();
                         Toast.makeText(login.this, "Sign in Problem",Toast.LENGTH_LONG).show();
                     }
+                    mProgress.dismiss();
+
 
                 }
             });
