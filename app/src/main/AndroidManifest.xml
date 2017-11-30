@@ -31,8 +31,6 @@
             android:label="@string/title_activity_mainmenu"
             android:theme="@style/AppTheme" />
         <activity android:name="hudlmo.interfaces.VideoMain" />
-        <activity android:name="hudlmo.interfaces.CreateMeeting.AddParticipants" />
-        <activity android:name="hudlmo.interfaces.CreateMeeting.CreateMeeting" />
         <activity
             android:name=".AddContacts"
             android:label="@string/title_activity_add_contacts"
