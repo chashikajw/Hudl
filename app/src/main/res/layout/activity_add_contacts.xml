@@ -16,22 +16,53 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:background="#008dc7"
-            android:text="call"
             android:onClick="callStart"
+            android:text="Add"
             android:textColor="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.443"/>
+            app:layout_constraintVertical_bias="0.687" />
 
+    <EditText
+        android:id="@+id/emailText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
 
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.276" />
 
+    <EditText
+        android:id="@+id/usernameText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
 
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
 
-
-
-
-
-
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
