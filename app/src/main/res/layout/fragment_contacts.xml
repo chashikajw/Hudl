@@ -10,4 +10,10 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="163dp"
+        android:layout_height="174dp"
+        android:text="Contacts" />
+
 </FrameLayout>

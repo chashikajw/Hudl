@@ -5,9 +5,16 @@
     tools:context="layout.Groups">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="185dp"
+        android:layout_height="236dp"
+        android:text="groups" />
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>
