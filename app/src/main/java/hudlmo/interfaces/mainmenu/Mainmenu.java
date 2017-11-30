@@ -198,13 +198,13 @@ public class Mainmenu extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Upcoming";
-                case 1:
                     return "Groups";
-                case 2:
+                case 1:
                     return "History";
-                case 3:
+                case 2:
                     return "Contacts";
+                case 3:
+                    return "Upcoming";
             }
             return null;
         }

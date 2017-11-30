@@ -99,9 +99,12 @@ public class Register extends AppCompatActivity {
                         String userId = mAuth.getCurrentUser().getUid();
 
                         DatabaseReference currnt_userDB = mDatabase.child(userId);
-                        currnt_userDB.child("name").setValue(name);
-                        currnt_userDB.child("username").setValue(username);
+
+                        currnt_userDB.child("meetings").setValue("default");
                         currnt_userDB.child("image").setValue("default");
+                        currnt_userDB.child("contacts").child("1").setValue("default");
+                        currnt_userDB.child("username").setValue(username);
+                        currnt_userDB.child("name").setValue(name);
 
                         mProgress.dismiss();
                         startActivity(new Intent(Register.this, Mainmenu.class));

@@ -10,4 +10,10 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="259dp"
+        android:layout_height="245dp"
+        android:text="History" />
+
 </FrameLayout>
