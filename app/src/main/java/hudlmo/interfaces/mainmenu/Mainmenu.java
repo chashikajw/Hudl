@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import hudlmo.interfaces.VideoMain;
+import hudlmo.interfaces.createMeeting.AddParticipants;
+import hudlmo.interfaces.createMeeting.CreateMeeting;
 import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.login;
@@ -64,8 +66,8 @@ public class Mainmenu extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Create a new hudle", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+               startActivity(new Intent(Mainmenu.this, CreateMeeting.class));
             }
         });
 
