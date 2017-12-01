@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +39,7 @@ public class AddContacts extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
-       
+
 
 
 
@@ -47,17 +48,22 @@ public class AddContacts extends AppCompatActivity {
 
 
     public void callStart(View v){
-        mProgress.setMessage("saving....");
-        mProgress.show();
-        String email = emailEt.getText().toString().trim();
-        String username = usernameEt.getText().toString().trim();
+        try{
+            mProgress.setMessage("saving....");
+            mProgress.show();
+            String email = emailEt.getText().toString().trim();
+            String username = usernameEt.getText().toString().trim();
 
-        String userId = mAuth.getCurrentUser().getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
-        DatabaseReference currnt_userDB = mDatabase.child(userId);
-        mDatabase.child(username).setValue(email);
+            String userId = mAuth.getCurrentUser().getUid();
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
+            DatabaseReference currnt_userDB = mDatabase.child(userId);
+            mDatabase.child(username).setValue(email);
 
-        mProgress.dismiss();
+            mProgress.dismiss();
+        }catch(Exception e){
+            Toast.makeText(AddContacts.this, "connction error",Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
