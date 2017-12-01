@@ -38,11 +38,34 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="hudlmo.interfaces.createMeeting.AddParticipants">
+            <intent-filter>
+                <action android:name="hudlmo.interfaces.createMeeting.AddParticipants" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="hudlmo.interfaces.createMeeting.CreateMeeting">
+            <intent-filter>
+                <action android:name="hudlmo.interfaces.createMeeting.Createmmeting" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <activity android:name="hudlmo.interfaces.registerPage.VideoMain">
+                <intent-filter>
+                    <action android:name="hudlmo.interfaces.registerPage.VideoMain" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+        </activity>
+
         <activity
             android:name="hudlmo.interfaces.mainmenu.Mainmenu"
             android:label="@string/title_activity_mainmenu"
             android:theme="@style/AppTheme" />
-        <activity android:name="hudlmo.interfaces.VideoMain" />
+
         <activity
             android:name=".AddContacts"
             android:label="@string/title_activity_add_contacts"
