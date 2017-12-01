@@ -103,8 +103,8 @@ public class login extends AppCompatActivity {
     }
 
     public void LoginButton(View v){
-        //startSignIn();
-        startActivity(new Intent(login.this,Mainmenu.class));
+        startSignIn();
+        //startActivity(new Intent(login.this,Mainmenu.class));
 
     }
 }

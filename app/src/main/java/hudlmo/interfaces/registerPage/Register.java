@@ -39,6 +39,7 @@ public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog mProgress;
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseindex;
 
 
 
@@ -56,6 +57,7 @@ public class Register extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseindex = FirebaseDatabase.getInstance().getReference().child("UserIndex");
         mProgress = new ProgressDialog(this);
 
     }
@@ -98,6 +100,7 @@ public class Register extends AppCompatActivity {
 
                         String userId = mAuth.getCurrentUser().getUid();
 
+                        mDatabaseindex.child(username).setValue(userId);
                         DatabaseReference currnt_userDB = mDatabase.child(userId);
 
                         currnt_userDB.child("meetings").setValue("default");
