@@ -28,10 +28,10 @@ public class CreateNotificationActivity extends Activity {
 
         // Build notification
         // Actions are just fake
-        Notification noti = new Notification.Builder(this)
+       /* Notification noti = new Notification.Builder(this)
                 .setContentTitle("New Notificatio " + "test@gmail.com")
                 .setContentText("Subject").setSmallIcon(R.drawable.logo)
                 .setContentIntent(pIntent)
-                .addAction(R.drawable.logo ,"");
+                .addAction(R.drawable. ,"");*/
     }
 }
