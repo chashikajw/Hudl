@@ -18,13 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
-import hudlmo.interfaces.VideoMain;
-import hudlmo.interfaces.createMeeting.AddParticipants;
+import hudlmo.interfaces.Video.VideoCoference;
+
 import hudlmo.interfaces.createMeeting.CreateMeeting;
 import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
+import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
 
 public class Mainmenu extends AppCompatActivity {
@@ -81,9 +83,7 @@ public class Mainmenu extends AppCompatActivity {
         return true;
     }
 
-    public void callStart(){
-        startActivity(new Intent(Mainmenu.this,VideoMain.class));
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,7 +94,7 @@ public class Mainmenu extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(Mainmenu.this, Settings.class));
         }
         if (id == R.id.action_addcontact) {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
@@ -123,6 +123,8 @@ public class Mainmenu extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private View rootViewm = null;
+
         public PlaceholderFragment() {
         }
 
@@ -143,11 +145,16 @@ public class Mainmenu extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootViewm = inflater.inflate(R.layout.fragment_mainmenu, container, false);
+            rootViewm = inflater.inflate(R.layout.fragment_mainmenu, container, false);
             if (getArguments().getInt(ARG_SECTION_NUMBER)==0){
 
                 View rootView = inflater.inflate(R.layout.fragment_mainmenu, container, false);
                 TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+
+
+
+
+
                 return rootView;
             }
             else if (getArguments().getInt(ARG_SECTION_NUMBER)==1){
@@ -169,8 +176,30 @@ public class Mainmenu extends AppCompatActivity {
                 return rootView;
             }
 
+
+
+            Button button = (Button) rootViewm.findViewById(R.id.call);
+            button.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent(getActivity(), VideoCoference.class);
+                    startActivity(intent);
+
+
+                }
+            });
+
+
+
             return rootViewm;
         }
+
+
+
+
+
     }
 
     /**
