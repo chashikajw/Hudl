@@ -5,15 +5,10 @@
     tools:context="layout.History">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="259dp"
-        android:layout_height="245dp"
-        android:text="History" />
-
+        android:id="@+id/historylst"
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -11,9 +11,10 @@
         android:text="@string/hello_blank_fragment" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/cntac"
         android:layout_width="163dp"
         android:layout_height="174dp"
+        android:onClick="showcontacts"
         android:text="Contacts" />
 
 </FrameLayout>
