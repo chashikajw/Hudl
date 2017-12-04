@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -19,7 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hudlmo.interfaces.loginpage.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +42,9 @@ public class Groups extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private RecyclerView mlistview;
+    private ListView mlistview;
+    private GroupAdapter adapter;
+    private List<Meeting> grouplist;
 
 
     // TODO: Rename and change types of parameters
@@ -73,6 +82,8 @@ public class Groups extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -84,7 +95,24 @@ public class Groups extends Fragment {
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
         View view = inflater.inflate(R.layout.fragment_groups, container, false);
-        mlistview = (RecyclerView) view.findViewById(R.id.grouplist);
+        mlistview = (ListView) view.findViewById(R.id.grouplist);
+
+        grouplist = new ArrayList<>();
+
+        grouplist.add(new Meeting("group1","yesh hurry"));
+        grouplist.add(new Meeting("group1","yesh hurry"));
+        grouplist.add(new Meeting("group1","yesh hurry"));
+        grouplist.add(new Meeting("group1","yesh hurry"));
+
+        adapter = new GroupAdapter(grouplist,getApplicationContext());
+        mlistview.setAdapter(adapter);
+
+       /* mlistview.setOnClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getApplicationContext(),"cliked me",Toast.LENGTH_LONG).show();
+            }
+        };*/
 
 
 
