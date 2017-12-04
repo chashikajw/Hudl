@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.687" />
 
+
     <EditText
         android:id="@+id/emailText"
         android:layout_width="350dp"
