@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.vidyo.VidyoClient.Connector.Connector;
 import com.vidyo.VidyoClient.Connector.VidyoConnector;
 
@@ -16,6 +18,8 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
     private VidyoConnector vc;
     private FrameLayout videoFrame;
     String token,username,room;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,9 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
     }
 
     public void Connect(View v) {
-        String token = "cHJvdmlzaW9uAHVzZXIxQDE4ZjBiZC52aWR5by5pbwA2MzY3OTE4NTYzNgAAOWUyOTUxNzQzZDdhN2QyOWMxYzE1MWMxNjFjY2M2ODU0NGU2NTAzMzIwMTRkZTgyZjczYzVjN2EwZDI1NmRlNTQzMDBmNjQ3M2Q5NDEyNzcyMTA4NDQ3YWQ1MzJkYWI2";
+        String token = "cHJvdmlzaW9uAGNoYXNoandAMThmMGJkLnZpZHlvLmlvADYzNjc5NjA3MjgzAAA0OTk5NTlkNjdhZjRhZTFlOTM0NjgzZjRkNTkzMTEwYWE4ZGMyNDE5Mzg2YmQ4MmIwOTQ2OGZiMmM0NzYzODA1Yjg1Njg5ODE3OGY1YjNlOWM4YzRkMWQ5MWJlZmJmZTY=";
         try {
-            vc.Connect("prod.vidyo.io", token, "oshan", "room1", this);
+            vc.Connect("prod.vidyo.io", token, "shalini", "room9", this);
             Toast.makeText( VideoCoference.this, "connecting succesfully",Toast.LENGTH_LONG).show();
         }catch (Exception e){
             Toast.makeText( VideoCoference.this, "connection error",Toast.LENGTH_LONG).show();

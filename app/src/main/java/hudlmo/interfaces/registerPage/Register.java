@@ -70,7 +70,7 @@ public class Register extends AppCompatActivity {
 
     //validate register form and insert data to the database
     public void StartRegister(){
-        String email = emailEt.getText().toString().trim();
+        final String email = emailEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
         String confirm_password = confirm_passwordEt.getText().toString().trim();
         final String username = usernameEt.getText().toString().trim();
@@ -108,6 +108,7 @@ public class Register extends AppCompatActivity {
                         currnt_userDB.child("contacts").child("1").setValue("default");
                         currnt_userDB.child("username").setValue(username);
                         currnt_userDB.child("name").setValue(name);
+                        currnt_userDB.child("email").setValue(email);
 
                         mProgress.dismiss();
                         startActivity(new Intent(Register.this, Mainmenu.class));
