@@ -64,6 +64,7 @@ public class login extends AppCompatActivity {
         mAuth.addAuthStateListener(mAuthListner);
     }
 
+/*
     private void startSignIn(){
 
         String email =  emailEt.getText().toString();
@@ -96,6 +97,7 @@ public class login extends AppCompatActivity {
             });
         }
     }
+*/
 
     public void RegisterButton(View v){
 
@@ -103,7 +105,9 @@ public class login extends AppCompatActivity {
     }
 
     public void LoginButton(View v){
-        startSignIn();
+        //startSignIn();
+        startActivity(new Intent(login.this,Mainmenu.class));
+
 
 
     }
