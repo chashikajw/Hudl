@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="#008dc7"
+        android:textColor="@android:color/background_light"
         android:id="@+id/button"
         android:onClick="Start" />
 
@@ -26,7 +28,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/button2"
-        android:onClick="Connect" />
+        android:onClick="Connect"
+        android:background="#008dc7"
+        android:textColor="@android:color/background_light"/>
 
     <Button
         android:text="Disconnect"
@@ -35,7 +39,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/button3"
-        android:onClick="Disconnect" />
+        android:onClick="Disconnect"
+        android:background="#008dc7"
+        android:textColor="@android:color/background_light"/>
 
     <FrameLayout
         android:layout_width="match_parent"

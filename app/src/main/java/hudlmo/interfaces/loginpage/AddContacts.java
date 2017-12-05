@@ -30,7 +30,7 @@ public class AddContacts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contacts);
+        setContentView(R.layout.activity_save_contact);
 
         emailEt =(EditText)findViewById(R.id.emailText);
         usernameEt = (EditText)findViewById(R.id.usernameText);
