@@ -198,35 +198,45 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             notificationData.put("from",CurrntUserId);
             notificationData.put("type","meeting creation");
 
-            final String[] sendUser = {"cjw007","boby","jay007"};
+            String[] sendUser = {"cjw007","mashi","jay007"};
 
             //store evey participants deatials
 
-            reqstUser = reqstUser.child("boby");
+
+
+            for(int i=0; i< sendUser.length;i++ ){
+
+
+                DatabaseReference reqst_userDB = reqstUser.child(sendUser[i]);
+
+                reqst_userDB.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+
+                        String reqstUid= dataSnapshot.getValue().toString();
+
+                        mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
+
+            }
 
 
 
-            reqstUser.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    String reqstUid= dataSnapshot.getValue().toString();
 
-                    mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-
-                }
-            });
 
 
 

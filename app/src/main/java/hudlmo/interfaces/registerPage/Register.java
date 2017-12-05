@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.login;
@@ -109,6 +110,10 @@ public class Register extends AppCompatActivity {
                         currnt_userDB.child("username").setValue(username);
                         currnt_userDB.child("name").setValue(name);
                         currnt_userDB.child("email").setValue(email);
+
+                        //to notifications
+                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                        currnt_userDB.child("device_token").setValue(deviceToken);
 
                         mProgress.dismiss();
                         startActivity(new Intent(Register.this, Mainmenu.class));
