@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +70,33 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_add_participants );
 
+        mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getCurrentUser().getUid();
+
+        contactsListView1 = (ListView)findViewById(R.id.contactsListView1);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
+
+
+
+        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
+                this,
+                String.class,
+                android.R.layout.simple_list_item_multiple_choice,
+                databaseReference
+
+
+        ) {
+            @Override
+            protected void populateView(View view, String s, int i) {
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                textView.setText(s);
+            }
+        };
+        contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        contactsListView1.setAdapter(firebaseListAdapter);
+
+/*
         //Contact ListView
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
         final String[] contacts = {"Sammani","Chashika","Piyumi","Aravind","Shalini","Prabhath"};
@@ -133,9 +161,10 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         } );
 
-
+*/
         createButton = (Button)findViewById(R.id.createButton);
         createButton.setOnClickListener ( this );
+
 
         //notification refernce
         mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
