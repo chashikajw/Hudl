@@ -173,7 +173,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             //store evey participants deatials
 
-            reqstUser = reqstUser.child("boby");
+            reqstUser = reqstUser.child("cjw007");
 
 
 
@@ -182,6 +182,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
+
                     String reqstUid= dataSnapshot.getValue().toString();
 
                     mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
