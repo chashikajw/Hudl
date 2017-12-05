@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,8 +34,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
@@ -49,6 +60,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private ArrayList<String> arrayList2;
     private ArrayAdapter<String> adapter;
     private EditText addEmailText;
+    private DatabaseReference mNotification;
+    private DatabaseReference reqstUser;
+    private FirebaseAuth mAuth;
 
     ///@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +137,11 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         createButton = (Button)findViewById(R.id.createButton);
         createButton.setOnClickListener ( this );
 
+        //notification refernce
+        mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
+        mAuth = FirebaseAuth.getInstance();
+        reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+
     }
 
     public void onClick(View view) {
@@ -142,6 +161,50 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             intent.putExtra ( Intent.EXTRA_TEXT,"click this link" );
             intent.setType ( "message/rfc822" );
             startActivity (Intent.createChooser ( intent,"Send Email" ));
+
+
+            //send notifications
+            final HashMap<String,String> notificationData = new HashMap<>();
+            String CurrntUserId = mAuth.getCurrentUser().getUid();
+            notificationData.put("from",CurrntUserId);
+            notificationData.put("type","meeting creation");
+
+            final String[] sendUser = {"cjw007","boby","jay007"};
+
+            //store evey participants deatials
+
+            reqstUser = reqstUser.child("boby");
+
+
+
+            reqstUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    String reqstUid= dataSnapshot.getValue().toString();
+
+                    mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }
+            });
+
+
+
+
+
+
+
         }
     }
 }
