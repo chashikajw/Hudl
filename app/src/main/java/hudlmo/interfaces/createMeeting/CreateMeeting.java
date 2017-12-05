@@ -2,13 +2,16 @@ package hudlmo.interfaces.createMeeting;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,15 +29,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 import hudlmo.interfaces.loginpage.R;
+import hudlmo.interfaces.mainmenu.Mainmenu;
+import hudlmo.interfaces.registerPage.Register;
 
 
 public class CreateMeeting extends AppCompatActivity implements View.OnClickListener {
 
     Button dateButton,timeButton,nextButton;
-    EditText dateText,timeText;
+    EditText dateText,timeText,groupName,description,duration;
     private int day,month,year,hour,minutes;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +62,22 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
         dateButton = (Button)findViewById(R.id.dateButton);
         timeButton = (Button)findViewById(R.id.timeButton);
+
+        groupName = (EditText)findViewById(R.id.groupNameText);
+        description = (EditText)findViewById(R.id.descriptionText);
+        duration = (EditText)findViewById(R.id.durationText);
         dateText = (EditText)findViewById(R.id.dateText);
         timeText = (EditText)findViewById(R.id.timeText);
+
         dateButton.setOnClickListener ( this );
         timeButton.setOnClickListener ( this );
-        init ();//next button
 
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
+        mProgress = new ProgressDialog(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        init ();
+
     }
 
     //Next button
@@ -69,8 +87,44 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
 
-                Intent toy = new Intent ( CreateMeeting.this,AddParticipants.class);
-                startActivity ( toy );
+                String group_name = groupName.getText().toString().trim();
+                String description_ = description.getText().toString().trim();
+                String date_text = dateText.getText().toString().trim();
+                String time_text = timeText.getText().toString().trim();
+                String duration_ = duration.getText().toString().trim();
+
+                //validation
+                if(TextUtils.isEmpty(group_name)/*||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)*/){
+                    Toast.makeText(CreateMeeting.this, "Fields are empty",Toast.LENGTH_LONG).show();
+                }
+
+                //insert data to database
+                else {
+                    mProgress.setMessage("Creating meeting....");
+                    mProgress.show();
+
+                    String userId = mAuth.getCurrentUser().getUid();
+
+                    //mDatabase.child(group_name).setValue(userId);
+                    DatabaseReference currnt_userDB = mDatabase.child(userId);
+
+                    currnt_userDB.child("groupName").setValue(group_name);
+                    currnt_userDB.child("description").setValue(description_);
+                    currnt_userDB.child("duration").setValue(duration_);
+                    currnt_userDB.child("date").setValue(date_text);
+                    currnt_userDB.child("time").setValue(time_text);
+
+                    mProgress.dismiss();
+
+                    //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
+
+                    Intent toy = new Intent ( CreateMeeting.this,AddParticipants.class);
+                    startActivity ( toy );
+
+
+                }
+
+
             }
         } );
 
@@ -97,6 +151,8 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -139,5 +195,3 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
 }
-
-
