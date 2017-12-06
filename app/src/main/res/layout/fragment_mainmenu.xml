@@ -14,15 +14,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+    <ImageView
+        android:id="@+id/main_logo"
+        android:layout_width="309dp"
+        android:layout_height="275dp"
+        android:layout_marginBottom="375dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/logo"
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="177dp"
         android:onClick="callStart"
-        android:text="Call" />
+        android:text="Call"
+        android:background="#008dc7"
+        android:textColor="@android:color/background_light"
+        android:layout_marginTop="140dp"
+        android:layout_below="@+id/section_label"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
