@@ -29,7 +29,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
         int mNotificationId = (int)System.currentTimeMillis();
-\
+
         NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
