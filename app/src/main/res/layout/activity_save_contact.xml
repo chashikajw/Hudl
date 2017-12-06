@@ -97,7 +97,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/main_logo"
         android:layout_width="184dp"
         android:layout_height="142dp"
         android:layout_marginBottom="8dp"
