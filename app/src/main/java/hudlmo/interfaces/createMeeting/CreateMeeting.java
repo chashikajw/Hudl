@@ -51,9 +51,9 @@ import hudlmo.interfaces.registerPage.Register;
 
 public class CreateMeeting extends AppCompatActivity implements View.OnClickListener {
 
-    Button timeButton,nextButton;
-    EditText timeText,groupName,description,duration;
-    TextView dateText,dateButton;
+    Button nextButton;
+    EditText groupName,description,duration;
+    TextView dateText,timeText,dateButton,timeButton;
     private int day,month,year,hour,minutes;
 
     private FirebaseAuth mAuth;
@@ -71,16 +71,16 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_create_meeting);
 
         dateButton = (TextView) findViewById(R.id.dateButton);
-        timeButton = (Button)findViewById(R.id.timeButton);
+        timeButton = (TextView) findViewById(R.id.timeButton);
 
         groupName = (EditText)findViewById(R.id.groupNameText);
         description = (EditText)findViewById(R.id.descriptionText);
         duration = (EditText)findViewById(R.id.durationText);
         dateText = (TextView) findViewById(R.id.dateText);
-        timeText = (EditText)findViewById(R.id.timeText);
+        timeText = (TextView)findViewById(R.id.timeText);
 
         dateText.setOnClickListener ( this );
-        timeButton.setOnClickListener ( this );
+        timeText.setOnClickListener ( this );
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
@@ -203,7 +203,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         }
 
         //set calender to find time
-        if (v==timeButton){
+        if (v==timeText){
             final Calendar c = Calendar.getInstance ();
             hour = c.get ( Calendar.HOUR_OF_DAY );
             minutes = c.get(Calendar.MINUTE);
