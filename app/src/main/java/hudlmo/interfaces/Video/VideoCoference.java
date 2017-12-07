@@ -1,5 +1,6 @@
 package hudlmo.interfaces.Video;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +8,11 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vidyo.VidyoClient.Connector.Connector;
 import com.vidyo.VidyoClient.Connector.VidyoConnector;
 
@@ -17,8 +22,13 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
 
     private VidyoConnector vc;
     private FrameLayout videoFrame;
-    String token,username,room;
+
+
+    private  String roomID;
+    private String username;
     private FirebaseAuth mAuth;
+    private String token;
+
     private DatabaseReference mDatabase;
 
     @Override
@@ -29,6 +39,29 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
         Connector.SetApplicationUIContext(this);
         Connector.Initialize();
         videoFrame = (FrameLayout)findViewById(R.id.videoFrame);
+
+        Bundle bundle = getIntent().getExtras();
+        roomID = bundle.getString("roomId");
+
+        mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getCurrentUser().getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("username");
+        token = "cHJvdmlzaW9uAGNqdzAwN0AxOGYwYmQudmlkeW8uaW8ANjM2Nzk5MDg3MjMAAGRlNDg0ZTBmYTIxMTI1YzgzNjg2Yzg3OWUwZThiOTJiMTY3Mjk2YWQzMWViMThhZjIxNTE3NmM2NzNlYTMwNzAwMzJlNzliMDg5MzMxZjFhNDU1NTgxZGVhNmNkN2Q4OA==";
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String uname = (String) dataSnapshot.getValue();
+                username = uname;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
     }
     //
     public void Start(View v) {
@@ -37,9 +70,9 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
     }
 
     public void Connect(View v) {
-        String token = "cHJvdmlzaW9uAGNoYXNoandAMThmMGJkLnZpZHlvLmlvADYzNjc5NjA3MjgzAAA0OTk5NTlkNjdhZjRhZTFlOTM0NjgzZjRkNTkzMTEwYWE4ZGMyNDE5Mzg2YmQ4MmIwOTQ2OGZiMmM0NzYzODA1Yjg1Njg5ODE3OGY1YjNlOWM4YzRkMWQ5MWJlZmJmZTY=";
+
         try {
-            vc.Connect("prod.vidyo.io", token, "shalini", "room9", this);
+            vc.Connect("prod.vidyo.io", token, username, roomID, this);
             Toast.makeText( VideoCoference.this, "connecting succesfully",Toast.LENGTH_LONG).show();
         }catch (Exception e){
             Toast.makeText( VideoCoference.this, "connection error",Toast.LENGTH_LONG).show();
