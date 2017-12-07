@@ -115,7 +115,9 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
-            firebaseAuth.signOut();
+            FirebaseAuth fAuth = FirebaseAuth.getInstance();
+            fAuth.signOut();
+            //firebaseAuth.signOut();
             //startActivity(new Intent(this,login.class));
             startActivity(new Intent(this,login.class));
         }
