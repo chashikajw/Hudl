@@ -64,6 +64,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference mNotification;
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
+    private DatabaseReference usersref;
 
     ///@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +171,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
         mAuth = FirebaseAuth.getInstance();
         reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+        usersref = FirebaseDatabase.getInstance().getReference().child("Users");
 
     }
 
@@ -196,12 +198,13 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             final HashMap<String,String> notificationData = new HashMap<>();
             String CurrntUserId = mAuth.getCurrentUser().getUid();
             //calculate unique number
-            String roomId = Integer.toString((int)System.currentTimeMillis());
+            final String roomId = Integer.toString((int)System.currentTimeMillis());
             notificationData.put("from",CurrntUserId);
-            notificationData.put("roomID",roomId);
+            notificationData.put("roomId",roomId);
+            //notificationData.put("roomID",roomId);
             notificationData.put("type","meeting creation");
 
-            String[] sendUser = {"sam","mashi","","hiru007"};
+            String[] sendUser = {"sha","piyumi","prabhath","jay007","cjw007"};
 
 
 
@@ -209,7 +212,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             try {
 
-                for(int i=0; i< sendUser.length;i++ ){
+               for(int i=0; i< sendUser.length;i++ ){
 
 
                     DatabaseReference reqst_userDB = reqstUser.child(sendUser[i]);
@@ -223,13 +226,19 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
 
-                            String reqstUid= dataSnapshot.getValue().toString();
+                            final String reqstUid= dataSnapshot.getValue().toString();
+                            usersref.child(reqstUid).child("roomId").setValue(roomId);
+
+
+
+
 
 
 
                             mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+                                    //usersref.child(reqstUid).child("roomID").setValue(roomId);
 
                                 }
                             });
@@ -243,6 +252,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                     });
 
                     //set room
+
 
 
                 }
