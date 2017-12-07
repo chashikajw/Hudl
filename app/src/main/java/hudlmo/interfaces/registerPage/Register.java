@@ -10,12 +10,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -28,19 +30,29 @@ import hudlmo.interfaces.mainmenu.Mainmenu;
  * Created by chashika on 10/5/17.
  */
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements View.OnClickListener {
 
-    private static EditText nameEt;
-    private static EditText usernameEt;
-    private static EditText emailEt;
-    private  static EditText passwordEt;
-    private  static EditText confirm_passwordEt;
-    private static Button register_btn;
+    private Button registerBtn;
+    private EditText usernameTxt;
+    private EditText nameTxt;
+    private EditText passwordTxt;
+    private EditText confirmPasswordTxt;
+    private EditText emailTxt;
 
-    private FirebaseAuth mAuth;
+
+
     private ProgressDialog mProgress;
+
+    //defining firebase object
+    private FirebaseAuth mAuth;
+    //defining db
     private DatabaseReference mDatabase;
+
     private DatabaseReference mDatabaseindex;
+
+
+
+
 
 
 
@@ -48,85 +60,158 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        nameEt =(EditText)findViewById(R.id.nameTxt);
-        usernameEt =(EditText)findViewById(R.id.usernamrTxt);
-        emailEt =(EditText)findViewById(R.id.emailTxt);
-        passwordEt = (EditText)findViewById(R.id.passwordTxt);
-        confirm_passwordEt = (EditText)findViewById(R.id.confirmPasswordTxt);
 
-        register_btn = (Button)findViewById(R.id.registerBtn);
-
+        // Initializing Firebase object
         mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        mDatabaseindex = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+
+        //if user already logged in start profile activity here
+        if (mAuth.getCurrentUser() != null) {
+            //start profile activity  here
+            finish();
+            startActivity(new Intent(getApplicationContext(), Mainmenu.class));
+
+        }
+
+
         mProgress = new ProgressDialog(this);
 
+        //get the firebase database reference
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseindex = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+
+
+        registerBtn = (Button) findViewById(R.id.registerBtn);
+
+        nameTxt= (EditText) findViewById(R.id.nameTxt);
+        usernameTxt= (EditText) findViewById(R.id.usernameTxt);
+        emailTxt = (EditText) findViewById(R.id.emailTxt);
+        passwordTxt = (EditText) findViewById(R.id.passwordTxt);
+        confirmPasswordTxt = (EditText) findViewById(R.id.confirmPasswordTxt);
+
+        //attaching listner to rehister Button
+        registerBtn.setOnClickListener(this);
     }
 
-    public void registerUser(View v){
-        System.out.print("yep");
-        StartRegister();
 
-    }
+    private void registerUser(){
+        String name = nameTxt.getText().toString().trim();
+        final String uname = usernameTxt.getText().toString().trim();
+        String email = emailTxt.getText().toString().trim();
+        String password = passwordTxt.getText().toString().trim();
+        String confirm_pw = confirmPasswordTxt.getText().toString().trim();
 
-    //validate register form and insert data to the database
-    public void StartRegister(){
-        final String email = emailEt.getText().toString().trim();
-        String password = passwordEt.getText().toString().trim();
-        String confirm_password = confirm_passwordEt.getText().toString().trim();
-        final String username = usernameEt.getText().toString().trim();
-        final String name = nameEt.getText().toString().trim();
+        final UserDetails newUser = new UserDetails(name,uname,email,password,confirm_pw);
 
-        if(TextUtils.isEmpty(email)||TextUtils.isEmpty(password)||TextUtils.isEmpty(confirm_password)
-            || TextUtils.isEmpty(username)||TextUtils.isEmpty(name)){
-            Toast.makeText(Register.this, "Fields are empty",Toast.LENGTH_LONG).show();
+
+        if (TextUtils.isEmpty(newUser.getName())){
+            //password is empty
+            Toast.makeText(this, "Please enter Name", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
         }
-        else if(password.length() <4){
-            Toast.makeText( Register.this, "Password should be at least 5 charcters",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(newUser.getUname())){
+            //password is empty
+            Toast.makeText(this, "Please enter User Name", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
         }
-        else if(!password.equals(confirm_password)){
-            Toast.makeText( Register.this, "Password is not matching",Toast.LENGTH_LONG).show();
+
+        if(TextUtils.isEmpty(newUser.getEmail())){
+            //email is empty
+            Toast.makeText(this, "Please enter email",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+
         }
 
-        //insert data to the database
-        else {
+        if (TextUtils.isEmpty(newUser.getPassword())){
+            //password is empty
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+        }
+
+        if (TextUtils.isEmpty(newUser.getComfirm_pw())){
+            //confirm password is empty
+            Toast.makeText(this, "Please confirm password", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+        }
+        if (!newUser.getPassword().equals(newUser.getComfirm_pw())){
+            //passwords mismatch
+            Toast.makeText(this, "Passwords does not match", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+        }
+
+        //if validations are ok a progress bar will be shown
+        mProgress.setMessage("Registering User...");
+        mProgress.show();
+
+        //creating a new user
+        mAuth.createUserWithEmailAndPassword(newUser.getEmail(),newUser.getPassword())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            //user is successfully registered and logged in
 
 
-            mProgress.setMessage("Signing up....");
-            mProgress.show();
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
 
-                        String userId = mAuth.getCurrentUser().getUid();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
+                            currnt_userDB.child("name").setValue(newUser.getName());
+                            currnt_userDB.child("username").setValue(newUser.getUname());
+                            currnt_userDB.child("email").setValue(newUser.getEmail());
+                            currnt_userDB.child("meetings").setValue("default");
+                            currnt_userDB.child("image").setValue("default");
+                            currnt_userDB.child("contacts").child("1").setValue("default");
 
-                        mDatabaseindex.child(username).setValue(userId);
-                        DatabaseReference currnt_userDB = mDatabase.child(userId);
 
-                        currnt_userDB.child("meetings").setValue("default");
-                        currnt_userDB.child("image").setValue("default");
-                        currnt_userDB.child("contacts").child("1").setValue("default");
-                        currnt_userDB.child("username").setValue(username);
-                        currnt_userDB.child("name").setValue(name);
-                        currnt_userDB.child("email").setValue(email);
+                            String userId = mAuth.getCurrentUser().getUid();
 
-                        //to notifications
-                        String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                        currnt_userDB.child("device_token").setValue(deviceToken);
+                            mDatabaseindex.child(newUser.getUname()).setValue(userId);
 
-                        mProgress.dismiss();
-                        startActivity(new Intent(Register.this, Mainmenu.class));
-                    } else {
-                        mProgress.dismiss();
-                        Toast.makeText(Register.this, "Sign up Problem", Toast.LENGTH_LONG).show();
+
+
+
+
+                            //to notifications
+                            String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                            currnt_userDB.child("device_token").setValue(deviceToken);
+
+
+
+                            finish();
+
+                            startActivity(new Intent(getApplicationContext(),Mainmenu.class));
+                        }
+
+                        else
+                        {
+                            Toast.makeText(Register.this,"Registration Failed! Please try again.",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-                }
+                });
 
-            });
 
-        }
     }
 
 
+
+    @Override
+    public void onClick(View v) {
+        if (v == registerBtn)
+        {
+            registerUser();
+        }
+
+    }
 }

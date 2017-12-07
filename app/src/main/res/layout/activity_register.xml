@@ -73,7 +73,7 @@
         android:layout_marginEnd="8dp"/>
 
     <EditText
-        android:id="@+id/usernamrTxt"
+        android:id="@+id/usernameTxt"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="Username"
