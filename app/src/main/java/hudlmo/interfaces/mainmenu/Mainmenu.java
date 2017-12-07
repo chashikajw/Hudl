@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import hudlmo.interfaces.Video.VideoCoference;
 
 import hudlmo.interfaces.createMeeting.CreateMeeting;
@@ -45,6 +47,7 @@ public class Mainmenu extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,16 +103,16 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
-            startActivity(new Intent(Mainmenu.this, login.class));
+            firebaseAuth.signOut();
+            //startActivity(new Intent(this,login.class));
+            startActivity(new Intent(this,login.class));
         }
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void signOut(){
 
-    }
 
 
 
