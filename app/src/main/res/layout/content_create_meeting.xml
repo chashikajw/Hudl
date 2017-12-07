@@ -236,6 +236,22 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="70dp" />
 
+    <ImageView
+        android:id="@+id/back_create_meeting"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.015"
+        app:srcCompat="@drawable/back_icon"
+        app:layout_constraintHorizontal_bias="0.025" />
+
     <TextView
         android:id="@+id/timeButton"
         android:layout_width="47dp"

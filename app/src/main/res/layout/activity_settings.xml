@@ -11,7 +11,7 @@
         android:layout_height="30dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="30dp"
-        android:text="Settings"
+        android:text="Setting"
         android:textColor="#0000ff"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,163 +20,38 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="70dp" />
 
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="100dp"
-        android:text="Notification Settings"
-        android:textColor="#000"
-        android:textSize="15dp"
+    <ImageView
+        android:id="@+id/back_setting"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="50dp" />
+        app:layout_constraintVertical_bias="0.015"
+        app:srcCompat="@drawable/back_icon"
+        app:layout_constraintHorizontal_bias="0.025" />
 
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="150dp"
-        android:text="Notification"
-        android:textColor="#73899a"
-        android:textSize="13dp"
+    <View
+        android:layout_width="368dp"
+        android:layout_height="1dp"
+        android:background="#008dc7"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
-    <CheckBox
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="150dp"
-        android:textColor="#73899a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="260dp" />
-
-
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="190dp"
-        android:text="Notification Sound"
-        android:textColor="#73899a"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
-    <CheckBox
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="190dp"
-        android:textColor="#73899a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="260dp" />
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="230dp"
-        android:text="Vibration"
-        android:textColor="#73899a"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
-    <CheckBox
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="230dp"
-        android:textColor="#73899a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="260dp" />
-
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="290dp"
-        android:text="Privacy"
-        android:textColor="#000"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="50dp" />
-
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="340dp"
-        android:text="Change User Name"
-        android:id="@+id/change_uname"
-        android:textColor="#73899a"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="380dp"
-        android:text="Change Email"
-        android:id="@+id/change_email"
-        android:textColor="#73899a"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
-    <TextView
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="420dp"
-        android:text="Change Password"
-        android:id="@+id/change_password"
-        android:textColor="#73899a"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="70dp" />
-
+        app:layout_constraintVertical_bias="0.112"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
     <ListView
         android:layout_width="368dp"
         android:layout_height="551dp"
