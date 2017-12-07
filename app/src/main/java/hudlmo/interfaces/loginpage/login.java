@@ -69,7 +69,6 @@ public class login extends AppCompatActivity {
     }
 
 
-
     private void startSignIn(){
 
         String email =  emailEt.getText().toString();
@@ -112,7 +111,7 @@ public class login extends AppCompatActivity {
     public void LoginButton(View v){
 
         startSignIn();
-        //startActivity(new Intent(login.this,Mainmenu.class));
+
 
 
     }

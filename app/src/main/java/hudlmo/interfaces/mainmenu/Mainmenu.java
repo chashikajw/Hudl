@@ -23,11 +23,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 import hudlmo.interfaces.Video.VideoCoference;
 
@@ -55,6 +57,7 @@ public class Mainmenu extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,16 +115,16 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
-            startActivity(new Intent(Mainmenu.this, login.class));
+            firebaseAuth.signOut();
+            //startActivity(new Intent(this,login.class));
+            startActivity(new Intent(this,login.class));
         }
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void signOut(){
 
-    }
 
 
 

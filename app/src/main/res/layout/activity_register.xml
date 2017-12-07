@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.122" />
 
     <EditText
-        android:id="@+id/usernamrTxt"
+        android:id="@+id/usernameTxt"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="Username"
