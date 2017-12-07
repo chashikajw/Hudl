@@ -23,7 +23,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.81"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <View
+        android:layout_width="368dp"
+        android:layout_height="1dp"
+        android:background="#008dc7"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/textView3"
@@ -41,32 +60,34 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.408"/>
+        app:layout_constraintVertical_bias="0.408"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
-    <Button
+    <TextView
         android:id="@+id/dateButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="88dp"
-        android:layout_height="44dp"
+        android:layout_width="47dp"
+        android:layout_height="18dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:background="#008dc7"
         android:text="Date"
+        android:textColor="@android:color/black"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintHorizontal_bias="0.193"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525"/>
-
+        app:layout_constraintVertical_bias="0.499"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
     <Button
         android:id="@+id/nextButton"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="108dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -79,7 +100,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.982" />
+        app:layout_constraintVertical_bias="0.982"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/timeText"
@@ -97,7 +120,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.678"
-        />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/groupNameText"
@@ -114,7 +138,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.142"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView8"
@@ -132,7 +158,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82"/>
+        app:layout_constraintVertical_bias="0.82"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -150,25 +178,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.304" />
+        app:layout_constraintVertical_bias="0.304"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/dateText"
-        android:layout_width="197dp"
-        android:layout_height="50dp"
+        android:layout_width="191dp"
+        android:layout_height="41dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:text="MM / DD / YYYY"
+        android:textColor="#73899a"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintHorizontal_bias="0.92"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499"
-        />
+        app:layout_constraintVertical_bias="0.521"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -186,7 +218,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintVertical_bias="0.188"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:layout_width="250dp"
@@ -206,7 +240,7 @@
         android:id="@+id/timeButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="88dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -219,7 +253,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.707"/>
+        app:layout_constraintVertical_bias="0.707"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/descriptionText"
@@ -236,6 +272,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintVertical_bias="0.276"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

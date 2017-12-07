@@ -51,8 +51,9 @@ import hudlmo.interfaces.registerPage.Register;
 
 public class CreateMeeting extends AppCompatActivity implements View.OnClickListener {
 
-    Button dateButton,timeButton,nextButton;
-    EditText dateText,timeText,groupName,description,duration;
+    Button timeButton,nextButton;
+    EditText timeText,groupName,description,duration;
+    TextView dateText,dateButton;
     private int day,month,year,hour,minutes;
 
     private FirebaseAuth mAuth;
@@ -69,16 +70,16 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
-        dateButton = (Button)findViewById(R.id.dateButton);
+        dateButton = (TextView) findViewById(R.id.dateButton);
         timeButton = (Button)findViewById(R.id.timeButton);
 
         groupName = (EditText)findViewById(R.id.groupNameText);
         description = (EditText)findViewById(R.id.descriptionText);
         duration = (EditText)findViewById(R.id.durationText);
-        dateText = (EditText)findViewById(R.id.dateText);
+        dateText = (TextView) findViewById(R.id.dateText);
         timeText = (EditText)findViewById(R.id.timeText);
 
-        dateButton.setOnClickListener ( this );
+        dateText.setOnClickListener ( this );
         timeButton.setOnClickListener ( this );
 
         mAuth = FirebaseAuth.getInstance();
@@ -168,6 +169,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         //set Calender to find date
+        if (v==dateText){
         mDisplayDate=(TextView) findViewById(R.id.dateText);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +200,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
             }
         };
+        }
 
         //set calender to find time
         if (v==timeButton){
