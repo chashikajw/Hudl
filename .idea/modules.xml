@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\New folder (5)\webrtc-project\app\app.iml" filepath="F:\New folder (5)\webrtc-project\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/webrtc-project.iml" filepath="$PROJECT_DIR$/webrtc-project.iml" />
+      <module fileurl="file://F:\New folder (5)\webrtc-project\webrtc-project.iml" filepath="F:\New folder (5)\webrtc-project\webrtc-project.iml" />
     </modules>
   </component>
 </project>
