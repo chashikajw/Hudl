@@ -41,21 +41,12 @@ import hudlmo.interfaces.loginpage.login;
 
 public class Mainmenu extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private Toolbar mtoolbar;
 
 
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
     private FirebaseAuth firebaseAuth;
 
@@ -64,12 +55,11 @@ public class Mainmenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
+        mtoolbar = (Toolbar)findViewById(R.id.maintoolbar);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setTitle("Hudl");
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -102,9 +92,7 @@ public class Mainmenu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -115,10 +103,10 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
+            //signout method
             FirebaseAuth fAuth = FirebaseAuth.getInstance();
             fAuth.signOut();
-            //firebaseAuth.signOut();
-            //startActivity(new Intent(this,login.class));
+
             startActivity(new Intent(this,login.class));
         }
 
@@ -252,10 +240,8 @@ public class Mainmenu extends AppCompatActivity {
 
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
+    //to place the fragments
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

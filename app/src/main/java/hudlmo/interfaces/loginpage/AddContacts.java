@@ -21,6 +21,7 @@ public class AddContacts extends AppCompatActivity {
 
     private static EditText emailEt;
     private  static EditText usernameEt;
+    private Toolbar mtoolbar;
 
     private DatabaseReference mDatabase;
     public FirebaseAuth mAuth;
@@ -37,6 +38,12 @@ public class AddContacts extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
+
+        //set up toolbar
+        mtoolbar = (Toolbar)findViewById(R.id.contacttoolbar);
+        setSupportActionBar(mtoolbar);
+        getSupportActionBar().setTitle("Save Contacts");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
