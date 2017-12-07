@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +14,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 
@@ -47,30 +51,36 @@ import hudlmo.interfaces.registerPage.Register;
 
 public class CreateMeeting extends AppCompatActivity implements View.OnClickListener {
 
-    Button dateButton,timeButton,nextButton;
-    EditText dateText,timeText,groupName,description,duration;
+    Button nextButton;
+    EditText groupName,description,duration;
+    TextView dateText,timeText,dateButton,timeButton;
     private int day,month,year,hour,minutes;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
 
+    private static final String TAG = "CreateMeeting";
+    private TextView mDisplayDate;
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
-        dateButton = (Button)findViewById(R.id.dateButton);
-        timeButton = (Button)findViewById(R.id.timeButton);
+        dateButton = (TextView) findViewById(R.id.dateButton);
+        timeButton = (TextView) findViewById(R.id.timeButton);
 
         groupName = (EditText)findViewById(R.id.groupNameText);
         description = (EditText)findViewById(R.id.descriptionText);
         duration = (EditText)findViewById(R.id.durationText);
-        dateText = (EditText)findViewById(R.id.dateText);
-        timeText = (EditText)findViewById(R.id.timeText);
+        dateText = (TextView) findViewById(R.id.dateText);
+        timeText = (TextView)findViewById(R.id.timeText);
 
-        dateButton.setOnClickListener ( this );
-        timeButton.setOnClickListener ( this );
+        dateText.setOnClickListener ( this );
+        timeText.setOnClickListener ( this );
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
@@ -159,26 +169,41 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         //set Calender to find date
-        if (v==dateButton){
-            final Calendar c = Calendar.getInstance ();
-            day = c.get ( Calendar.DAY_OF_MONTH );
-            month = c.get(Calendar.MONTH);
-            year = c.get(Calendar.YEAR);
+        if (v==dateText){
+        mDisplayDate=(TextView) findViewById(R.id.dateText);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog ( this, new DatePickerDialog.OnDateSetListener () {
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                java.util.Calendar cal = java.util.Calendar.getInstance();
+                int year=cal.get(java.util.Calendar.YEAR);
+                int month=cal.get(java.util.Calendar.MONTH);
+                int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
+                        mDateSetListener,year,month,day);
 
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    dateText.setText ( dayOfMonth+"/"+(month+1)+"/"+year );
-                }
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
             }
-                    ,day,month,year);
-            datePickerDialog.show ();
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month+1;
+                Log.d(TAG, "onDateSet: mm/dd/yyy:"+ year + "/"+ month + "/" + day+ "/");
+
+                String date =month + "/" + day + "/" + year;
+                mDisplayDate.setText(date);
+
+
+            }
+        };
         }
 
         //set calender to find time
-        if (v==timeButton){
+        if (v==timeText){
             final Calendar c = Calendar.getInstance ();
             hour = c.get ( Calendar.HOUR_OF_DAY );
             minutes = c.get(Calendar.MINUTE);
