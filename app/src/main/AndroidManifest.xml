@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hudlmo.interfaces.loginpage">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
     <meta-data
