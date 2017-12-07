@@ -111,7 +111,10 @@ public class login extends AppCompatActivity {
 
     public void LoginButton(View v){
 
+
         startSignIn();
+
+
 
 
     }

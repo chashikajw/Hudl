@@ -204,7 +204,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //notificationData.put("roomID",roomId);
             notificationData.put("type","meeting creation");
 
-            String[] sendUser = {"sha","piyumi","prabhath","jay007","cjw007"};
+            String[] sendUser = {"jay007","cjw007","hiru007"};
 
 
 
@@ -228,12 +228,6 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
                             final String reqstUid= dataSnapshot.getValue().toString();
                             usersref.child(reqstUid).child("roomId").setValue(roomId);
-
-
-
-
-
-
 
                             mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
