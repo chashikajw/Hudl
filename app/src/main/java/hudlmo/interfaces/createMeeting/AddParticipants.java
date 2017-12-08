@@ -94,7 +94,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         //initList();
         setContacts();
-        inputSearch.addTextChangedListener(new TextWatcher() {
+ /*       inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -115,7 +115,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
         //setContacts();
         //combineMethod();
         //setCheckItemsEmailArrray();
