@@ -51,6 +51,8 @@ public class Contacts extends Fragment {
 
     private View mMainView;
 
+    private FirebaseRecyclerAdapter<User, UsersViewHolder> meetingRecyclerViewAdapter;
+
 
     public Contacts() {
         // Required empty public constructor
@@ -61,9 +63,9 @@ public class Contacts extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mMainView = inflater.inflate(R.layout.fragment_groups, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_contacts, container, false);
 
-        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.contact_list);
         mAuth = FirebaseAuth.getInstance();
 
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
@@ -88,7 +90,7 @@ public class Contacts extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<User, UsersViewHolder> meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
+        meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
 
                 User.class,
                 R.layout.users_single_layout,
@@ -105,20 +107,50 @@ public class Contacts extends Fragment {
                 // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
 
                 final String name = users.getName();
-                final String username = users.getName();
+                final String username = users.getUsername();
                 final String email = users.getEmail();
+                final int positon = position;
 
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        Intent profileIntent = new Intent(getContext(), ProfileView.class);
-                        profileIntent.putExtra("name", name);
-                        profileIntent.putExtra("username", username);
-                        profileIntent.putExtra("email", email);
-                        startActivity(profileIntent);
+
+
+                        CharSequence options[] = new CharSequence[]{"Call", "Delete Contact"};
+
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle(username);
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //Click Event for each item.
+                                if (i == 0) {
+
+                                    Intent profileIntent = new Intent(getContext(), Settings.class);
+                                    profileIntent.putExtra("user_id", "fd");
+                                    startActivity(profileIntent);
+
+                                }
+
+                                if (i == 1) {
+
+
+                                    meetingRecyclerViewAdapter.getRef(positon).removeValue();
+
+                                }
+
+                            }
+                        });
+
+                        builder.show();
+
                     }
                 });
+
+
 
             }
             /*
