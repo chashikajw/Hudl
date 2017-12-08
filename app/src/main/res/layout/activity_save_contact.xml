@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context="hudlmo.interfaces.loginpage.AddContacts">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/contacttoolbar"
+        android:titleTextColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#008dc7"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    </android.support.v7.widget.Toolbar>
+
     <Button
         android:id="@+id/addNewContact"
         android:layout_width="152dp"

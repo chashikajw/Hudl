@@ -170,36 +170,36 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         //set Calender to find date
         if (v==dateText){
-        mDisplayDate=(TextView) findViewById(R.id.dateText);
+            mDisplayDate=(TextView) findViewById(R.id.dateText);
 
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                java.util.Calendar cal = java.util.Calendar.getInstance();
-                int year=cal.get(java.util.Calendar.YEAR);
-                int month=cal.get(java.util.Calendar.MONTH);
-                int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
+            mDisplayDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    java.util.Calendar cal = java.util.Calendar.getInstance();
+                    int year=cal.get(java.util.Calendar.YEAR);
+                    int month=cal.get(java.util.Calendar.MONTH);
+                    int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
-                        mDateSetListener,year,month,day);
+                    DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
+                            mDateSetListener,year,month,day);
 
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                }
+            });
 
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month+1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy:"+ year + "/"+ month + "/" + day+ "/");
+            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month = month+1;
+                    Log.d(TAG, "onDateSet: mm/dd/yyy:"+ year + "/"+ month + "/" + day+ "/");
 
-                String date =month + "/" + day + "/" + year;
-                mDisplayDate.setText(date);
+                    String date =month + "/" + day + "/" + year;
+                    mDisplayDate.setText(date);
 
 
-            }
-        };
+                }
+            };
         }
 
         //set calender to find time

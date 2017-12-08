@@ -52,9 +52,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         app:layout_constraintVertical_bias="0.015"
         app:srcCompat="@drawable/back_icon"
-        app:layout_constraintHorizontal_bias="0.025" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -214,14 +214,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
+        
+
+
         app:layout_constraintVertical_bias="0.876"
         app:layout_constraintHorizontal_bias="0.117" />
 
-        
+
 
 </android.support.constraint.ConstraintLayout>
