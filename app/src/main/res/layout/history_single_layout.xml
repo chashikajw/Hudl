@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/message_single_layout"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="10dp"
+android:weightSum="10">
+
+    <TextView
+        android:id="@+id/convo_name_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="26dp"
+        android:text="Conversation Name"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+<TextView
+    android:id="@+id/description_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/convo_name_layout"
+    android:layout_below="@+id/convo_name_layout"
+    android:text="00:00"
+    android:textSize="12sp"
+    tools:text="Description" />
+
+<TextView
+    android:id="@+id/date_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/description_layout"
+    android:layout_below="@+id/description_layout"
+    android:text="Date"
+    android:textSize="12sp" />
+
+<TextView
+    android:id="@+id/time_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/date_layout"
+    android:layout_below="@+id/date_layout"
+    android:text="Time"
+    android:textSize="12sp" />
+
+<TextView
+    android:id="@+id/duration_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignStart="@+id/time_layout"
+    android:layout_below="@+id/time_layout"
+    android:text="Duration"
+    android:textSize="12sp" />
+
+
+</RelativeLayout>
