@@ -203,7 +203,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         } );
 
-        //Contacts Button
+        //Groups Button
         Button contactsButton = (Button)findViewById ( R.id.contactsButton );
         contactsButton.setOnClickListener ( new View.OnClickListener() {
             @Override
