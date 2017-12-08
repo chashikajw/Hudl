@@ -262,7 +262,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 int j= (int)size;
-                String contact[] = new String[j];
+                String[] contact = new String[j];
 
                 for(int i=0;i<j;i++){
                     String item = (String)(contactsListView1.getItemAtPosition(i));

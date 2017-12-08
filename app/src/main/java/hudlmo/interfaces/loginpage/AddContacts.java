@@ -39,11 +39,11 @@ public class AddContacts extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
 
-        //set up toolbar
+       /* //set up toolbar
         mtoolbar = (Toolbar)findViewById(R.id.contacttoolbar);
         setSupportActionBar(mtoolbar);
         getSupportActionBar().setTitle("Save Groups");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); */
 
 
 
@@ -52,7 +52,7 @@ public class AddContacts extends AppCompatActivity {
     }
 
 
-    public void callStart(View v){
+    public void saveContact(View v){
         try{
             mProgress.setMessage("saving....");
             mProgress.show();
@@ -60,9 +60,12 @@ public class AddContacts extends AppCompatActivity {
             String username = usernameEt.getText().toString().trim();
 
             String userId = mAuth.getCurrentUser().getUid();
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
-            DatabaseReference currnt_userDB = mDatabase.child(userId);
-            mDatabase.child(username).setValue(email);
+
+            //creste unique number
+            String contacID = Integer.toString((int)System.currentTimeMillis());
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts").child(contacID);
+            mDatabase.child("username").setValue(username);
+            mDatabase.child("email").setValue(email);
 
             mProgress.dismiss();
         }catch(Exception e){
