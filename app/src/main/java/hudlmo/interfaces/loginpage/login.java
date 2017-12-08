@@ -71,6 +71,7 @@ public class login extends AppCompatActivity {
 
 
     private void startSignIn(){
+/*
 
         String email =  emailEt.getText().toString();
         String password = passwordEt.getText().toString();
@@ -84,11 +85,13 @@ public class login extends AppCompatActivity {
         }
 
         else{
+*/
 
             mProgress.setMessage("Signing up....");
             mProgress.show();
             //sign in with email and password
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            mAuth.signInWithEmailAndPassword("sammanianu123@gmail.com","123456").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
@@ -100,7 +103,7 @@ public class login extends AppCompatActivity {
 
                 }
             });
-        }
+        //}
     }
 
 
