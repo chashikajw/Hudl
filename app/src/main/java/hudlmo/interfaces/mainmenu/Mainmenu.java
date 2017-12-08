@@ -24,7 +24,6 @@ import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
 import hudlmo.models.UsersActivity;
-import layout.Contacts;
 import layout.Groups;
 
 public class Mainmenu extends AppCompatActivity {

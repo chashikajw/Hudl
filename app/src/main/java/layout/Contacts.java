@@ -123,9 +123,9 @@ public class Contacts extends Fragment {
             }
             /*
             @Override
-            protected void populateViewHolder(final UsersViewHolder UsersViewHolder, Meeting meeting, int i) {
+            protected void populateViewHolder(final HistoryViewHolder HistoryViewHolder, Meeting meeting, int i) {
 
-                UsersViewHolder.setDate(meeting.getDate());
+                HistoryViewHolder.setDate(meeting.getDate());
 
                 final String list_user_id = getRef(i).getKey();
 
@@ -139,14 +139,14 @@ public class Contacts extends Fragment {
                         if(dataSnapshot.hasChild("online")) {
 
                             String userOnline = dataSnapshot.child("online").getValue().toString();
-                            UsersViewHolder.setUserOnline(userOnline);
+                            HistoryViewHolder.setUserOnline(userOnline);
 
                         }
 
-                        UsersViewHolder.setName(userName);
-                        // UsersViewHolder.setUserImage(userThumb, getContext());
+                        HistoryViewHolder.setName(userName);
+                        // HistoryViewHolder.setUserImage(userThumb, getContext());
 
-                        UsersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        HistoryViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
