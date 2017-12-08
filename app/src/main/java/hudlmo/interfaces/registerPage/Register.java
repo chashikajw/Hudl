@@ -171,7 +171,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             currnt_userDB.child("email").setValue(newUser.getEmail());
                             currnt_userDB.child("meetings").setValue("default");
                             currnt_userDB.child("image").setValue("default");
-                          
+
 
 
                             String userId = mAuth.getCurrentUser().getUid();
