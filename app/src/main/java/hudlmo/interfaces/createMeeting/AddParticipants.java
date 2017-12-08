@@ -61,9 +61,9 @@ import hudlmo.models.User;
 
 public class AddParticipants extends AppCompatActivity implements View.OnClickListener {
 
-    Button createButton , contactsButton, selectButton, deleteButton ;
+    Button createButton, contactsButton, selectButton, deleteButton;
     int index;
-    ListView emailListView , contactsListView1;
+    ListView emailListView, contactsListView1;
     private ArrayList<String> arrayList1;
     private ArrayList<String> arrayList2;
     private ArrayList<String> arrayList3;
@@ -76,6 +76,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
+    private DatabaseReference usersref;
 
     String[] check = new String[6];
 
@@ -91,11 +92,11 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
     ///@Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_add_participants );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_participants);
 
-        contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
-        inputSearch = (EditText)findViewById(R.id.inputSearch);
+        contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
         //initList();
         setContacts();
         inputSearch.addTextChangedListener(new TextWatcher() {
@@ -106,11 +107,10 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals(" ")){
+                if (s.toString().equals(" ")) {
                     //initList();
                     setContacts();
-                }
-                else {
+                } else {
                     searchItem(s.toString());
                 }
             }
@@ -125,7 +125,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         //setCheckItemsEmailArrray();
         //filter();
 
-        Button selectButton = (Button)findViewById(R.id.selectButton);
+        Button selectButton = (Button) findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +133,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        Button deleteButton = (Button)findViewById(R.id.deleteButton);
+        Button deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,26 +226,29 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         } );
 
 */
-        createButton = (Button)findViewById(R.id.createButton);
-        createButton.setOnClickListener ( this );
+        createButton = (Button) findViewById(R.id.createButton);
+        createButton.setOnClickListener(this);
+
 
 
         //notification refernce
         mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
         mAuth = FirebaseAuth.getInstance();
         reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+        usersref = FirebaseDatabase.getInstance().getReference().child("Users");
 
     }
 
-    public void searchItem(String textToSearch){
-        for (String item:contacts){
-            if (!item.contains(textToSearch)){
+    public void searchItem(String textToSearch) {
+        for (String item : contacts) {
+            if (!item.contains(textToSearch)) {
                 arrayList2.remove(item);
             }
         }
         adapter.notifyDataSetChanged();
     }
-    public void initList(){
+
+    public void initList() {
 /*
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
         contacts = new String[] {"Sammani","Chashika","Piyumi","Aravind","Shalini","Prabhath"};
@@ -257,7 +260,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
         mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
-        contactsListView1 = (ListView)findViewById(R.id.contactsListView1);
+        contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
         //int j;
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
@@ -265,17 +268,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
-                int j= (int)size;
+                int j = (int) size;
                 String contact[] = new String[j];
 
-                for(int i=0;i<j;i++){
-                    String item = (String)(contactsListView1.getItemAtPosition(i));
+                for (int i = 0; i < j; i++) {
+                    String item = (String) (contactsListView1.getItemAtPosition(i));
                     System.out.println(item);
                     contact[i] = item;
 
                 }
-                contactsListView1 = (ListView)findViewById(R.id.contactsListView1);
-                arrayList1 = new ArrayList<> ( Arrays.asList(contact) );
+                contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
+                arrayList1 = new ArrayList<>(Arrays.asList(contact));
 
             }
 
@@ -293,47 +296,50 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         contactsListView1.setAdapter(itemsAdapter);
 
     }
-    public void setCheckItemsEmailArrray(){
+
+    public void setCheckItemsEmailArrray() {
         SparseBooleanArray checked = contactsListView1.getCheckedItemPositions();
-        int k=0;
-        int j=contactsListView1.getAdapter().getCount();
+        int k = 0;
+        int j = contactsListView1.getAdapter().getCount();
         String checkedList[] = new String[j];
 
-        for(int i=0;i<j;i++){
-            String item = (String)(contactsListView1.getItemAtPosition(i));
+        for (int i = 0; i < j; i++) {
+            String item = (String) (contactsListView1.getItemAtPosition(i));
             //System.out.println(item);
             //checkedList[i] = item;
-            if (checked.get(i)){
-                checkedList[k]=item;
+            if (checked.get(i)) {
+                checkedList[k] = item;
                 k++;
             }
 
         }
 
-        emailListView = (ListView)findViewById(R.id.emailListView);
-        arrayList2 = new ArrayList<> ( Arrays.asList(checkedList) );
+        emailListView = (ListView) findViewById(R.id.emailListView);
+        arrayList2 = new ArrayList<>(Arrays.asList(checkedList));
         itemsAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, arrayList2);
         emailListView.setAdapter(itemsAdapter2);
         emailListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
     }
-    public void setDelete(){
+
+    public void setDelete() {
         //get checked items
         SparseBooleanArray checked = emailListView.getCheckedItemPositions();
-        int k=0;
-        int size=contactsListView1.getAdapter().getCount();
+        int k = 0;
+        int size = contactsListView1.getAdapter().getCount();
         int indexList[] = new int[size];
         String notCheckedList[] = new String[size];
         String totalList[] = new String[size];
         String newList[] = new String[size];
 
-        for(int i=0;i<size;i++){
-            String item = (String)(emailListView.getItemAtPosition(i));
-            totalList[i]=item;
-            newList[i]=item;;
-            if (!checked.get(i)){
+        for (int i = 0; i < size; i++) {
+            String item = (String) (emailListView.getItemAtPosition(i));
+            totalList[i] = item;
+            newList[i] = item;
+            ;
+            if (!checked.get(i)) {
                 //indexList[k]=i;
-                notCheckedList[k]=item;
+                notCheckedList[k] = item;
                 k++;
             }
         }
@@ -358,24 +364,24 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         }
 */
 
-        emailListView = (ListView)findViewById(R.id.emailListView);
-        arrayList3 = new ArrayList<> ( Arrays.asList(notCheckedList));
+        emailListView = (ListView) findViewById(R.id.emailListView);
+        arrayList3 = new ArrayList<>(Arrays.asList(notCheckedList));
         ArrayAdapter<String> itemsAdapter2 =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, arrayList3);
         emailListView.setAdapter(itemsAdapter2);
         emailListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
     }
-    public void setContacts(){
+
+    public void setContacts() {
 
         //get user list from firebase database
         mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
 
-        contactsListView1 = (ListView)findViewById(R.id.contactsListView1);
+        contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
-
 
 
         //create multiple choice list view
@@ -391,7 +397,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             protected void populateView(View view, User user, int i) {
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
                 textView.setText(user.getUsername());
-                check[i]=user.getUsername();
+                check[i] = user.getUsername();
 
             }
 
@@ -403,24 +409,19 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void check(View v){
-        Toast.makeText(AddParticipants.this,check[0],Toast.LENGTH_LONG).show();
+    public void check(View v) {
+        Toast.makeText(AddParticipants.this, check[0], Toast.LENGTH_LONG).show();
         mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        for(int i=0; i<3; i++){
+        for (int i = 0; i < 3; i++) {
             databaseReference.child("yes").child(Integer.toString(i)).setValue(check[i]);
         }
 
     }
 
 
-
-
-
-
-
-    public void filter(){
+    public void filter() {
 /*
         List<String> td = (ArrayList<String>) dataSnapshot.getValue();
         String[] stringArray = td.toArray(new String[0]);
@@ -440,10 +441,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals(" ")){
+                if (s.toString().equals(" ")) {
 
-                }
-                else{
+                } else {
 
                 }
             }
@@ -459,64 +459,81 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         //send email
-        if (view.getId()==R.id.createButton){
-            Intent intent = new Intent( Intent.ACTION_SEND);
-            intent.setData ( Uri.parse ("mailto:") );
+        if (view.getId() == R.id.createButton) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setData(Uri.parse("mailto:"));
             //String[] to = {"sammanianu123@gmail.com","sammanianu12@gmail.com"};
             //ListView lv = (ListView)findViewById ( R.id.emailListView );
             //String[] to = (String[]) listEmail.toArray ();
 
             String[] to = arrayList2.toArray(new String[0]);
 
-            intent.putExtra ( Intent.EXTRA_EMAIL,to );
-            intent.putExtra ( Intent.EXTRA_SUBJECT,"Meeting Invitation" );
-            intent.putExtra ( Intent.EXTRA_TEXT,"click this link" );
-            intent.setType ( "message/rfc822" );
-            startActivity (Intent.createChooser ( intent,"Send Email" ));
+            intent.putExtra(Intent.EXTRA_EMAIL, to);
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Meeting Invitation");
+            intent.putExtra(Intent.EXTRA_TEXT, "click this link");
+            intent.setType("message/rfc822");
+            startActivity(Intent.createChooser(intent, "Send Email"));
 
 
             //send notifications
-            final HashMap<String,String> notificationData = new HashMap<>();
+            final HashMap<String, String> notificationData = new HashMap<>();
             String CurrntUserId = mAuth.getCurrentUser().getUid();
-            notificationData.put("from",CurrntUserId);
-            notificationData.put("type","meeting creation");
+            //calculate unique number
+            final String roomId = Integer.toString((int) System.currentTimeMillis());
+            notificationData.put("from", CurrntUserId);
+            notificationData.put("roomId", roomId);
+            //notificationData.put("roomID",roomId);
+            notificationData.put("type", "meeting creation");
 
-            final String[] sendUser = {"cjw007","boby","jay007"};
+            String[] sendUser = {"sha", "piyumi", "prabhath", "jay007", "cjw007"};
+
 
             //store evey participants deatials
 
-            reqstUser = reqstUser.child("boby");
+            try {
+
+                for (int i = 0; i < sendUser.length; i++) {
 
 
+                    DatabaseReference reqst_userDB = reqstUser.child(sendUser[i]);
 
-            reqstUser.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    String reqstUid= dataSnapshot.getValue().toString();
 
-                    mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    reqst_userDB.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+
+                            final String reqstUid = dataSnapshot.getValue().toString();
+                            usersref.child(reqstUid).child("roomId").setValue(roomId);
+
+
+                            mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //usersref.child(reqstUid).child("roomID").setValue(roomId);
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
 
                         }
                     });
 
+                    //set room
+
+
                 }
 
-                @Override
-                public void onCancelled(DatabaseError error) {
 
-                }
-            });
+            } catch (Exception e) {
+                Log.d("myTag", "error");
 
-
-
-
-
-
-
+            }
         }
     }
 }
