@@ -55,6 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
+import hudlmo.models.User;
 
 
 public class AddParticipants extends AppCompatActivity implements View.OnClickListener {
@@ -94,32 +95,6 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         //initList();
         setContacts();
- /*       inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals(" ")){
-                    //initList();
-                    setContacts();
-                }
-                else {
-                    searchItem(s.toString());
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });*/
-        //setContacts();
-        //combineMethod();
-        //setCheckItemsEmailArrray();
-        //filter();
 
         Button selectButton = (Button)findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new OnClickListener() {
@@ -372,27 +347,23 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
 
-
-
         //create multiple choice list view
-        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
+        FirebaseListAdapter<User> userFirebaseListAdapter = new FirebaseListAdapter<User>(
                 this,
-                String.class,
-                android.R.layout.simple_list_item_multiple_choice,
-                databaseReference
-
-
-        ) {
+                User.class,android.R.layout.simple_list_item_multiple_choice,
+                databaseReference) {
             @Override
-            protected void populateView(View view, String s, int i) {
+            protected void populateView(View view, User user, int i) {
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(s);
+                textView.setText((CharSequence) user);
+                //textView.setText(i);
+                System.out.println("dewgeEAGRHTDAEJEMRXMYUMSXMYSFX");
+                System.out.println(textView);
             }
         };
-        contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        contactsListView1.setAdapter(firebaseListAdapter);
 
-
+        //contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //contactsListView1.setAdapter(userFirebaseListAdapter);
     }
 
 
