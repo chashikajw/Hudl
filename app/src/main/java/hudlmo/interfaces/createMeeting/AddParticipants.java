@@ -404,7 +404,13 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     }
 
     public void check(View v){
-        Toast.makeText(AddParticipants.this,check[1],Toast.LENGTH_LONG).show();
+        Toast.makeText(AddParticipants.this,check[0],Toast.LENGTH_LONG).show();
+        mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        for(int i=0; i<3; i++){
+            databaseReference.child("yes").child(Integer.toString(i)).setValue(check[i]);
+        }
 
     }
 
