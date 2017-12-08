@@ -55,6 +55,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
+import hudlmo.interfaces.loginpage.login;
+import hudlmo.models.User;
 
 
 public class AddParticipants extends AppCompatActivity implements View.OnClickListener {
@@ -74,6 +76,8 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
+
+    String[] check = new String[6];
 
     String[] contacts;
     String[] stringArray;
@@ -375,25 +379,39 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
 
         //create multiple choice list view
-        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(
+        FirebaseListAdapter<User> firebaseListAdapter = new FirebaseListAdapter<User>(
                 this,
-                String.class,
+                User.class,
                 android.R.layout.simple_list_item_multiple_choice,
                 databaseReference
 
 
         ) {
             @Override
-            protected void populateView(View view, String s, int i) {
+            protected void populateView(View view, User user, int i) {
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(s);
+                textView.setText(user.getUsername());
+                check[i]=user.getUsername();
+
             }
+
+
         };
         contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         contactsListView1.setAdapter(firebaseListAdapter);
 
 
     }
+
+    public void check(View v){
+        Toast.makeText(AddParticipants.this,check[1],Toast.LENGTH_LONG).show();
+
+    }
+
+
+
+
+
 
 
     public void filter(){
