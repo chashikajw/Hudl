@@ -94,7 +94,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         //initList();
         setContacts();
- /*       inputSearch.addTextChangedListener(new TextWatcher() {
+        inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -115,7 +115,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void afterTextChanged(Editable s) {
 
             }
-        });*/
+        });
         //setContacts();
         //combineMethod();
         //setCheckItemsEmailArrray();
@@ -203,7 +203,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         } );
 
-        //Groups Button
+        //Contacts Button
         Button contactsButton = (Button)findViewById ( R.id.contactsButton );
         contactsButton.setOnClickListener ( new View.OnClickListener() {
             @Override
@@ -262,7 +262,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 int j= (int)size;
-                String[] contact = new String[j];
+                String contact[] = new String[j];
 
                 for(int i=0;i<j;i++){
                     String item = (String)(contactsListView1.getItemAtPosition(i));
