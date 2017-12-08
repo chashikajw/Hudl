@@ -55,6 +55,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
+<<<<<<< HEAD
+=======
+import hudlmo.interfaces.loginpage.login;
+>>>>>>> c7cd0aa4647eb596f05b4601e3987fb7df3ac921
 import hudlmo.models.User;
 
 
@@ -76,6 +80,8 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
 
+    String[] check = new String[6];
+
     String[] contacts;
     String[] stringArray;
     ArrayList<String> listItems;
@@ -95,6 +101,35 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         //initList();
         setContacts();
+<<<<<<< HEAD
+=======
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().equals(" ")){
+                    //initList();
+                    setContacts();
+                }
+                else {
+                    searchItem(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        //setContacts();
+        //combineMethod();
+        //setCheckItemsEmailArrray();
+        //filter();
+>>>>>>> c7cd0aa4647eb596f05b4601e3987fb7df3ac921
 
         Button selectButton = (Button)findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new OnClickListener() {
@@ -178,7 +213,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         } );
 
-        //Groups Button
+        //Contacts Button
         Button contactsButton = (Button)findViewById ( R.id.contactsButton );
         contactsButton.setOnClickListener ( new View.OnClickListener() {
             @Override
@@ -237,7 +272,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 int j= (int)size;
-                String[] contact = new String[j];
+                String contact[] = new String[j];
 
                 for(int i=0;i<j;i++){
                     String item = (String)(contactsListView1.getItemAtPosition(i));
@@ -348,6 +383,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
 
         //create multiple choice list view
+<<<<<<< HEAD
         FirebaseListAdapter<User> userFirebaseListAdapter = new FirebaseListAdapter<User>(
                 this,
                 User.class,android.R.layout.simple_list_item_multiple_choice,
@@ -359,12 +395,40 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                 //textView.setText(i);
                 System.out.println("dewgeEAGRHTDAEJEMRXMYUMSXMYSFX");
                 System.out.println(textView);
+=======
+        FirebaseListAdapter<User> firebaseListAdapter = new FirebaseListAdapter<User>(
+                this,
+                User.class,
+                android.R.layout.simple_list_item_multiple_choice,
+                databaseReference
+
+
+        ) {
+            @Override
+            protected void populateView(View view, User user, int i) {
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                textView.setText(user.getUsername());
+                check[i]=user.getUsername();
+
+>>>>>>> c7cd0aa4647eb596f05b4601e3987fb7df3ac921
             }
+
+
         };
 
         //contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         //contactsListView1.setAdapter(userFirebaseListAdapter);
     }
+
+    public void check(View v){
+        Toast.makeText(AddParticipants.this,check[1],Toast.LENGTH_LONG).show();
+
+    }
+
+
+
+
+
 
 
     public void filter(){
