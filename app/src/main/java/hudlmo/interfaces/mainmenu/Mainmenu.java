@@ -1,5 +1,6 @@
 package hudlmo.interfaces.mainmenu;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
 import hudlmo.interfaces.Video.VideoCoference;
 
 import hudlmo.interfaces.createMeeting.CreateMeeting;
@@ -41,15 +51,20 @@ public class Mainmenu extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,16 +115,18 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
-            startActivity(new Intent(Mainmenu.this, login.class));
+            FirebaseAuth fAuth = FirebaseAuth.getInstance();
+            fAuth.signOut();
+            //firebaseAuth.signOut();
+            //startActivity(new Intent(this,login.class));
+            startActivity(new Intent(this,login.class));
         }
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void signOut(){
 
-    }
 
 
 
@@ -120,7 +137,12 @@ public class Mainmenu extends AppCompatActivity {
         /**
          * The fragment argument representing the section number for this
          * fragment.
+         *
          */
+
+        private FirebaseAuth mAuth;
+
+        private DatabaseReference mDatabase;
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         private View rootViewm = null;
@@ -176,6 +198,12 @@ public class Mainmenu extends AppCompatActivity {
                 return rootView;
             }
 
+            mAuth = FirebaseAuth.getInstance();
+            String userId = mAuth.getCurrentUser().getUid();
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("roomId");
+
+
+
 
 
             Button button = (Button) rootViewm.findViewById(R.id.call);
@@ -183,9 +211,31 @@ public class Mainmenu extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Intent intent = new Intent(getActivity(), VideoCoference.class);
-                    startActivity(intent);
+
+                    try{
+                        mDatabase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String roomid = (String) dataSnapshot.getValue();
+
+                                Intent intent = new Intent(getActivity(), VideoCoference.class);
+                                intent.putExtra("roomId", roomid);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("The read failed: " + databaseError.getCode());
+                            }
+                        });
+                    }catch (Exception e){
+
+                    }
+
+
+
+
+
 
 
                 }

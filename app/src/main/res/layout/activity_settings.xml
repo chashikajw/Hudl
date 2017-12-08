@@ -7,9 +7,61 @@
     tools:context="hudlmo.interfaces.loginpage.Settings">
 
     <ListView
-        android:layout_width="368dp"
-        android:layout_height="551dp"
         android:id="@+id/grouplist2"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        android:layout_width="17dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="117dp"
+        android:layout_marginStart="41dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="446dp" />
+
+    <ImageButton
+        android:id="@+id/profile_image"
+        android:layout_width="0dp"
+        android:layout_height="227dp"
+        android:layout_marginBottom="194dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="19dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/grouplist2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/add_icon" />
+
+    <EditText
+        android:id="@+id/profile_displayName"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginStart="42dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/grouplist2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image"
+        tools:layout_marginLeft="20dp"
+        tools:layout_marginRight="20dp" />
+
+    <Button
+        android:id="@+id/store_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="STORE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/grouplist2" />
 </android.support.constraint.ConstraintLayout>
