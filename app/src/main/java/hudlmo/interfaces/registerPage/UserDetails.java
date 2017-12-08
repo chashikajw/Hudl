@@ -7,14 +7,14 @@ package hudlmo.interfaces.registerPage;
 public class UserDetails {
 
     public String name;
-    public String uname;
+    public String username;
     public String email;
     public String password;
     public String comfirm_pw;
 
     public UserDetails(String name, String uname, String email, String password, String comfirm_pw) {
         this.name = name;
-        this.uname = uname;
+        this.username = uname;
         this.email = email;
         this.password = password;
         this.comfirm_pw = comfirm_pw;
@@ -30,7 +30,7 @@ public class UserDetails {
     }
 
     public String getUname() {
-        return uname;
+        return username;
     }
 
     public String getEmail() {

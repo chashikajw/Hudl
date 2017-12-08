@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hudlmo.interfaces.loginpage">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
     <meta-data
@@ -28,11 +29,9 @@
             <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
         </intent-filter>
     </service>
-
-    <service
-        android:name=".MyFirebaseMessagingService">
+    <service android:name=".MyFirebaseMessagingService">
         <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter>
     </service>
 
@@ -59,30 +58,28 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="hudlmo.interfaces.createMeeting.AddParticipants">
+        <activity
+            android:name="hudlmo.interfaces.createMeeting.AddParticipants"
+            android:parentActivityName="hudlmo.interfaces.createMeeting.CreateMeeting">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.createMeeting.AddParticipants" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name="hudlmo.interfaces.loginpage.Settings">
+        <activity android:name=".Settings">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.loginpage.Settings" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity android:name="hudlmo.interfaces.createMeeting.CreateMeeting">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.createMeeting.Createmmeting" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
 
             <activity android:name="hudlmo.interfaces.VideoMain">
                 <intent-filter>
@@ -101,8 +98,6 @@
             android:label="@string/title_activity_add_contacts"
             android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu"
             android:theme="@style/AppTheme" />
-
-
         <activity android:name="hudlmo.interfaces.Video.VideoCoference">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -110,6 +105,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="hudlmo.models.UsersActivity" />
+        <activity android:name=".ProfileView"></activity>
     </application>
 
 </manifest>
