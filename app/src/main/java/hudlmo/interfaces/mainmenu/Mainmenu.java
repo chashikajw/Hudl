@@ -1,10 +1,8 @@
 package hudlmo.interfaces.mainmenu;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -13,25 +11,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-
-import hudlmo.interfaces.Video.VideoCoference;
 
 import hudlmo.interfaces.createMeeting.CreateMeeting;
 import hudlmo.interfaces.loginpage.AddContacts;
@@ -41,8 +26,6 @@ import hudlmo.interfaces.loginpage.login;
 import hudlmo.models.UsersActivity;
 import layout.Contacts;
 import layout.Groups;
-import layout.History;
-import layout.Upcoming;
 
 public class Mainmenu extends AppCompatActivity {
 
@@ -266,24 +249,22 @@ public class Mainmenu extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    //Groups groupsFragment = new Groups();
-                    //return groupsFragment;
-                    Contacts  contactsFragment4 = new  Contacts();
-                    return   contactsFragment4;
+                    Contacts contactsFragment = new Contacts();
+                    return contactsFragment;
 
                 case 1:
-                    Contacts  contactsFragment = new  Contacts();
-                    return   contactsFragment;
+                    Groups groupsFragment = new Groups();
+                    return groupsFragment;
 
                 case 2:
                     //History historyFragment = new History();
                     //return  historyFragment;
-                    Contacts  contactsFragment2 = new  Contacts();
-                    return   contactsFragment2;
+                    Groups groupsFragment2 = new Groups();
+                    return groupsFragment2;
 
                 case 3:
-                    Groups groupsFragment = new Groups();
-                    return groupsFragment;
+                    Groups groupsFragment3 = new Groups();
+                    return groupsFragment3;
 
                 default:
                     return  null;
@@ -300,13 +281,13 @@ public class Mainmenu extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Groups";
+                    return "Contacts";
                 case 1:
                     return "History";
                 case 2:
                     return "Upcoming";
                 case 3:
-                    return "Contacts";
+                    return "Groups";
             }
             return null;
         }

@@ -42,7 +42,7 @@ public class AddContacts extends AppCompatActivity {
         //set up toolbar
         mtoolbar = (Toolbar)findViewById(R.id.contacttoolbar);
         setSupportActionBar(mtoolbar);
-        getSupportActionBar().setTitle("Save Contacts");
+        getSupportActionBar().setTitle("Save Groups");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
