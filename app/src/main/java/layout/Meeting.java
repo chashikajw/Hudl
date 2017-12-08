@@ -6,28 +6,37 @@ package layout;
 
 public class Meeting {
 
-    private String groupname;
+    private String groupName;
     private String groupdtails;
+    private String date;
+
+    public Meeting() {
+
+    }
 
     public String getGroupname() {
-        return groupname;
-    }
-
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
-    }
-
-    public void setGroupdtails(String groupdtails) {
-        this.groupdtails = groupdtails;
+        return groupName;
     }
 
     public String getGroupdtails() {
         return groupdtails;
     }
 
-    public Meeting(String groupname, String groupdtails) {
-        this.groupname = groupname;
+    public String getDate() {
+        return date;
+    }
 
+    public void setGroupname(String groupname) {
+        this.groupName = groupname;
+    }
+
+    public void setGroupdtails(String groupdtails) {
         this.groupdtails = groupdtails;
     }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+
 }

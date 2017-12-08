@@ -3,7 +3,6 @@ package hudlmo.interfaces.mainmenu;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,22 +11,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.Button;
-import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
 
-import hudlmo.interfaces.Video.VideoCoference;
 
 import hudlmo.interfaces.createMeeting.CreateMeeting;
 import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
+import hudlmo.models.UsersActivity;
+import layout.Contacts;
+import layout.Groups;
 
 public class Mainmenu extends AppCompatActivity {
 
@@ -41,15 +39,20 @@ public class Mainmenu extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,7 +72,7 @@ public class Mainmenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               startActivity(new Intent(Mainmenu.this, CreateMeeting.class));
+                startActivity(new Intent(Mainmenu.this, CreateMeeting.class));
             }
         });
 
@@ -100,27 +103,30 @@ public class Mainmenu extends AppCompatActivity {
             startActivity(new Intent(Mainmenu.this, AddContacts.class));
         }
         if (id == R.id.action_Logout) {
-            startActivity(new Intent(Mainmenu.this, login.class));
+            FirebaseAuth fAuth = FirebaseAuth.getInstance();
+            fAuth.signOut();
+            //firebaseAuth.signOut();
+            //startActivity(new Intent(this,login.class));
+            startActivity(new Intent(this,login.class));
         }
+        if (id == R.id.action_findusers) {
+            startActivity(new Intent(Mainmenu.this, UsersActivity.class));
+        }
+
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void signOut(){
-
-    }
 
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+ /*
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
+
+        private FirebaseAuth mAuth;
+
+        private DatabaseReference mDatabase;
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         private View rootViewm = null;
@@ -128,10 +134,7 @@ public class Mainmenu extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -176,6 +179,12 @@ public class Mainmenu extends AppCompatActivity {
                 return rootView;
             }
 
+            mAuth = FirebaseAuth.getInstance();
+            String userId = mAuth.getCurrentUser().getUid();
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("roomId");
+
+
+
 
 
             Button button = (Button) rootViewm.findViewById(R.id.call);
@@ -183,9 +192,31 @@ public class Mainmenu extends AppCompatActivity {
 
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Intent intent = new Intent(getActivity(), VideoCoference.class);
-                    startActivity(intent);
+
+                    try{
+                        mDatabase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String roomid = (String) dataSnapshot.getValue();
+
+                                Intent intent = new Intent(getActivity(), VideoCoference.class);
+                                intent.putExtra("roomId", roomid);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("The read failed: " + databaseError.getCode());
+                            }
+                        });
+                    }catch (Exception e){
+
+                    }
+
+
+
+
+
 
 
                 }
@@ -200,7 +231,9 @@ public class Mainmenu extends AppCompatActivity {
 
 
 
-    }
+    } */
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -214,9 +247,28 @@ public class Mainmenu extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch(position) {
+                case 0:
+                    Contacts contactsFragment = new Contacts();
+                    return contactsFragment;
+
+                case 1:
+                    Groups groupsFragment = new Groups();
+                    return groupsFragment;
+
+                case 2:
+                    //History historyFragment = new History();
+                    //return  historyFragment;
+                    Groups groupsFragment2 = new Groups();
+                    return groupsFragment2;
+
+                case 3:
+                    Groups groupsFragment3 = new Groups();
+                    return groupsFragment3;
+
+                default:
+                    return  null;
+            }
         }
 
         @Override
@@ -229,13 +281,13 @@ public class Mainmenu extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Groups";
+                    return "Contacts";
                 case 1:
                     return "History";
                 case 2:
-                    return "Contacts";
-                case 3:
                     return "Upcoming";
+                case 3:
+                    return "Groups";
             }
             return null;
         }

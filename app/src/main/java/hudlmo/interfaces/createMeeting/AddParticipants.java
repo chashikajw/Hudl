@@ -203,7 +203,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         } );
 
-        //Contacts Button
+        //Groups Button
         Button contactsButton = (Button)findViewById ( R.id.contactsButton );
         contactsButton.setOnClickListener ( new View.OnClickListener() {
             @Override
@@ -262,7 +262,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long size = dataSnapshot.getChildrenCount();
                 int j= (int)size;
-                String contact[] = new String[j];
+                String[] contact = new String[j];
 
                 for(int i=0;i<j;i++){
                     String item = (String)(contactsListView1.getItemAtPosition(i));

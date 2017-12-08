@@ -1,7 +1,6 @@
 package layout;
 
 
-import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.Context;
@@ -30,20 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hudlmo.interfaces.loginpage.Settings;
-import hudlmo.models.User;
-import hudlmo.models.UsersActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Contacts extends Fragment {
+public class Upcoming extends Fragment {
 
     private RecyclerView meetingLIst;
 
-    private DatabaseReference mContactDatabase;
-    private DatabaseReference mUserDatabase;
-
+    private DatabaseReference meetingDatabase;
+    private DatabaseReference mUsersDatabase;
 
     private FirebaseAuth mAuth;
 
@@ -52,7 +48,7 @@ public class Contacts extends Fragment {
     private View mMainView;
 
 
-    public Contacts() {
+    public Upcoming() {
         // Required empty public constructor
     }
 
@@ -61,19 +57,21 @@ public class Contacts extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mMainView = inflater.inflate(R.layout.fragment_groups, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
         meetingLIst = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
         mAuth = FirebaseAuth.getInstance();
 
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        mContactDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("contacts");
-
+        meetingDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting").child(mCurrent_user_id);
+        
         //offline syncronize
-        mContactDatabase.keepSynced(true);
-
+        meetingDatabase.keepSynced(true);
+        
+        
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mUsersDatabase.keepSynced(true);
 
 
         meetingLIst.setHasFixedSize(true);
@@ -88,44 +86,19 @@ public class Contacts extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<User, UsersViewHolder> meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
+        FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting, MeetingViewHolder>(
 
-                User.class,
+                Meeting.class,
                 R.layout.users_single_layout,
-                UsersViewHolder.class,
-                mContactDatabase
+                MeetingViewHolder.class,
+                meetingDatabase
 
 
         ) {
             @Override
-            protected void populateViewHolder(UsersViewHolder usersViewHolder, User users, int position) {
+            protected void populateViewHolder(final MeetingViewHolder MeetingViewHolder, Meeting meeting, int i) {
 
-                usersViewHolder.setDisplayEmail(users.getEmail());
-                usersViewHolder.setDisplayUserName(users.getUsername());
-                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
-
-                final String name = users.getName();
-                final String username = users.getName();
-                final String email = users.getEmail();
-
-                usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent profileIntent = new Intent(getContext(), ProfileView.class);
-                        profileIntent.putExtra("name", name);
-                        profileIntent.putExtra("username", username);
-                        profileIntent.putExtra("email", email);
-                        startActivity(profileIntent);
-                    }
-                });
-
-            }
-            /*
-            @Override
-            protected void populateViewHolder(final UsersViewHolder UsersViewHolder, Meeting meeting, int i) {
-
-                UsersViewHolder.setDate(meeting.getDate());
+                MeetingViewHolder.setDate(meeting.getDate());
 
                 final String list_user_id = getRef(i).getKey();
 
@@ -139,14 +112,14 @@ public class Contacts extends Fragment {
                         if(dataSnapshot.hasChild("online")) {
 
                             String userOnline = dataSnapshot.child("online").getValue().toString();
-                            UsersViewHolder.setUserOnline(userOnline);
+                            MeetingViewHolder.setUserOnline(userOnline);
 
                         }
 
-                        UsersViewHolder.setName(userName);
-                        // UsersViewHolder.setUserImage(userThumb, getContext());
+                        MeetingViewHolder.setName(userName);
+                       // MeetingViewHolder.setUserImage(userThumb, getContext());
 
-                        UsersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
@@ -194,7 +167,7 @@ public class Contacts extends Fragment {
                     }
                 });
 
-            }*/
+            }
         };
 
         meetingLIst.setAdapter(meetingRecyclerViewAdapter);
@@ -203,32 +176,30 @@ public class Contacts extends Fragment {
     }
 
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder {
+    public static class MeetingViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
-        public UsersViewHolder(View itemView) {
+        public MeetingViewHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
 
         }
 
-        public void setDisplayEmail(String email){
+        public void setDate(String date){
+
+            TextView userStatusView = (TextView) mView.findViewById(R.id.user_single_status);
+            userStatusView.setText(date);
+
+        }
+
+        public void setName(String name){
 
             TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
-            userNameView.setText(email);
+            userNameView.setText(name);
 
         }
-
-        public void setDisplayUserName(String username){
-
-            TextView userName = (TextView) mView.findViewById(R.id.user_single_status);
-            userName.setText(username);
-
-
-        }
-
 
       /*  public void setUserImage(String thumb_image, Context ctx){
 
@@ -255,8 +226,6 @@ public class Contacts extends Fragment {
 
 
     }
-    
-    
 
 
 }

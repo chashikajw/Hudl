@@ -15,6 +15,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import hudlmo.interfaces.mainmenu.Mainmenu;
 import hudlmo.interfaces.registerPage.Register;
@@ -29,6 +32,7 @@ public class login extends AppCompatActivity {
     public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
     private ProgressDialog mProgress;
+    private DatabaseReference mDatabase;
 
 
     @Override
@@ -40,7 +44,7 @@ public class login extends AppCompatActivity {
         login_btn = (Button)findViewById(R.id.loginBtn);
         register_btn = (Button)findViewById(R.id.registerBtn);
         mProgress = new ProgressDialog(this);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -63,6 +67,8 @@ public class login extends AppCompatActivity {
 
         mAuth.addAuthStateListener(mAuthListner);
     }
+
+
 
     private void startSignIn(){
 /*
@@ -100,13 +106,18 @@ public class login extends AppCompatActivity {
         //}
     }
 
+
     public void RegisterButton(View v){
 
         startActivity(new Intent(login.this,Register.class));
     }
 
     public void LoginButton(View v){
+
+
         startSignIn();
+
+
 
 
     }
