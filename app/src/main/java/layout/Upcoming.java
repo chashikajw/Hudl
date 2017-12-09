@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hudlmo.interfaces.loginpage.Settings;
@@ -73,10 +79,13 @@ public class Upcoming extends Fragment {
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         String meetingID = Integer.toString((int)System.currentTimeMillis());
 
-        mMeetingDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("meetings");
+        mMeetingDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("meetings").child("upcoming");
 
         //offline syncronize
         mMeetingDatabase.keepSynced(true);
+
+
+
 
 
 
@@ -85,6 +94,46 @@ public class Upcoming extends Fragment {
 
         // Inflate the layout for this fragment
         return mMainView;
+    }
+
+
+    //if  shedule time of the meeting is past then it delete from upcoming and added to history
+    public void romovePastMeetings(){
+
+        mMeetingDatabase.orderByChild("date").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Date currentTime = Calendar.getInstance().getTime();
+                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                            if(currentTime)
+                            child.getRef().setValue(null);
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
+                    }
+                });
+    }
+
+    public void CompareDate(){
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
+        String currentDate = formatter1.format(calendar1.getTime());
+
+        final String dateString = cursor.getString(4);
+        final String timeString = cursor.getString(5);
+        String datadb =dateString+" "+timeString;
+
+//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
+
+        if(currentDate.compareTo(datadb)>=0) {
+            myCheckBox.setChecked(true);
+            myCheckBox.setEnabled(false);
+        }
     }
 
 
@@ -152,80 +201,7 @@ public class Upcoming extends Fragment {
 
 
             }
-            /*
-            @Override
-            protected void populateViewHolder(final UsersViewHolder UsersViewHolder, Meeting meeting, int i) {
 
-                UsersViewHolder.setDate(meeting.getDate());
-
-                final String list_user_id = getRef(i).getKey();
-
-                mUsersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        final String userName = dataSnapshot.child("name").getValue().toString();
-                        String userThumb = dataSnapshot.child("username").getValue().toString();
-
-                        if(dataSnapshot.hasChild("online")) {
-
-                            String userOnline = dataSnapshot.child("online").getValue().toString();
-                            UsersViewHolder.setUserOnline(userOnline);
-
-                        }
-
-                        UsersViewHolder.setName(userName);
-                        // UsersViewHolder.setUserImage(userThumb, getContext());
-
-                        UsersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                                CharSequence options[] = new CharSequence[]{"Open Profile", "Send message"};
-
-                                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-                                builder.setTitle("Select Options");
-                                builder.setItems(options, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        //Click Event for each item.
-                                        if(i == 0){
-
-                                            Intent profileIntent = new Intent(getContext(), Settings.class);
-                                            profileIntent.putExtra("user_id", list_user_id);
-                                            startActivity(profileIntent);
-
-                                        }
-
-                                        if(i == 1){
-
-                                            Intent chatIntent = new Intent(getContext(), Settings.class);
-                                            chatIntent.putExtra("user_id", list_user_id);
-                                            chatIntent.putExtra("user_name", userName);
-                                            startActivity(chatIntent);
-
-                                        }
-
-                                    }
-                                });
-
-                                builder.show();
-
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-            }*/
         };
 
         meetingLIst.setAdapter(meetingRecyclerViewAdapter);

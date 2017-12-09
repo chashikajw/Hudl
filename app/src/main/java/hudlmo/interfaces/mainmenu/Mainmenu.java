@@ -24,6 +24,7 @@ import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
 import hudlmo.models.UsersActivity;
+import layout.Contacts;
 import layout.Groups;
 import layout.Upcoming;
 
@@ -284,9 +285,9 @@ public class Mainmenu extends AppCompatActivity {
                 case 0:
                     return "Upcoming";
                 case 1:
-                    return "History";
-                case 2:
                     return "Contacts";
+                case 2:
+                    return "History";
                 case 3:
                     return "Groups";
             }
