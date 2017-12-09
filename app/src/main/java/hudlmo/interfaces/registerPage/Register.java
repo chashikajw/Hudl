@@ -134,6 +134,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
 
         }
+        if(newUser.getPassword().length() <5)
+        {
+            //if password too short
+            Toast.makeText(Register.this, "Password should be at least 5 characters", Toast.LENGTH_LONG).show();
+            //stopping the function execution further
+            return;
+        }
 
         if (TextUtils.isEmpty(newUser.getComfirm_pw())){
             //confirm password is empty
@@ -142,6 +149,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
 
         }
+
+
         if (!newUser.getPassword().equals(newUser.getComfirm_pw())){
             //passwords mismatch
             Toast.makeText(this, "Passwords does not match", Toast.LENGTH_SHORT).show();

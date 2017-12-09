@@ -117,7 +117,7 @@
         android:id="@+id/passwordTxt"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="Password: at least 5 characters"
         android:paddingBottom="20dp"
         android:ems="10"
         android:inputType="textPassword"
