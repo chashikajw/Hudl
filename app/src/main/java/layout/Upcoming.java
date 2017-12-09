@@ -106,8 +106,8 @@ public class Upcoming extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Date currentTime = Calendar.getInstance().getTime();
                         for (DataSnapshot child: dataSnapshot.getChildren()) {
-                            if(currentTime)
-                            child.getRef().setValue(null);
+
+                            //child.getRef().setValue(null);
                         }
                     }
 
@@ -119,7 +119,7 @@ public class Upcoming extends Fragment {
                 });
     }
 
-    public void CompareDate(){
+   /* public void CompareDate(){
         Calendar calendar1 = Calendar.getInstance();
         SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
         String currentDate = formatter1.format(calendar1.getTime());
@@ -135,6 +135,7 @@ public class Upcoming extends Fragment {
             myCheckBox.setEnabled(false);
         }
     }
+    */
 
 
     @Override

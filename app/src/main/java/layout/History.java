@@ -1,6 +1,7 @@
 package layout;
 
 
+
 import hudlmo.interfaces.History.HistoryView;
 import hudlmo.interfaces.loginpage.R;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 import hudlmo.models.HistoryC;
+import hudlmo.models.Meeting;
 
 /**
  * Created by Shalini PC on 12/8/2017.
@@ -76,7 +78,7 @@ public class History extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<HistoryC, HistoryViewHolder> HistoryRecyclerViewAdapter = new FirebaseRecyclerAdapter<HistoryC,HistoryViewHolder>(
+      /*  FirebaseRecyclerAdapter<HistoryC, HistoryViewHolder> HistoryRecyclerViewAdapter = new FirebaseRecyclerAdapter<HistoryC,HistoryViewHolder>(
 
                 HistoryC.class,
                 R.layout.history_single_layout,
@@ -118,7 +120,7 @@ public class History extends Fragment {
             }
         };
 
-        meetingList.setAdapter(HistoryRecyclerViewAdapter);
+        meetingList.setAdapter(HistoryRecyclerViewAdapter);  */
 
 
     }
