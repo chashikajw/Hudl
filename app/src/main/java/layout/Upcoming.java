@@ -1,6 +1,7 @@
 package layout;
 
 
+import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.Context;
@@ -29,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hudlmo.interfaces.loginpage.Settings;
+import hudlmo.models.Meeting;
+import hudlmo.models.User;
+import hudlmo.models.UsersActivity;
 
 
 /**
@@ -38,14 +42,17 @@ public class Upcoming extends Fragment {
 
     private RecyclerView meetingLIst;
 
-    private DatabaseReference meetingDatabase;
-    private DatabaseReference mUsersDatabase;
+    private DatabaseReference mMeetingDatabase;
+    private DatabaseReference mUserDatabase;
+
 
     private FirebaseAuth mAuth;
 
     private String mCurrent_user_id;
 
     private View mMainView;
+
+    private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter;
 
 
     public Upcoming() {
@@ -59,19 +66,18 @@ public class Upcoming extends Fragment {
 
         mMainView = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
-        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.upcoming_list);
         mAuth = FirebaseAuth.getInstance();
 
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        String meetingID = Integer.toString((int)System.currentTimeMillis());
 
-        meetingDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting").child(mCurrent_user_id);
-        
+        mMeetingDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("meetings");
+
         //offline syncronize
-        meetingDatabase.keepSynced(true);
-        
-        
-        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        mUsersDatabase.keepSynced(true);
+        mMeetingDatabase.keepSynced(true);
+
 
 
         meetingLIst.setHasFixedSize(true);
@@ -86,19 +92,71 @@ public class Upcoming extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting, MeetingViewHolder>(
+        meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
 
                 Meeting.class,
                 R.layout.users_single_layout,
                 MeetingViewHolder.class,
-                meetingDatabase
+                mMeetingDatabase
 
 
         ) {
             @Override
-            protected void populateViewHolder(final MeetingViewHolder MeetingViewHolder, Meeting meeting, int i) {
+            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder, Meeting meeting, int position) {
 
-                MeetingViewHolder.setDate(meeting.getDate());
+                MeetingViewHolder.setDisplayMeetingname(meeting.getMeetingName());
+                MeetingViewHolder.setDisplayAdminName(meeting.getAdmin());
+                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
+
+                final String mName = meeting.getMeetingName();
+                final String mAdmin = meeting.getAdmin();
+                final String mDescription = meeting.getDescription();
+                final int positon = position;
+
+                MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
+
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle(mName);
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //Click Event for each item.
+                                if (i == 0) {
+
+                                    Intent profileIntent = new Intent(getContext(), Settings.class);
+                                    profileIntent.putExtra("user_id", "fd");
+                                    startActivity(profileIntent);
+
+                                }
+
+                                if (i == 1) {
+
+
+                                    meetingRecyclerViewAdapter.getRef(positon).removeValue();
+
+                                }
+
+                            }
+                        });
+
+                        builder.show();
+
+                    }
+                });
+
+
+            }
+            /*
+            @Override
+            protected void populateViewHolder(final UsersViewHolder UsersViewHolder, Meeting meeting, int i) {
+
+                UsersViewHolder.setDate(meeting.getDate());
 
                 final String list_user_id = getRef(i).getKey();
 
@@ -112,14 +170,14 @@ public class Upcoming extends Fragment {
                         if(dataSnapshot.hasChild("online")) {
 
                             String userOnline = dataSnapshot.child("online").getValue().toString();
-                            MeetingViewHolder.setUserOnline(userOnline);
+                            UsersViewHolder.setUserOnline(userOnline);
 
                         }
 
-                        MeetingViewHolder.setName(userName);
-                       // MeetingViewHolder.setUserImage(userThumb, getContext());
+                        UsersViewHolder.setName(userName);
+                        // UsersViewHolder.setUserImage(userThumb, getContext());
 
-                        MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                        UsersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
@@ -167,7 +225,7 @@ public class Upcoming extends Fragment {
                     }
                 });
 
-            }
+            }*/
         };
 
         meetingLIst.setAdapter(meetingRecyclerViewAdapter);
@@ -187,19 +245,21 @@ public class Upcoming extends Fragment {
 
         }
 
-        public void setDate(String date){
+        public void setDisplayMeetingname(String groupname){
 
-            TextView userStatusView = (TextView) mView.findViewById(R.id.user_single_status);
-            userStatusView.setText(date);
+            TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_name);
+            meetingNameView.setText(groupname);
+
+        }
+
+        public void setDisplayAdminName(String admin){
+
+            TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
+            adminName.setText(admin);
+
 
         }
 
-        public void setName(String name){
-
-            TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
-            userNameView.setText(name);
-
-        }
 
       /*  public void setUserImage(String thumb_image, Context ctx){
 
@@ -226,6 +286,8 @@ public class Upcoming extends Fragment {
 
 
     }
+
+
 
 
 }
