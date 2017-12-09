@@ -149,11 +149,16 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
-                    Intent toy = new Intent ( CreateMeeting.this,AddParticipants.class);
-                    startActivity ( toy );
-
+                    Intent detail = new Intent ( CreateMeeting.this,AddParticipants.class);
+                    detail.putExtra("group_name", group_name);
+                    detail.putExtra("description_",description_);
+                    detail.putExtra("date_text", date_text);
+                    detail.putExtra("time_text", time_text);
+                    startActivity(detail);
 
                 }
+
+
 
 
             }
