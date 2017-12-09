@@ -80,7 +80,7 @@ public class HistoryC implements Serializable {
 
 
 
-    //Duration of Concersation
+    //Duration of Conversation
     public String getDuration() {
         return duration;
     }
