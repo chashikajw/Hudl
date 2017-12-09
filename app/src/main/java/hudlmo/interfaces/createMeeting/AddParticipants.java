@@ -3,6 +3,7 @@ package hudlmo.interfaces.createMeeting;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,20 +56,30 @@ import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
+<<<<<<< HEAD
+import hudlmo.interfaces.loginpage.login;
+=======
 
 import hudlmo.interfaces.loginpage.login;
 
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
 import hudlmo.models.User;
 
 
 public class AddParticipants extends AppCompatActivity implements View.OnClickListener {
 
+<<<<<<< HEAD
+    Button createButton , contactsButton, selectButton, deleteButton, addEmailButton ;
+    String group_name,description_,date_text,time_text;
+=======
     Button createButton, contactsButton, selectButton, deleteButton;
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
     int index;
     ListView emailListView, contactsListView1;
     private ArrayList<String> arrayList1;
     private ArrayList<String> arrayList2;
     private ArrayList<String> arrayList3;
+    private ArrayList<String> arrayList4;
     //private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
     private EditText addEmailText;
@@ -78,9 +89,16 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
+<<<<<<< HEAD
+    int count;
+    String[] check = new String[8];
+    String[] emailList = new String[8];
+    int contactLength;
+=======
     private DatabaseReference usersref;
 
     String[] check = new String[6];
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
 
     String[] contacts;
     String[] stringArray;
@@ -90,6 +108,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
     private ArrayAdapter mAdapter;
     ArrayAdapter<String> itemsAdapter2;
+    ArrayAdapter<String> itemsAdapter4;
 
 
     ///@Override
@@ -97,6 +116,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_participants);
 
+<<<<<<< HEAD
+        contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
+        emailListView = (ListView)findViewById(R.id.emailListView);
+        inputSearch = (EditText)findViewById(R.id.inputSearch);
+        addEmailText = (EditText) findViewById(R.id.addEmailText) ;
+
+        setContacts();
+
+        //Select Button
+        selectButton = (Button)findViewById(R.id.selectButton);
+=======
         contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         //initList();
@@ -130,6 +160,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
 
         Button selectButton = (Button) findViewById(R.id.selectButton);
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
         selectButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +168,10 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+<<<<<<< HEAD
+        //Add email button
+        addEmailButton = (Button)findViewById(R.id.addEmailButton);
+=======
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -149,77 +184,36 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         // addEmailButton Button
  /*       addEmailText = (EditText)findViewById ( R.id.addEmailText );
         Button addEmailButton = (Button)findViewById ( R.id.addEmailButton );
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
         addEmailButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newMailList[] = new String[1];
-                String newMail = addEmailText.getText().toString();
-                newMailList[0]=newMail;
-                emailListView = (ListView)findViewById(R.id.emailListView);
-                arrayList3 = new ArrayList<> ( Arrays.asList(newMailList) );
-                ArrayAdapter<String> itemsAdapter =
-                        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList3);
-                emailListView.setAdapter(itemsAdapter);
-
+                //addEmailText.setText(count);
+                //Toast.makeText(AddParticipants.this,count,Toast.LENGTH_LONG).show();
             }
         });
-*/
-/*
-        //Contact ListView
-        contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
-        final String[] contacts = {"Sammani","Chashika","Piyumi","Aravind","Shalini","Prabhath"};
-        final String[] contactsMails = {"Sammanianu123@gmail.com","chashikajw007@gmail.com","piyumisenevirathne@gmail.com","aravinth9611991@gmail.com","nimeshika94@gmail.com","DRAPIROSHAN@gmail.com"};
-        arrayList2 = new ArrayList<> ( Arrays.asList(contacts) );
-        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList2);
-        contactsListView1.setAdapter(adapter); //same adapter?
 
-        // ListView Buttons
-        final ListView contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
-        contactsListView1.setOnItemClickListener ( new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view;
-                String message = textView.getText ().toString ();
-                for (int i=0;i<contacts.length;i++){
-                    if (message.equals ( contacts[i] )){
-                        index = i;
-                    }
-                }
 
-                addEmailText.setText ( contactsMails[index] );
-            }
-        } );
+<<<<<<< HEAD
+        //create Button
+        createButton = (Button)findViewById(R.id.createButton);
+        createButton.setOnClickListener ( this );
 
-        //add emails to emailListView
-        emailListView = (ListView)findViewById ( R.id.emailListView );
-        String[] items = {};
-        arrayList = new ArrayList<> ( Arrays.asList(items) );
-        adapter = new ArrayAdapter<String> ( this,android.R.layout.simple_list_item_1 ,arrayList);////
-        emailListView.setAdapter(adapter);
+    }
 
-        // addEmailButton Button
-        addEmailText = (EditText)findViewById ( R.id.addEmailText );
-        Button addEmailButton = (Button)findViewById ( R.id.addEmailButton );
-        addEmailButton.setOnClickListener ( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String newItem = addEmailText.getText ().toString ();
-                arrayList.add ( newItem );
-                adapter.notifyDataSetChanged ();
-                Toast.makeText (getBaseContext (),"Email Added",Toast.LENGTH_SHORT).show ();
-                addEmailText.setText ( " " );
-            }
-        } );
+    public void setCheckItemsEmailArrray(){
+        SparseBooleanArray checked = contactsListView1.getCheckedItemPositions();
+        int k=0;
+        contactLength = check.length;
+        //int j=contactsListView1.getAdapter().getCount();
+        //Toast.makeText(AddParticipants.this,contactLength,Toast.LENGTH_LONG).show();
+        String checkedList[] = new String[contactLength];
 
-        //Contacts Button
-        Button contactsButton = (Button)findViewById ( R.id.contactsButton );
-        contactsButton.setOnClickListener ( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contactsListView1.setVisibility(View.VISIBLE);
-            }
-        } );
-
+        for(int i=0;i<contactLength;i++){
+            String item = emailList[i];
+            if (checked.get(i)){
+                checkedList[k]=item;
+=======
         //Hide ListView when click addEmailText
         TextView addEmailText = (TextView)findViewById ( R.id.addEmailText );
         addEmailText.setOnClickListener ( new View.OnClickListener() {
@@ -313,9 +307,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //checkedList[i] = item;
             if (checked.get(i)) {
                 checkedList[k] = item;
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
                 k++;
             }
-
         }
 
         emailListView = (ListView) findViewById(R.id.emailListView);
@@ -325,6 +319,10 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         emailListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
     }
+<<<<<<< HEAD
+
+    public void setContacts(){
+=======
 
     public void setDelete() {
         //get checked items
@@ -378,6 +376,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     }
 
     public void setContacts() {
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
 
         //get user list from firebase database
         mAuth = FirebaseAuth.getInstance();
@@ -387,6 +386,34 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("contacts");
 
+<<<<<<< HEAD
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                count = (int) dataSnapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        FirebaseListAdapter<User> firebaseListAdapter = new FirebaseListAdapter<User>(
+                this,
+                User.class,
+                android.R.layout.simple_list_item_multiple_choice,
+                databaseReference
+
+
+        ) {
+            @Override
+            protected void populateView(View view, User user, int i) {
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                textView.setText(user.getUsername());
+                check[i]=user.getUsername();
+                emailList[i] = user.getEmail();
+=======
 
         //create multiple choice list view
 
@@ -402,10 +429,18 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                 System.out.println("dewgeEAGRHTDAEJEMRXMYUMSXMYSFX");
                 System.out.println(textView);
 
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
             }
 
 
         };
+<<<<<<< HEAD
+        contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        contactsListView1.setAdapter(firebaseListAdapter);
+    }
+
+
+=======
 
         //contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         //contactsListView1.setAdapter(userFirebaseListAdapter);
@@ -457,10 +492,37 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
 
     public void onClick(View view) {
 
         //send email
+<<<<<<< HEAD
+        if (view.getId()==R.id.createButton){
+
+            //get details from Create Meeting
+            Bundle bundle = getIntent().getExtras();
+            group_name = bundle.getString("group_name");
+            description_ = bundle.getString("description_");
+            date_text = bundle.getString("date_text");
+            time_text = bundle.getString("time_text");
+
+
+            Intent intent = new Intent( Intent.ACTION_SEND);
+
+            String[] to = arrayList2.toArray(new String[0]);
+
+            intent.putExtra ( Intent.EXTRA_EMAIL,to );
+            intent.putExtra ( Intent.EXTRA_SUBJECT,"Meeting Invitation" );
+            intent.putExtra ( Intent.EXTRA_TEXT,group_name+"\n"+description_+"\n"+date_text+"\n"+time_text );
+            intent.setType ( "message/rfc822" );
+            startActivity (Intent.createChooser ( intent,"Send Email" ));
+
+
+
+ /*           //send notifications
+            final HashMap<String,String> notificationData = new HashMap<>();
+=======
         if (view.getId() == R.id.createButton) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setData(Uri.parse("mailto:"));
@@ -479,6 +541,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             //send notifications
             final HashMap<String, String> notificationData = new HashMap<>();
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
             String CurrntUserId = mAuth.getCurrentUser().getUid();
             //calculate unique number
             final String roomId = Integer.toString((int) System.currentTimeMillis());
@@ -502,6 +565,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
                     reqst_userDB.addValueEventListener(new ValueEventListener() {
                         @Override
+<<<<<<< HEAD
+                        public void onSuccess(Void aVoid) {
+                        }
+                    });
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+
+                }
+            });*/
+=======
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
@@ -536,6 +610,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                 Log.d("myTag", "error");
 
             }
+>>>>>>> 5894b1362806a9b92c51606fb4d0870a816c6569
         }
     }
 }
