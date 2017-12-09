@@ -24,7 +24,9 @@ import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
 import hudlmo.models.UsersActivity;
+import layout.Contacts;
 import layout.Groups;
+import layout.History;
 
 public class Mainmenu extends AppCompatActivity {
 
@@ -256,10 +258,8 @@ public class Mainmenu extends AppCompatActivity {
                     return groupsFragment;
 
                 case 2:
-                    //History historyFragment = new History();
-                    //return  historyFragment;
-                    Groups groupsFragment2 = new Groups();
-                    return groupsFragment2;
+                    History historyFragment = new History();
+                    return  historyFragment;
 
                 case 3:
                     Groups groupsFragment3 = new Groups();
