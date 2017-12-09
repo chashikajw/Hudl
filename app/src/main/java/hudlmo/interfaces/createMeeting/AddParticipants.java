@@ -55,7 +55,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import hudlmo.interfaces.loginpage.R;
+
 import hudlmo.interfaces.loginpage.login;
+
 import hudlmo.models.User;
 
 
@@ -99,6 +101,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         //initList();
         setContacts();
+
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -124,6 +127,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         //combineMethod();
         //setCheckItemsEmailArrray();
         //filter();
+
 
         Button selectButton = (Button) findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new OnClickListener() {
@@ -385,28 +389,26 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
 
         //create multiple choice list view
-        FirebaseListAdapter<User> firebaseListAdapter = new FirebaseListAdapter<User>(
+
+        FirebaseListAdapter<User> userFirebaseListAdapter = new FirebaseListAdapter<User>(
                 this,
-                User.class,
-                android.R.layout.simple_list_item_multiple_choice,
-                databaseReference
-
-
-        ) {
+                User.class,android.R.layout.simple_list_item_multiple_choice,
+                databaseReference) {
             @Override
             protected void populateView(View view, User user, int i) {
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setText(user.getUsername());
-                check[i] = user.getUsername();
+                textView.setText((CharSequence) user);
+                //textView.setText(i);
+                System.out.println("dewgeEAGRHTDAEJEMRXMYUMSXMYSFX");
+                System.out.println(textView);
 
             }
 
 
         };
-        contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        contactsListView1.setAdapter(firebaseListAdapter);
 
-
+        //contactsListView1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //contactsListView1.setAdapter(userFirebaseListAdapter);
     }
 
     public void check(View v) {
