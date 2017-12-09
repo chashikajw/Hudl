@@ -39,8 +39,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
@@ -116,13 +119,31 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     String userId = mAuth.getCurrentUser().getUid();
 
                     //mDatabase.child(group_name).setValue(userId);
-                    DatabaseReference currnt_userDB = mDatabase.child(userId);
+                    final DatabaseReference currnt_userDB = mDatabase.child(userId).child("meetings").child("upcoming");
+                    final DatabaseReference username_userDB = mDatabase.child(userId).child("username");
 
-                    currnt_userDB.child("groupName").setValue(group_name);
+                    currnt_userDB.child("meetingName").setValue(group_name);
                     currnt_userDB.child("description").setValue(description_);
-                    currnt_userDB.child("duration").setValue(duration_);
+                    currnt_userDB.child("createdDate").setValue("vfdvdv");
+                    currnt_userDB.child("sheduleDate").setValue("12133234343");
+
+
                     currnt_userDB.child("date").setValue(date_text);
                     currnt_userDB.child("time").setValue(time_text);
+
+
+                    username_userDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String username = dataSnapshot.getValue(String.class);
+                            currnt_userDB.child("initiator").setValue(username);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     mProgress.dismiss();
 

@@ -115,7 +115,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         addEmailText = (EditText) findViewById(R.id.addEmailText) ;
 
-        setContacts();
+       setContacts();
 
 
 
@@ -231,7 +231,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         //send email
-        if (view.getId()==R.id.createButton){
+       if (view.getId()==R.id.createButton){
 
             //get details from Create Meeting
             Bundle bundle = getIntent().getExtras();
@@ -262,7 +262,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //notificationData.put("roomID",roomId);
             notificationData.put("type", "meeting creation");
 
-            String[] sendUser = {};
+            String[] sendUser = {"hiru"};
 
 
             //store evey participants deatials
