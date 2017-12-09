@@ -1,6 +1,7 @@
 package layout;
 
 
+import hudlmo.interfaces.Video.VideoCoference;
 import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
 
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -57,6 +59,8 @@ public class Upcoming extends Fragment {
     private String mCurrent_user_id;
 
     private View mMainView;
+
+
 
     private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter;
 
@@ -119,23 +123,7 @@ public class Upcoming extends Fragment {
                 });
     }
 
-   /* public void CompareDate(){
-        Calendar calendar1 = Calendar.getInstance();
-        SimpleDateFormat formatter1 = new SimpleDateFormat("dd/M/yyyy h:mm");
-        String currentDate = formatter1.format(calendar1.getTime());
 
-        final String dateString = cursor.getString(4);
-        final String timeString = cursor.getString(5);
-        String datadb =dateString+" "+timeString;
-
-//  Toast.makeText(context,"databse date:-"+datadb+"Current Date :-"+currentDate,Toast.LENGTH_LONG).show();
-
-        if(currentDate.compareTo(datadb)>=0) {
-            myCheckBox.setChecked(true);
-            myCheckBox.setEnabled(false);
-        }
-    }
-    */
 
 
     @Override
@@ -152,20 +140,26 @@ public class Upcoming extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder, Meeting meeting, int position) {
+            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder,Meeting meeting, int position) {
 
                 MeetingViewHolder.setDisplayMeetingname(meeting.getMeetingName());
-                MeetingViewHolder.setDisplayAdminName(meeting.getAdmin());
+                MeetingViewHolder.setDisplayAdminName(meeting.getInitiator());
                 // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
 
+
+
                 final String mName = meeting.getMeetingName();
-                final String mAdmin = meeting.getAdmin();
+                final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
+                final long sheduletime = meeting.getSheduleDate();
+                final String roomid = meeting.getRoomId();
                 final int positon = position;
 
                 MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
 
                         CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
 
@@ -179,8 +173,9 @@ public class Upcoming extends Fragment {
                                 //Click Event for each item.
                                 if (i == 0) {
 
-                                    Intent profileIntent = new Intent(getContext(), Settings.class);
-                                    profileIntent.putExtra("user_id", "fd");
+                                    Intent profileIntent = new Intent(getContext(), VideoCoference.class);
+                                    profileIntent.putExtra("sheduletime", sheduletime);
+                                    profileIntent.putExtra("roomid", roomid);
                                     startActivity(profileIntent);
 
                                 }
@@ -234,6 +229,13 @@ public class Upcoming extends Fragment {
             TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
             adminName.setText(admin);
 
+
+        }
+
+        public void setCountdown(String countdownTostart){
+
+            TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_timer);
+            meetingNameView.setText(countdownTostart);
 
         }
 

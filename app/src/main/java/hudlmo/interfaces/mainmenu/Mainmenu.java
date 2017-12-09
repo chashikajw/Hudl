@@ -25,7 +25,6 @@ import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
 import hudlmo.models.UsersActivity;
 import layout.Contacts;
-import layout.Groups;
 
 import layout.Upcoming;
 
@@ -266,9 +265,7 @@ public class Mainmenu extends AppCompatActivity {
                     History historyFragment = new History();
                     return  historyFragment;
 
-                case 3:
-                    Groups groupsFragment3 = new Groups();
-                    return groupsFragment3;
+
 
                 default:
                     return  null;
@@ -278,7 +275,7 @@ public class Mainmenu extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
@@ -290,8 +287,7 @@ public class Mainmenu extends AppCompatActivity {
                     return "Contacts";
                 case 2:
                     return "History";
-                case 3:
-                    return "Groups";
+
             }
             return null;
         }

@@ -3,6 +3,7 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/scrollviewInfo"
 android:layout_width="match_parent"
+    android:screenOrientation="portrait"
 android:layout_height="wrap_content"
 tools:context="hudlmo.interfaces.History.HistoryView">
 
