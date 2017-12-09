@@ -287,9 +287,9 @@ public class Mainmenu extends AppCompatActivity {
                 case 0:
                     return "Upcoming";
                 case 1:
-                    return "History";
-                case 2:
                     return "Contacts";
+                case 2:
+                    return "History";
                 case 3:
                     return "Groups";
             }
