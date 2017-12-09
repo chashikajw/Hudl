@@ -90,18 +90,27 @@ public class History extends Fragment {
 
                 historyViewHolder.setDisplayDate(history.getDate());
                 historyViewHolder.setDisplayConName(history.getConvoName());
-                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
+                historyViewHolder.setDisplayDescription(history.getDescription());
+                historyViewHolder.setDisplayTime(history.getStartTime());
+                historyViewHolder.setDisplayDuration(history.getDuration());
+
 
                 final String convoName = history.getConvoName();
                 final String date = history.getDate();
+                final String description = history.getDescription();
+                final String time = history.getStartTime();
+                final String duration = history.getDuration();
 
                 historyViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
                         Intent historyIntent = new Intent(getContext(), HistoryView.class);
-                        historyIntent.putExtra("convoName", convoName);
+                        historyIntent.putExtra("groupName", convoName);
                         historyIntent.putExtra("date", date);
+                        historyIntent.putExtra("description", description);
+                        historyIntent.putExtra("time", time);
+                        historyIntent.putExtra("duration", duration);
                         startActivity(historyIntent);
                     }
                 });
@@ -126,17 +135,37 @@ public class History extends Fragment {
 
         }
 
-        public void setDisplayDate(String email) {
+        public void setDisplayDate(String date) {
 
             TextView DescriptionView = (TextView) mView.findViewById(R.id.date);
-            DescriptionView.setText(email);
+            DescriptionView.setText(date);
 
         }
 
-        public void setDisplayConName(String username) {
+        public void setDisplayConName(String cname) {
 
             TextView ConNameView = (TextView) mView.findViewById(R.id.convoName);
-            ConNameView.setText(username);
+            ConNameView.setText(cname);
         }
+
+        public void setDisplayDescription(String desc) {
+
+            TextView DescriptionView = (TextView) mView.findViewById(R.id.description);
+            DescriptionView.setText(desc);
+        }
+
+        public void setDisplayTime(String tme) {
+
+            TextView TimeView = (TextView) mView.findViewById(R.id.time);
+            TimeView.setText(tme);
+        }
+
+        public void setDisplayDuration(String dur) {
+
+            TextView DurationView = (TextView) mView.findViewById(R.id.duration);
+            DurationView.setText(dur);
+        }
+
+
     }
 }

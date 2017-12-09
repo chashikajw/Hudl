@@ -5,7 +5,7 @@ android:layout_height="match_parent"
 tools:context="layout.Upcoming">
 
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/meeting_list"
+    android:id="@+id/upcoming_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

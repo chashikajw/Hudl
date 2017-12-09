@@ -27,6 +27,11 @@ import hudlmo.models.UsersActivity;
 import layout.Contacts;
 import layout.Groups;
 
+import layout.Upcoming;
+
+import layout.History;
+
+
 public class Mainmenu extends AppCompatActivity {
 
     /**
@@ -249,18 +254,17 @@ public class Mainmenu extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
+                    Upcoming upcomingFragment = new Upcoming();
+                    return upcomingFragment;
+
+
+                case 1:
                     Contacts contactsFragment = new Contacts();
                     return contactsFragment;
 
-                case 1:
-                    Groups groupsFragment = new Groups();
-                    return groupsFragment;
-
                 case 2:
-                    //History historyFragment = new History();
-                    //return  historyFragment;
-                    Groups groupsFragment2 = new Groups();
-                    return groupsFragment2;
+                    History historyFragment = new History();
+                    return  historyFragment;
 
                 case 3:
                     Groups groupsFragment3 = new Groups();
@@ -281,11 +285,11 @@ public class Mainmenu extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Contacts";
+                    return "Upcoming";
                 case 1:
                     return "History";
                 case 2:
-                    return "Upcoming";
+                    return "Contacts";
                 case 3:
                     return "Groups";
             }

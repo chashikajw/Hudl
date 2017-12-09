@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hudlmo.interfaces.loginpage.Settings;
+import hudlmo.models.Meeting;
 import hudlmo.models.User;
 import hudlmo.models.UsersActivity;
 
@@ -41,7 +42,7 @@ public class Upcoming extends Fragment {
 
     private RecyclerView meetingLIst;
 
-    private DatabaseReference mContactDatabase;
+    private DatabaseReference mMeetingDatabase;
     private DatabaseReference mUserDatabase;
 
 
@@ -50,6 +51,8 @@ public class Upcoming extends Fragment {
     private String mCurrent_user_id;
 
     private View mMainView;
+
+    private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter;
 
 
     public Upcoming() {
@@ -61,18 +64,19 @@ public class Upcoming extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mMainView = inflater.inflate(R.layout.fragment_groups, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
-        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.upcoming_list);
         mAuth = FirebaseAuth.getInstance();
 
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        String meetingID = Integer.toString((int)System.currentTimeMillis());
 
-        mContactDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("contacts");
+        mMeetingDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("meetings");
 
         //offline syncronize
-        mContactDatabase.keepSynced(true);
+        mMeetingDatabase.keepSynced(true);
 
 
 
@@ -88,37 +92,64 @@ public class Upcoming extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<User, UsersViewHolder> meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
+        meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
 
-                User.class,
+                Meeting.class,
                 R.layout.users_single_layout,
-                UsersViewHolder.class,
-                mContactDatabase
+                MeetingViewHolder.class,
+                mMeetingDatabase
 
 
         ) {
             @Override
-            protected void populateViewHolder(UsersViewHolder usersViewHolder, User users, int position) {
+            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder, Meeting meeting, int position) {
 
-                usersViewHolder.setDisplayEmail(users.getEmail());
-                usersViewHolder.setDisplayUserName(users.getUsername());
+                MeetingViewHolder.setDisplayMeetingname(meeting.getMeetingName());
+                MeetingViewHolder.setDisplayAdminName(meeting.getAdmin());
                 // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
 
-                final String name = users.getName();
-                final String username = users.getName();
-                final String email = users.getEmail();
+                final String mName = meeting.getMeetingName();
+                final String mAdmin = meeting.getAdmin();
+                final String mDescription = meeting.getDescription();
+                final int positon = position;
 
-                usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        Intent profileIntent = new Intent(getContext(), ProfileView.class);
-                        profileIntent.putExtra("name", name);
-                        profileIntent.putExtra("username", username);
-                        profileIntent.putExtra("email", email);
-                        startActivity(profileIntent);
+                        CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
+
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle(mName);
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //Click Event for each item.
+                                if (i == 0) {
+
+                                    Intent profileIntent = new Intent(getContext(), Settings.class);
+                                    profileIntent.putExtra("user_id", "fd");
+                                    startActivity(profileIntent);
+
+                                }
+
+                                if (i == 1) {
+
+
+                                    meetingRecyclerViewAdapter.getRef(positon).removeValue();
+
+                                }
+
+                            }
+                        });
+
+                        builder.show();
+
                     }
                 });
+
 
             }
             /*
@@ -203,28 +234,28 @@ public class Upcoming extends Fragment {
     }
 
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder {
+    public static class MeetingViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
-        public UsersViewHolder(View itemView) {
+        public MeetingViewHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
 
         }
 
-        public void setDisplayEmail(String email){
+        public void setDisplayMeetingname(String groupname){
 
-            TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
-            userNameView.setText(email);
+            TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_name);
+            meetingNameView.setText(groupname);
 
         }
 
-        public void setDisplayUserName(String username){
+        public void setDisplayAdminName(String admin){
 
-            TextView userName = (TextView) mView.findViewById(R.id.user_single_status);
-            userName.setText(username);
+            TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
+            adminName.setText(admin);
 
 
         }
