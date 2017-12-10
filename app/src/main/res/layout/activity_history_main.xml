@@ -132,7 +132,7 @@ tools:context="hudlmo.interfaces.History.HistoryView">
             android:text="Duration : " />
 
         <TextView
-            android:id="@+id/duration"
+            android:id="@+id/initiator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"

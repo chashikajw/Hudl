@@ -4,15 +4,16 @@ package layout;
 import hudlmo.interfaces.History.HistoryView;
 import hudlmo.interfaces.loginpage.R;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -21,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.models.HistoryC;
+import hudlmo.models.Meeting;
 
 /**
  * Created by Shalini PC on 12/8/2017.
@@ -31,9 +34,11 @@ public class History extends Fragment {
 
     private RecyclerView meetingList;
 
+    //new database references for hisotry and user
     private DatabaseReference mHistoryDatabase;
     private DatabaseReference mUserDatabase;
 
+    private FirebaseRecyclerAdapter<Meeting, HistoryViewHolder> HistoryRecyclerViewAdapter;
 
     private FirebaseAuth mAuth;
 
@@ -59,7 +64,9 @@ public class History extends Fragment {
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        mHistoryDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting").child(mCurrent_user_id);
+        //get the first conversation history as history
+        //called child("1")
+        mHistoryDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("Meeting").child("History");
 
         //offline synchronize
         mHistoryDatabase.keepSynced(true);
@@ -76,9 +83,9 @@ public class History extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<HistoryC, HistoryViewHolder> HistoryRecyclerViewAdapter = new FirebaseRecyclerAdapter<HistoryC,HistoryViewHolder>(
+        HistoryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,HistoryViewHolder>(
 
-                HistoryC.class,
+                Meeting.class,
                 R.layout.history_single_layout,
                 HistoryViewHolder.class,
                 mHistoryDatabase
@@ -86,41 +93,58 @@ public class History extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(HistoryViewHolder historyViewHolder, HistoryC history, int position) {
+            protected void populateViewHolder(HistoryViewHolder historyViewHolder, Meeting history, int position) {
 
-                historyViewHolder.setDisplayDate(history.getDate());
-                historyViewHolder.setDisplayConName(history.getConvoName());
-                historyViewHolder.setDisplayDescription(history.getDescription());
-                historyViewHolder.setDisplayTime(history.getStartTime());
-                historyViewHolder.setDisplayDuration(history.getDuration());
+               historyViewHolder.setDisplayMeetingname(history.getMeetingName());
+               historyViewHolder.setDisplayDate(history.getSheduleDate());
+
+                final String mName = history.getMeetingName();
+                final String mDate = history.getSheduleDate();
+                final String mAdmin = history.getAdmin();
+                final String mDescription = history.getDescription();
+                final int positon = position;
 
 
-                final String convoName = history.getConvoName();
-                final String date = history.getDate();
-                final String description = history.getDescription();
-                final String time = history.getStartTime();
-                final String duration = history.getDuration();
 
                 historyViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        CharSequence options[] = new CharSequence[]{"Call", "Delete Item"};
 
-                        Intent historyIntent = new Intent(getContext(), HistoryView.class);
-                        historyIntent.putExtra("groupName", convoName);
-                        historyIntent.putExtra("date", date);
-                        historyIntent.putExtra("description", description);
-                        historyIntent.putExtra("time", time);
-                        historyIntent.putExtra("duration", duration);
-                        startActivity(historyIntent);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        builder.setTitle(mName);
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //Click Event for each item.
+                                if (i == 0) {
+
+                                    Intent profileIntent = new Intent(getContext(), Settings.class);
+                                    profileIntent.putExtra("user_id", "fd");
+                                    startActivity(profileIntent);
+
+                                }
+
+                                if (i == 1) {
+
+
+                                    HistoryRecyclerViewAdapter.getRef(positon).removeValue();
+
+                                }
+
+                            }
+                        });
+
+                        builder.show();
+
                     }
                 });
-
             }
         };
 
         meetingList.setAdapter(HistoryRecyclerViewAdapter);
-
-
     }
 
 
@@ -132,40 +156,19 @@ public class History extends Fragment {
             super(itemView);
 
             mView = itemView;
+        }
+
+        public void setDisplayMeetingname(String groupname){
+
+            TextView meetingNameView = (TextView) mView.findViewById(R.id.convo_name_layout);
+            meetingNameView.setText(groupname);
 
         }
 
-        public void setDisplayDate(String date) {
-
-            TextView DescriptionView = (TextView) mView.findViewById(R.id.date);
-            DescriptionView.setText(date);
+        public void setDisplayDate(String date){
+            TextView conDate = (TextView) mView.findViewById(R.id.date_layout);
+            conDate.setText(date);
 
         }
-
-        public void setDisplayConName(String cname) {
-
-            TextView ConNameView = (TextView) mView.findViewById(R.id.convoName);
-            ConNameView.setText(cname);
-        }
-
-        public void setDisplayDescription(String desc) {
-
-            TextView DescriptionView = (TextView) mView.findViewById(R.id.description);
-            DescriptionView.setText(desc);
-        }
-
-        public void setDisplayTime(String tme) {
-
-            TextView TimeView = (TextView) mView.findViewById(R.id.time);
-            TimeView.setText(tme);
-        }
-
-        public void setDisplayDuration(String dur) {
-
-            TextView DurationView = (TextView) mView.findViewById(R.id.duration);
-            DurationView.setText(dur);
-        }
-
-
     }
 }

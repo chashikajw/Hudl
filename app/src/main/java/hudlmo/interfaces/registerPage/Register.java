@@ -165,7 +165,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         if (task.isSuccessful()){
                             //user is successfully registered and logged in
 
-                            EmailVerification();
+                            //EmailVerification();
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
@@ -182,14 +182,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             mDatabaseindex.child(newUser.getUname()).setValue(userId);
 
 
-
-
-
                             //to notifications
                             String deviceToken = FirebaseInstanceId.getInstance().getToken();
                             currnt_userDB.child("device_token").setValue(deviceToken);
-
-
 
                             finish();
 

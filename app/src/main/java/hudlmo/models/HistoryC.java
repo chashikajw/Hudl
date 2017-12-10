@@ -8,7 +8,8 @@ import java.io.Serializable;
 
 public class HistoryC implements Serializable {
     String key;
-    String duration;
+   // String participants;
+    String initiator;
     String convoName;
     String date;
     String startTime;
@@ -18,12 +19,12 @@ public class HistoryC implements Serializable {
 
     public HistoryC() {
     }
-    public HistoryC(String key,String convoName,String date,String startTime,String description,String duration){
+    public HistoryC(String key,String convoName,String date,String startTime,String description,String initiator){
         this.key = key ;
         this.convoName = convoName;
         this.date = date;
         this.startTime = startTime;
-        this.duration = duration;
+        this.initiator = initiator;
         this.description = description;
     }
 
@@ -81,12 +82,12 @@ public class HistoryC implements Serializable {
 
 
     //Duration of Conversation
-    public String getDuration() {
-        return duration;
+    public String getInitiator() {
+        return initiator;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setInitiator(String initiator) {
+        this.initiator = initiator;
     }
 
 }
