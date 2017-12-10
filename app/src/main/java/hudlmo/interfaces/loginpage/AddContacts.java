@@ -12,9 +12,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.google.firebase.database.ValueEventListener;
 
 
 public class AddContacts extends AppCompatActivity {
@@ -24,6 +26,9 @@ public class AddContacts extends AppCompatActivity {
     private Toolbar mtoolbar;
 
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseContact;
+
+
     public FirebaseAuth mAuth;
 
     private ProgressDialog mProgress;
@@ -45,21 +50,38 @@ public class AddContacts extends AppCompatActivity {
         getSupportActionBar().setTitle("Save Groups");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); */
 
-
-
-
-
     }
 
 
     public void saveContact(View v){
         try{
-            mProgress.setMessage("saving....");
-            mProgress.show();
-            String email = emailEt.getText().toString().trim();
+            //mProgress.setMessage("saving....");
+            //mProgress.show();
+
+            final String email = emailEt.getText().toString().trim();
             String username = usernameEt.getText().toString().trim();
 
             String userId = mAuth.getCurrentUser().getUid();
+
+ /*           mDatabaseContact = FirebaseDatabase.getInstance().getReference().child("UniqueID");
+            mDatabaseContact.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(email)) {//I need the verification here.
+                        Toast.makeText(AddContacts.this, "Installed",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(AddContacts.this, "Not Installed",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+*/
+
 
             //creste unique number
             String contacID = Integer.toString((int)System.currentTimeMillis());
@@ -67,7 +89,7 @@ public class AddContacts extends AppCompatActivity {
             mDatabase.child("username").setValue(username);
             mDatabase.child("email").setValue(email);
 
-            mProgress.dismiss();
+            //mProgress.dismiss();
         }catch(Exception e){
             Toast.makeText(AddContacts.this, "connction error",Toast.LENGTH_LONG).show();
         }

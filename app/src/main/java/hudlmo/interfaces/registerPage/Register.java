@@ -48,6 +48,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     //defining db
     private DatabaseReference mDatabase;
 
+    private DatabaseReference mDatabaseEmail;
+
     private DatabaseReference mDatabaseindex;
 
     @Override
@@ -72,6 +74,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         //get the firebase database reference
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseindex = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+        mDatabaseEmail = FirebaseDatabase.getInstance().getReference().child("UniqueID");
 
 
         registerBtn = (Button) findViewById(R.id.registerBtn);
@@ -174,6 +177,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             currnt_userDB.child("email").setValue(newUser.getEmail());
                             currnt_userDB.child("meetings").setValue("default");
                             currnt_userDB.child("image").setValue("default");
+
+                            String emailID = Integer.toString((int)System.currentTimeMillis());
+                            //mDatabaseEmail = FirebaseDatabase.getInstance().getReference().child("UniqueID");
+                            mDatabaseEmail.child(emailID).setValue(user.getEmail());
 
 
 

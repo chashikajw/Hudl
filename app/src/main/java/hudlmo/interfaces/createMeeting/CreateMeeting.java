@@ -337,5 +337,3 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
 }
-
-
