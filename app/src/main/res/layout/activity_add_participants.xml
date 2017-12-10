@@ -9,14 +9,15 @@
     android:focusableInTouchMode="true"
     tools:context="hudlmo.interfaces.createMeeting.AddParticipants">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="76dp"
-        android:layout_height="28dp"
+    <Button
+        android:id="@+id/contactButton"
+        android:layout_width="78dp"
+        android:layout_height="39dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+
         android:text="Contacts"
         android:textColor="#0000ff"
         android:textSize="18sp"
@@ -26,25 +27,31 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.049"
+        android:background="@android:color/background_light"
+        android:onClick="check"
+        android:text="Contact"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/inputSearch"
-        android:layout_width="240dp"
-        android:layout_height="39dp"
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="199dp"
+        android:layout_height="28dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:focusableInTouchMode="true"
+        android:text="Invite Participants"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.113" />
+
 
     <Button
         android:id="@+id/selectButton"
@@ -82,7 +89,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         app:layout_constraintVertical_bias="0.584" />
+
 
     <EditText
         android:id="@+id/addEmailText"

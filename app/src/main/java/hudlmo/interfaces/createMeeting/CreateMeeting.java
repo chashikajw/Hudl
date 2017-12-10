@@ -36,6 +36,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +46,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
 
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.mainmenu.Mainmenu;
@@ -63,7 +66,14 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+
     private Toolbar mToolbar;
+
+    private String iniatorUsername;
+    private String  roomId;
+
+    private long ShduletimeInMilliseconds;
+
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatePickerDialog.OnDateSetListener mTimeSetListener;
@@ -164,31 +174,80 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 String date_text = dateText.getText().toString().trim();
                 String time_text = timeText.getText().toString().trim();
                 String duration_ = duration.getText().toString().trim();
+                roomId = Integer.toString((int) System.currentTimeMillis());
+                String initatorID = mAuth.getCurrentUser().getUid();
+
+                //get initator userrname
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("initatorID");
+
+
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        iniatorUsername = dataSnapshot.getValue(String.class);
+                        //create unique id for room
+                        roomId =  roomId + iniatorUsername;
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                //convert shedule date time to timemills
+                String sheduleDateTime = date_text + " " +time_text;
+
+                long currentmilliseconds = System.currentTimeMillis();
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMM dd,yyyy HH:mm");
+
+                try {
+                    Date mDate = sdf.parse(sheduleDateTime);
+                    ShduletimeInMilliseconds = mDate.getTime();
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
 
                 //validation
                 if(TextUtils.isEmpty(group_name)/*||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)*/){
                     Toast.makeText(CreateMeeting.this, "Fields are empty",Toast.LENGTH_LONG).show();
                 }
 
+
                 //insert data to database
                 else {
                     mProgress.setMessage("Creating meeting....");
                     mProgress.show();
 
-                    String userId = mAuth.getCurrentUser().getUid();
 
-                    //mDatabase.child(group_name).setValue(userId);
-                    final DatabaseReference currnt_userDB = mDatabase.child(userId).child("meetings").child("upcoming");
-                    final DatabaseReference username_userDB = mDatabase.child(userId).child("username");
-
-                    currnt_userDB.child("meetingName").setValue(group_name);
-                    currnt_userDB.child("description").setValue(description_);
-                    currnt_userDB.child("createdDate").setValue("vfdvdv");
-                    currnt_userDB.child("sheduleDate").setValue("12133234343");
+                    final HashMap<String, String> meetingData = new HashMap<>();
+                    meetingData.put("meetingName", group_name);
+                    meetingData.put("createdDate", "2015/12/31");
+                    meetingData.put("description", description_);
+                    meetingData.put("initiator",  iniatorUsername);
+                    meetingData.put("sheduleDate", Long.toString(ShduletimeInMilliseconds));
+                    meetingData.put("roomId", roomId);
 
 
-                    currnt_userDB.child("date").setValue(date_text);
-                    currnt_userDB.child("time").setValue(time_text);
+                    String reqstUid = mAuth.getCurrentUser().getUid();
+
+
+                    DatabaseReference storemeeting =  FirebaseDatabase.getInstance().getReference().child("Users").child(reqstUid).child("meetings").child("upcoming");
+
+                    storemeeting.child(roomId).setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+
+
 
 
                     mProgress.dismiss();
@@ -196,10 +255,13 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
                     Intent detail = new Intent ( CreateMeeting.this,AddParticipants.class);
-                    detail.putExtra("group_name", group_name);
-                    detail.putExtra("description_",description_);
-                    detail.putExtra("date_text", date_text);
-                    detail.putExtra("time_text", time_text);
+                    detail.putExtra("MeetingName", group_name);
+                    detail.putExtra("CreatedDate",description_);
+                    detail.putExtra("Description", roomId);
+                    detail.putExtra("Initiator", iniatorUsername);
+                    detail.putExtra("SheduleDate", Long.toString(ShduletimeInMilliseconds));
+                    detail.putExtra("RoomId", roomId);
+
                     startActivity(detail);
                 }
 
@@ -285,5 +347,3 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
 }
-
-
