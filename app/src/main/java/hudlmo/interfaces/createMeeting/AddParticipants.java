@@ -43,7 +43,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.api.model.StringList;
+//import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,6 +134,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         addEmailButton = (Button)findViewById(R.id.addEmailButton);
         addEmailButton.setOnClickListener(new OnClickListener() {
 
+
             @Override
             public void onClick(View v) {
                 String newItem = addEmailText.getText ().toString ();
@@ -170,11 +171,13 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
  /*       //Hide Contact and Email lists
         addEmailText.setOnClickListener ( new View.OnClickListener() {
 
+
             @Override
             public void onClick(View v) {
                 contactsListView1.setVisibility(View.GONE);
                 emailListView.setVisibility(View.GONE);
             }
+
 
         } );
 */
@@ -182,6 +185,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         arrayList2 = new ArrayList<> ( Arrays.asList(allEmail) );
         itemsAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList2);
         emailListView.setAdapter(itemsAdapter2);
+
 
         //create Button
         createButton = (Button)findViewById(R.id.createButton);
@@ -203,13 +207,15 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             if (checked.get(i)){
                 checkedList[k]=item;
 
+
                 arrayList2.add(item);
+
                 k++;
             }
         }
         itemsAdapter2.notifyDataSetChanged ();
 
-      
+
 
     }
 
@@ -285,9 +291,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             startActivity (Intent.createChooser ( intent,"Send Email" ));
 
 
-
-
-            //send notifications
+ //send notifications
             final HashMap<String, String> notificationData = new HashMap<>();
             String CurrntUserId = mAuth.getCurrentUser().getUid();
             //calculate unique number
@@ -300,24 +304,18 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             String[] sendUser = {"hiru"};
 
 
-            final String[] sendUser = {"cjw007","boby","jay007"};
-
             //store evey participants deatials
 
-            reqstUser = reqstUser.child("boby");
+            try {
+
+                for (int i = 0; i < sendUser.length; i++) {
 
 
+                    DatabaseReference reqst_userDB = reqstUser.child(sendUser[i]);
 
-            reqstUser.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    String reqstUid= dataSnapshot.getValue().toString();
 
-                    mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    reqst_userDB.addValueEventListener(new ValueEventListener() {
                         @Override
-
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
@@ -352,7 +350,6 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                 Log.d("myTag", "error");
 
             }
-
         }
     }
 }
