@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
     tools:context="hudlmo.interfaces.loginpage.Settings">
+
+    <include
+        android:id="@+id/userprofile"
+        layout="@layout/app_bar_layout" />
 
     <ListView
         android:id="@+id/grouplist2"
@@ -21,12 +24,11 @@
 
     <ImageButton
         android:id="@+id/profile_image"
-        android:layout_width="0dp"
-        android:layout_height="227dp"
+        android:layout_width="159dp"
+        android:layout_height="187dp"
         android:layout_marginBottom="194dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginTop="55dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/grouplist2"
@@ -51,9 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image"
         tools:layout_marginLeft="20dp"
-        tools:layout_marginRight="20dp"
-        tools:layout_editor_absoluteX="42dp"
-        app:layout_constraintVertical_bias="0.453" />
+        tools:layout_marginRight="20dp" />
 
     <Button
         android:id="@+id/store_btn"
@@ -63,9 +63,38 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="STORE"
-        android:background="#008dc7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grouplist2" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="348dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="38dp"
+        android:text="user name"
+        app:layout_constraintBottom_toTopOf="@+id/grouplist2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_displayName" />
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="149dp"
+        android:layout_height="171dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_displayName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.745"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/userprofile"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 </android.support.constraint.ConstraintLayout>
