@@ -13,7 +13,7 @@ public class Meeting implements Serializable {
     private String meetingName;
     private String description;
     private String createdDate;
-    private long sheduleDate;
+    private String sheduleDate;
     private String initiator;
     private String roomId;
     private ArrayList<String> participants;
@@ -33,7 +33,7 @@ public class Meeting implements Serializable {
         return createdDate;
     }
 
-    public long getSheduleDate() {
+    public String getSheduleDate() {
         return sheduleDate;
     }
 
@@ -61,7 +61,7 @@ public class Meeting implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public void setSheduleDate(long sheduleDate) {
+    public void setSheduleDate(String sheduleDate) {
         this.sheduleDate = sheduleDate;
     }
 

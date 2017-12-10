@@ -301,10 +301,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //notificationData.put("roomID",roomId);
             notificationData.put("type", "meeting creation");
 
-            String[] sendUser = {"hiru"};
+            String[] sendUser = {"Prabhath","arvin","cjw007","sanu","sammani12"};
 
 
             //store evey participants deatials
+            final HashMap<String, String> meetingData = new HashMap<>();
+            meetingData.put(" meetingName", "fdsfsdfds");
+            meetingData.put("createdDate", "vdvdsvsd");
+            meetingData.put("description", "gdfsdfd");
+            meetingData.put("initiator", "dsvdsfd");
+            meetingData.put("sheduleDate", "2323123232");
+            meetingData.put("roomId", "dfdsfs");
 
             try {
 
@@ -321,8 +328,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                             // whenever data at this location is updated.
 
                             final String reqstUid = dataSnapshot.getValue().toString();
-                            usersref.child(reqstUid).child("roomId").setValue(roomId);
+                            String meetingId = Integer.toString((int) System.currentTimeMillis());
 
+
+                            DatabaseReference storemeeting =  usersref.child(reqstUid).child("meetings").child("upcoming");
+
+                            storemeeting.push().setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                }
+                            });
 
                             mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

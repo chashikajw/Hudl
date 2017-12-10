@@ -109,7 +109,7 @@ public class History extends Fragment {
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
-                final long sheduletime = meeting.getSheduleDate();
+                final String sheduletime = meeting.getSheduleDate();
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
@@ -173,9 +173,9 @@ public class History extends Fragment {
 
         }
 
-        public void setDisplayDate(long sdate){
+        public void setDisplayDate(String sdate){
             TextView conDate = (TextView) mView.findViewById(R.id.date_layout);
-            conDate.setText((int) sdate);
+            conDate.setText(sdate);
 
         }
     }
