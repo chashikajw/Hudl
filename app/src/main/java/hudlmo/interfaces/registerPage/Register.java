@@ -50,12 +50,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     private DatabaseReference mDatabaseindex;
 
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +165,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         if (task.isSuccessful()){
                             //user is successfully registered and logged in
 
-
+                            EmailVerification();
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
@@ -213,6 +207,23 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    //when a newly registered user have to confirm their email address using the verification email
+    //this code implements to send that verification email.
+    //once the user click that link their email address is verified.
+    private void EmailVerification() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(Register.this,"Check your Email for Verification", Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().signOut();
+                    }
+                }
+            });
+        }
+    }
 
 
     @Override

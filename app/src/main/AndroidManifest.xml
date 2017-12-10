@@ -44,14 +44,14 @@
         android:theme="@style/AppTheme">
         <uses-sdk android:minSdkVersion="18" />
 
-        <activity android:name=".login">
+        <activity android:name=".login" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="hudlmo.interfaces.registerPage.Register">
+        <activity android:name="hudlmo.interfaces.registerPage.Register" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.registerPage.Register" />
 
@@ -60,6 +60,7 @@
         </activity>
         <activity
             android:name="hudlmo.interfaces.createMeeting.AddParticipants"
+            android:screenOrientation="portrait"
             android:parentActivityName="hudlmo.interfaces.createMeeting.CreateMeeting">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.createMeeting.AddParticipants" />
@@ -67,21 +68,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Settings">
+        <activity android:name=".Settings" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.loginpage.Settings" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="hudlmo.interfaces.createMeeting.CreateMeeting">
+        <activity android:name="hudlmo.interfaces.createMeeting.CreateMeeting" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="hudlmo.interfaces.createMeeting.Createmmeting" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <activity android:name="hudlmo.interfaces.VideoMain">
+            <activity android:name="hudlmo.interfaces.VideoMain" android:screenOrientation="portrait">
                 <intent-filter>
                     <action android:name="hudlmo.interfaces.VideoMain" />
 
@@ -91,10 +92,12 @@
         </activity>
         <activity
             android:name="hudlmo.interfaces.mainmenu.Mainmenu"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_mainmenu"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".AddContacts"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_add_contacts"
             android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu"
             android:theme="@style/AppTheme" />
