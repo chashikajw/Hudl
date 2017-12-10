@@ -62,7 +62,5 @@ public class HistoryView extends AppCompatActivity {
         time.setText(conTime);
         duration.setText(conDuration);
 
-
-
     }
 }
