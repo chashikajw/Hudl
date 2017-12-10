@@ -153,6 +153,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         }
 
+        EmailVerification();
         //if validations are ok a progress bar will be shown
         mProgress.setMessage("Registering User...");
         mProgress.show();

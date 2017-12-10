@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,23 @@ public class Contacts extends Fragment {
         meetingLIst.setHasFixedSize(true);
         meetingLIst.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        mContactDatabase.orderByChild("username").equalTo("arvin").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child: dataSnapshot.getChildren()) {
+                            child.getRef().setValue(null);
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
+                    }
+                });
+
+
         // Inflate the layout for this fragment
         return mMainView;
     }
@@ -102,6 +120,8 @@ public class Contacts extends Fragment {
             @Override
             protected void populateViewHolder(UsersViewHolder usersViewHolder, User users, int position) {
 
+
+
                 usersViewHolder.setDisplayEmail(users.getEmail());
                 usersViewHolder.setDisplayUserName(users.getUsername());
                 // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
@@ -111,9 +131,13 @@ public class Contacts extends Fragment {
                 final String email = users.getEmail();
                 final int positon = position;
 
+
+
                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+
 
 
 

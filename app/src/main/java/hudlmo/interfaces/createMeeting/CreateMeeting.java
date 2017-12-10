@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,14 +12,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 
@@ -39,8 +35,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
@@ -51,36 +50,30 @@ import hudlmo.interfaces.registerPage.Register;
 
 public class CreateMeeting extends AppCompatActivity implements View.OnClickListener {
 
-    Button nextButton;
-    EditText groupName,description,duration;
-    TextView dateText,timeText,dateButton,timeButton;
+    Button dateButton,timeButton,nextButton;
+    EditText dateText,timeText,groupName,description,duration;
     private int day,month,year,hour,minutes;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
 
-    private static final String TAG = "CreateMeeting";
-    private TextView mDisplayDate;
-
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
-        dateButton = (TextView) findViewById(R.id.dateButton);
-        timeButton = (TextView) findViewById(R.id.timeButton);
+        dateButton = (Button)findViewById(R.id.dateButton);
+        timeButton = (Button)findViewById(R.id.timeButton);
 
         groupName = (EditText)findViewById(R.id.groupNameText);
         description = (EditText)findViewById(R.id.descriptionText);
         duration = (EditText)findViewById(R.id.durationText);
-        dateText = (TextView) findViewById(R.id.dateText);
-        timeText = (TextView)findViewById(R.id.timeText);
+        dateText = (EditText)findViewById(R.id.dateText);
+        timeText = (EditText)findViewById(R.id.timeText);
 
-        dateText.setOnClickListener ( this );
-        timeText.setOnClickListener ( this );
+        dateButton.setOnClickListener ( this );
+        timeButton.setOnClickListener ( this );
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
@@ -116,13 +109,33 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     String userId = mAuth.getCurrentUser().getUid();
 
                     //mDatabase.child(group_name).setValue(userId);
-                    DatabaseReference currnt_userDB = mDatabase.child(userId);
+                    final DatabaseReference currnt_userDB = mDatabase.child(userId).child("meetings").child("upcoming");
+                    final DatabaseReference username_userDB = mDatabase.child(userId).child("username");
 
-                    currnt_userDB.child("groupName").setValue(group_name);
+                    currnt_userDB.child("meetingName").setValue(group_name);
                     currnt_userDB.child("description").setValue(description_);
-                    currnt_userDB.child("duration").setValue(duration_);
+                    currnt_userDB.child("createdDate").setValue("vfdvdv");
+                    currnt_userDB.child("sheduleDate").setValue("12133234343");
+
+
                     currnt_userDB.child("date").setValue(date_text);
                     currnt_userDB.child("time").setValue(time_text);
+
+
+
+                    username_userDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String username = dataSnapshot.getValue(String.class);
+                            currnt_userDB.child("initiator").setValue(username);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
 
                     mProgress.dismiss();
 
@@ -134,10 +147,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     detail.putExtra("date_text", date_text);
                     detail.putExtra("time_text", time_text);
                     startActivity(detail);
-
                 }
-
-
 
 
             }
@@ -170,45 +180,30 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
     @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         //set Calender to find date
-        if (v==dateText){
-            mDisplayDate=(TextView) findViewById(R.id.dateText);
+        if (v==dateButton){
+            final Calendar c = Calendar.getInstance ();
+            day = c.get ( Calendar.DAY_OF_MONTH );
+            month = c.get(Calendar.MONTH);
+            year = c.get(Calendar.YEAR);
 
-            mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            DatePickerDialog datePickerDialog = new DatePickerDialog ( this, new DatePickerDialog.OnDateSetListener () {
+
+
                 @Override
-                public void onClick(View view) {
-                    java.util.Calendar cal = java.util.Calendar.getInstance();
-                    int year=cal.get(java.util.Calendar.YEAR);
-                    int month=cal.get(java.util.Calendar.MONTH);
-                    int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
-
-                    DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
-                            mDateSetListener,year,month,day);
-
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    dateText.setText ( dayOfMonth+"/"+(month+1)+"/"+year );
                 }
-            });
-
-            mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    month = month+1;
-                    Log.d(TAG, "onDateSet: mm/dd/yyy:"+ year + "/"+ month + "/" + day+ "/");
-
-                    String date =month + "/" + day + "/" + year;
-                    mDisplayDate.setText(date);
-
-
-                }
-            };
+            }
+                    ,day,month,year);
+            datePickerDialog.show ();
         }
 
         //set calender to find time
-        if (v==timeText){
+        if (v==timeButton){
             final Calendar c = Calendar.getInstance ();
             hour = c.get ( Calendar.HOUR_OF_DAY );
             minutes = c.get(Calendar.MINUTE);
@@ -225,3 +220,5 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
 }
+
+

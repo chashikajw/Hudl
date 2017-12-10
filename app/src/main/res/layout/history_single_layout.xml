@@ -15,6 +15,7 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/img6" />
 
+
     <TextView
         android:id="@+id/convo_name_layout"
         android:layout_width="wrap_content"

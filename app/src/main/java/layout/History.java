@@ -1,7 +1,9 @@
 package layout;
 
 
+
 import hudlmo.interfaces.History.HistoryView;
+import hudlmo.interfaces.Video.VideoCoference;
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.DialogInterface;
@@ -56,11 +58,14 @@ public class History extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //set the main view to history fragment
         mRootView = inflater.inflate(R.layout.fragment_history, container, false);
 
+        //add the meeting history summary to main page of history
         meetingList = (RecyclerView) mRootView.findViewById(R.id.meeting_list);
         mAuth = FirebaseAuth.getInstance();
 
+        //get the current user id and current user's references to the database
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -71,6 +76,7 @@ public class History extends Fragment {
         //offline synchronize
         mHistoryDatabase.keepSynced(true);
 
+        //set the list wiev to the device sizes
         meetingList.setHasFixedSize(true);
         meetingList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -93,23 +99,25 @@ public class History extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(HistoryViewHolder historyViewHolder, Meeting history, int position) {
+            protected void populateViewHolder(HistoryViewHolder historyViewHolder,Meeting meeting, int position) {
 
-               historyViewHolder.setDisplayMeetingname(history.getMeetingName());
-               historyViewHolder.setDisplayDate(history.getSheduleDate());
+                //create inner class "HistoryViewHolder" to hold the data
+                historyViewHolder.setDisplayMeetingname(meeting.getMeetingName());
+                historyViewHolder.setDisplayDate(meeting.getSheduleDate());
 
-                final String mName = history.getMeetingName();
-                final String mDate = history.getSheduleDate();
-                final String mAdmin = history.getAdmin();
-                final String mDescription = history.getDescription();
+                //set the data to variables
+                final String mName = meeting.getMeetingName();
+                final String mAdmin = meeting.getInitiator();
+                final String mDescription = meeting.getDescription();
+                final long sheduletime = meeting.getSheduleDate();
+                final String roomid = meeting.getRoomId();
                 final int positon = position;
-
 
 
                 historyViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"Call", "Delete Item"};
+                        CharSequence options[] = new CharSequence[]{"View","Delete"};
 
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -118,22 +126,18 @@ public class History extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                //Click Event for each item.
                                 if (i == 0) {
-
-                                    Intent profileIntent = new Intent(getContext(), Settings.class);
-                                    profileIntent.putExtra("user_id", "fd");
+                                    // if user clicks View, all details will be shown : i = 0 = "View"
+                                    Intent profileIntent = new Intent(getContext(), HistoryView.class);
+                                    profileIntent.putExtra("sheduletime", sheduletime);
+                                    profileIntent.putExtra("roomid", roomid);
                                     startActivity(profileIntent);
 
                                 }
-
                                 if (i == 1) {
-
-
+                                    // if user clicks Delete, the item will be delete : i = 1 = "Delete"
                                     HistoryRecyclerViewAdapter.getRef(positon).removeValue();
-
                                 }
-
                             }
                         });
 
@@ -141,13 +145,17 @@ public class History extends Fragment {
 
                     }
                 });
+
+
             }
+
         };
 
         meetingList.setAdapter(HistoryRecyclerViewAdapter);
     }
 
 
+    //Inner class to hold data
     public static class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -165,9 +173,9 @@ public class History extends Fragment {
 
         }
 
-        public void setDisplayDate(String date){
+        public void setDisplayDate(long sdate){
             TextView conDate = (TextView) mView.findViewById(R.id.date_layout);
-            conDate.setText(date);
+            conDate.setText((int) sdate);
 
         }
     }
