@@ -63,6 +63,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
+    private Toolbar mToolbar;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatePickerDialog.OnDateSetListener mTimeSetListener;
@@ -73,6 +74,10 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
+
+        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateButton = (Button)findViewById(R.id.dateButton);
         timeButton = (Button)findViewById(R.id.timeButton);
@@ -143,6 +148,8 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
     }
+
+    public void startTwo(View view) { startActivity(new Intent(this, Mainmenu.class)); }
 
 
     //Next button

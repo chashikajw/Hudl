@@ -21,7 +21,7 @@ public class AddContacts extends AppCompatActivity {
 
     private static EditText emailEt;
     private  static EditText usernameEt;
-    private Toolbar mtoolbar;
+    private Toolbar mToolbar;
 
     private DatabaseReference mDatabase;
     public FirebaseAuth mAuth;
@@ -32,6 +32,11 @@ public class AddContacts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_contact);
+
+        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         emailEt =(EditText)findViewById(R.id.emailText);
         usernameEt = (EditText)findViewById(R.id.usernameText);
