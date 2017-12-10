@@ -45,6 +45,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import hudlmo.interfaces.loginpage.R;
@@ -57,8 +59,13 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     Button dateButton,timeButton,nextButton;
     EditText dateText,timeText,groupName,description,duration;
     private int day,month,year,hour,minutes;
+
     String format;
     Calendar currentTime;
+
+    private String mDatetime;
+    private long timeInMilliseconds;
+
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -163,7 +170,10 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     currnt_userDB.child("time").setValue(time_text);
 
 
-                   mProgress.dismiss();
+
+
+                    mProgress.dismiss();
+
 
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
@@ -238,6 +248,24 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             },hour,minutes,false);
             timePickerDialog.show ();
         }
+    }
+
+
+    public void changedateTimeemills(){
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+        Date resultdate = new Date(yourmilliseconds);
+        System.out.println(sdf.format(resultdate));
+
+        try {
+            Date mDate = sdf.parse(mDatetime);
+            timeInMilliseconds = mDate.getTime();
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
