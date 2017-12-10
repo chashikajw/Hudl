@@ -73,6 +73,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private ArrayList<String> arrayList4;
     //private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
+    private String MroomID;
     private EditText addEmailText;
     String[] checkedList;
     String[] allEmail = {};
@@ -86,6 +87,8 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     String[] check = new String[8];
     String[] emailList = new String[8];
     int contactLength;
+
+    private String meetingName;
 
     String[] contacts;
     String[] stringArray;
@@ -273,11 +276,6 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
 
             //get details from Create Meeting
-            Bundle bundle = getIntent().getExtras();
-            group_name = bundle.getString("group_name");
-            description_ = bundle.getString("description_");
-            date_text = bundle.getString("date_text");
-            time_text = bundle.getString("time_text");
 
 
             Intent intent = new Intent( Intent.ACTION_SEND);
@@ -301,17 +299,25 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //notificationData.put("roomID",roomId);
             notificationData.put("type", "meeting creation");
 
-            String[] sendUser = {"Prabhath","arvin","cjw007","sanu","sammani12"};
+            String[] sendUser = {"sanu","sha"};
 
             String shedyldate = Integer.toString((int) System.currentTimeMillis() + 10000);
-            //store evey participants deatials
+            //store for evey participants deatials
             final HashMap<String, String> meetingData = new HashMap<>();
-            meetingData.put(" meetingName", "fdsfsdfds");
-            meetingData.put("createdDate", "vdvdsvsd");
-            meetingData.put("description", "gdfsdfd");
-            meetingData.put("initiator", "dsvdsfd");
-            meetingData.put("sheduleDate", shedyldate);
-            meetingData.put("roomId", "dfdsfs");
+
+            //get details from Create Meeting
+
+
+            Bundle bundle = getIntent().getExtras();
+            MroomID = bundle.getString("RoomId");
+
+
+            meetingData.put("meetingName", bundle.getString("MeetingName"));
+            meetingData.put("createdDate", bundle.getString("CreatedDate"));
+            meetingData.put("description", bundle.getString("Description"));
+            meetingData.put("initiator", bundle.getString("Initiator"));
+            meetingData.put("sheduleDate", bundle.getString("SheduleDate"));
+            meetingData.put("roomId", bundle.getString("RoomId"));
 
             try {
 
@@ -333,7 +339,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
                             DatabaseReference storemeeting =  usersref.child(reqstUid).child("meetings").child("upcoming");
 
-                            storemeeting.push().setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            storemeeting.child(MroomID).setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
