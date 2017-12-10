@@ -68,8 +68,11 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     private ProgressDialog mProgress;
     private String iniatorUsername;
     private String  roomId;
+    private String date_text;
+    private String time_text;
 
     private long ShduletimeInMilliseconds;
+    private String sheduleDateTime;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private DatePickerDialog.OnDateSetListener mTimeSetListener;
@@ -161,8 +164,8 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
                 String group_name = groupName.getText().toString().trim();
                 String description_ = description.getText().toString().trim();
-                String date_text = dateText.getText().toString().trim();
-                String time_text = timeText.getText().toString().trim();
+                date_text = dateText.getText().toString().trim();
+                time_text = timeText.getText().toString().trim();
                 String duration_ = duration.getText().toString().trim();
                 roomId = Integer.toString((int) System.currentTimeMillis());
                 String initatorID = mAuth.getCurrentUser().getUid();
@@ -188,7 +191,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
                 //convert shedule date time to timemills
-                String sheduleDateTime = date_text + " " +time_text;
+                sheduleDateTime =   date_text+ " "+  time_text;
 
                 long currentmilliseconds = System.currentTimeMillis();
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMM dd,yyyy HH:mm");
@@ -218,7 +221,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
                     final HashMap<String, String> meetingData = new HashMap<>();
                     meetingData.put("meetingName", group_name);
-                    meetingData.put("createdDate", "2015/12/31");
+                    meetingData.put("createdDate", roomId);
                     meetingData.put("description", description_);
                     meetingData.put("initiator",  iniatorUsername);
                     meetingData.put("sheduleDate", Long.toString(ShduletimeInMilliseconds));
@@ -246,8 +249,8 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
                     Intent detail = new Intent ( CreateMeeting.this,AddParticipants.class);
                     detail.putExtra("MeetingName", group_name);
-                    detail.putExtra("CreatedDate",description_);
-                    detail.putExtra("Description", roomId);
+                    detail.putExtra("CreatedDate",roomId);
+                    detail.putExtra("Description", description_);
                     detail.putExtra("Initiator", iniatorUsername);
                     detail.putExtra("SheduleDate", Long.toString(ShduletimeInMilliseconds));
                     detail.putExtra("RoomId", roomId);
