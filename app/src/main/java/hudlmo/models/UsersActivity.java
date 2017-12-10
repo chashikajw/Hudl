@@ -40,10 +40,9 @@ public class UsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
-        mToolbar = (Toolbar) findViewById(R.id.users_appBar);
-        setSupportActionBar(mToolbar);
 
-        getSupportActionBar().setTitle("Add contacts");
+        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
