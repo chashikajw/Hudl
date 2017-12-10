@@ -45,8 +45,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import hudlmo.interfaces.loginpage.R;
@@ -59,19 +57,15 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
     Button dateButton,timeButton,nextButton;
     EditText dateText,timeText,groupName,description,duration;
     private int day,month,year,hour,minutes;
-
     String format;
     Calendar currentTime;
-
-    private String mDatetime;
-    private long timeInMilliseconds;
-
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private ProgressDialog mProgress;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private DatePickerDialog.OnDateSetListener mTimeSetListener;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -127,6 +121,26 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             }
         };
 
+        timeButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(CreateMeeting.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        timeText.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+
 
     }
 
@@ -170,10 +184,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     currnt_userDB.child("time").setValue(time_text);
 
 
-
-
                     mProgress.dismiss();
-
 
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
@@ -233,8 +244,23 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             dialog.show();
 
         }
+ /*       if (v==timeButton){
+            java.util.Calendar cal = java.util.Calendar.getInstance();
 
-       //set calender to find time
+            int hour=cal.get(java.util.Calendar.HOUR);
+            int miniutes=cal.get(java.util.Calendar.MINUTE);
+            //int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
+                    mTimeSetListener,hour,miniutes);
+
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+
+        }
+
+*/
+/*        //set calender to find time
         if (v==timeButton){
             final Calendar c = Calendar.getInstance ();
             hour = c.get ( Calendar.HOUR_OF_DAY );
@@ -247,25 +273,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 }
             },hour,minutes,false);
             timePickerDialog.show ();
-        }
-    }
-
-
-    public void changedateTimeemills(){
-        long yourmilliseconds = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-        Date resultdate = new Date(yourmilliseconds);
-        System.out.println(sdf.format(resultdate));
-
-        try {
-            Date mDate = sdf.parse(mDatetime);
-            timeInMilliseconds = mDate.getTime();
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        }*/
     }
 
 
