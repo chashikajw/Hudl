@@ -63,48 +63,47 @@ import hudlmo.models.User;
 
 public class AddParticipants extends AppCompatActivity implements View.OnClickListener {
 
-    Button createButton , contactsButton, selectButton, deleteButton, addEmailButton ;
-    String group_name,description_,date_text,time_text;
+    int contactLength;
     int index;
+    int count=0;
+    String group_name,description_,date_text,time_text;
+
+    String[] check = new String[8];
+    String[] emailList = new String[8];
+    String[] checkedList;
+    String[] allEmail = {};
+    String[] contacts;
+    String[] stringArray;
+
+    private EditText addEmailText;
+    EditText inputSearch;
+    Button createButton, selectButton, addEmailButton ;
     ListView emailListView , contactsListView1;
+
     private ArrayList<String> arrayList1;
     private ArrayList<String> arrayList2;
     private ArrayList<String> arrayList3;
     private ArrayList<String> arrayList4;
-    //private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
-    private EditText addEmailText;
-    String[] checkedList;
-    String[] allEmail = {};
+    private ArrayAdapter mAdapter;
+
+    ArrayList<String> listItems;
+    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> itemsAdapter2;
+    ArrayAdapter<String> itemsAdapter4;
 
     private DatabaseReference mNotification;
     private DatabaseReference usersref;
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
-    int count;
-    String[] check = new String[8];
-    String[] emailList = new String[8];
-    int contactLength;
 
-    String[] contacts;
-    String[] stringArray;
-    ArrayList<String> listItems;
-    ArrayAdapter<String> adapter;
-    EditText inputSearch;
-
-    private ArrayAdapter mAdapter;
-    ArrayAdapter<String> itemsAdapter2;
-    ArrayAdapter<String> itemsAdapter4;
     FirebaseListAdapter<User> firebaseListAdapter;
-
 
     ///@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_add_participants );
-
-
 
         //notification refernce
         mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
@@ -112,17 +111,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
         usersref = FirebaseDatabase.getInstance().getReference().child("Users");
 
-
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
         emailListView = (ListView)findViewById(R.id.emailListView);
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         addEmailText = (EditText) findViewById(R.id.addEmailText) ;
+        selectButton = (Button) findViewById(R.id.selectButton);
+        addEmailButton = (Button)findViewById(R.id.addEmailButton);
 
-       setContacts();
+        setContacts();
 
 
         //Select Button
-        selectButton = (Button) findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,16 +130,22 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         });
 
         //Add email button
-        addEmailButton = (Button)findViewById(R.id.addEmailButton);
         addEmailButton.setOnClickListener(new OnClickListener() {
-
 
             @Override
             public void onClick(View v) {
                 String newItem = addEmailText.getText ().toString ();
-                arrayList2.add ( newItem );
-                itemsAdapter2.notifyDataSetChanged ();
-                Toast.makeText(AddParticipants.this,"Add "+newItem,Toast.LENGTH_LONG).show();
+
+                if (newItem.isEmpty()){
+                    Toast.makeText(AddParticipants.this,"Error,Required email",Toast.LENGTH_LONG).show();
+                }
+                else if (!isEmailValied(newItem)){
+                    Toast.makeText(AddParticipants.this,"Error,Invalied Email",Toast.LENGTH_LONG).show();
+                }else {
+                    arrayList2.add(newItem);
+                    itemsAdapter2.notifyDataSetChanged();
+                    Toast.makeText(AddParticipants.this, "Add " + newItem, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -158,8 +163,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
+
                             //itemsAdapter2.getItemId(position).removeValue();
-                            arrayList2.remove(position);
+                            //arrayList2.remove(position);
                             //emailListView.removeViewAt(position);
                         }
                     }
@@ -186,11 +192,15 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         itemsAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList2);
         emailListView.setAdapter(itemsAdapter2);
 
-
         //create Button
         createButton = (Button)findViewById(R.id.createButton);
         createButton.setOnClickListener ( this );
 
+    }
+
+    //validate Email
+    public boolean isEmailValied(String email){
+        return email.contains("@");
     }
 
     //set selected items from contact listview to email listview
@@ -198,24 +208,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         SparseBooleanArray checked = contactsListView1.getCheckedItemPositions();
         int k=0;
         contactLength = check.length;
-        //int j=contactsListView1.getAdapter().getCount();
-        //Toast.makeText(AddParticipants.this,contactLength,Toast.LENGTH_LONG).show();
         checkedList = new String[contactLength];
 
         for(int i=0;i<contactLength;i++){
             String item = emailList[i];
             if (checked.get(i)){
                 checkedList[k]=item;
-
-
                 arrayList2.add(item);
-
                 k++;
             }
         }
         itemsAdapter2.notifyDataSetChanged ();
-
-
 
     }
 

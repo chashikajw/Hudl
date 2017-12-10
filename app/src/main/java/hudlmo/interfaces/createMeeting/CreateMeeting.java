@@ -97,7 +97,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month+1;
-                //Log.d(TAG, "onDateSet: mm/dd/yyy:"+ year + "/"+ month + "/" + day+ "/");
+
                 String months = "";
                 switch (month){
                     case 1:months="Jan";break;
@@ -179,10 +179,8 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     currnt_userDB.child("createdDate").setValue("vfdvdv");
                     currnt_userDB.child("sheduleDate").setValue("12133234343");
 
-
                     currnt_userDB.child("date").setValue(date_text);
                     currnt_userDB.child("time").setValue(time_text);
-
 
                     mProgress.dismiss();
 
@@ -244,36 +242,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
             dialog.show();
 
         }
- /*       if (v==timeButton){
-            java.util.Calendar cal = java.util.Calendar.getInstance();
 
-            int hour=cal.get(java.util.Calendar.HOUR);
-            int miniutes=cal.get(java.util.Calendar.MINUTE);
-            //int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
-                    mTimeSetListener,hour,miniutes);
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
-
-        }
-
-*/
-/*        //set calender to find time
-        if (v==timeButton){
-            final Calendar c = Calendar.getInstance ();
-            hour = c.get ( Calendar.HOUR_OF_DAY );
-            minutes = c.get(Calendar.MINUTE);
-
-            TimePickerDialog timePickerDialog = new TimePickerDialog ( this, new TimePickerDialog.OnTimeSetListener () {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    timeText.setText ( hourOfDay+":"+minute );
-                }
-            },hour,minutes,false);
-            timePickerDialog.show ();
-        }*/
     }
 
 
