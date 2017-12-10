@@ -151,7 +151,7 @@ public class Upcoming extends Fragment {
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
-                final long sheduletime = meeting.getSheduleDate();
+                final long sheduletime = Long.parseLong(meeting.getSheduleDate());
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
