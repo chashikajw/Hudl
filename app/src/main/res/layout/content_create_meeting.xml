@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:screenOrientation="portrait"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="hudlmo.interfaces.createMeeting.CreateMeeting"
     tools:showIn="@layout/activity_create_meeting">

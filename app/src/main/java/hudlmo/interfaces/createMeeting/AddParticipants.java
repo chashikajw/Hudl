@@ -74,7 +74,8 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     //private ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter1;
     private EditText addEmailText;
-    //private String[] lv_arr,checkedList = {};
+    String[] checkedList;
+    String[] allEmail = {};
 
     private DatabaseReference mNotification;
     private DatabaseReference usersref;
@@ -95,6 +96,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private ArrayAdapter mAdapter;
     ArrayAdapter<String> itemsAdapter2;
     ArrayAdapter<String> itemsAdapter4;
+    FirebaseListAdapter<User> firebaseListAdapter;
 
 
     ///@Override
@@ -110,15 +112,13 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
         usersref = FirebaseDatabase.getInstance().getReference().child("Users");
 
+
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
         emailListView = (ListView)findViewById(R.id.emailListView);
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         addEmailText = (EditText) findViewById(R.id.addEmailText) ;
 
-        setContacts();
-
-
-
+       setContacts();
 
 
         //Select Button
@@ -133,24 +133,59 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         //Add email button
         addEmailButton = (Button)findViewById(R.id.addEmailButton);
         addEmailButton.setOnClickListener(new OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                //addEmailText.setText(count);
-                //Toast.makeText(AddParticipants.this,count,Toast.LENGTH_LONG).show();
+                String newItem = addEmailText.getText ().toString ();
+                arrayList2.add ( newItem );
+                itemsAdapter2.notifyDataSetChanged ();
+                Toast.makeText(AddParticipants.this,"Add "+newItem,Toast.LENGTH_LONG).show();
             }
         });
 
-    /*    emailListView.setOnItemClickListener(new OnItemClickListener() {
+        //Delete item from email listview
+        emailListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 CharSequence options[] = new CharSequence[]{ "Delete"};
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(AddParticipants.this);
 
                 builder.setTitle("Delete Email");
 
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            //itemsAdapter2.getItemId(position).removeValue();
+                            arrayList2.remove(position);
+                            //emailListView.removeViewAt(position);
+                        }
+                    }
+                });
+                builder.show();
+                }
+        });
+
+ /*       //Hide Contact and Email lists
+        addEmailText.setOnClickListener ( new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                contactsListView1.setVisibility(View.GONE);
+                emailListView.setVisibility(View.GONE);
             }
-        });*/
+
+
+        } );
+*/
+        //Add Emails to EmailListView
+        arrayList2 = new ArrayList<> ( Arrays.asList(allEmail) );
+        itemsAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList2);
+        emailListView.setAdapter(itemsAdapter2);
+
 
         //create Button
         createButton = (Button)findViewById(R.id.createButton);
@@ -158,30 +193,33 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    //set selected items from contact listview to email listview
     public void setCheckItemsEmailArrray(){
         SparseBooleanArray checked = contactsListView1.getCheckedItemPositions();
         int k=0;
         contactLength = check.length;
         //int j=contactsListView1.getAdapter().getCount();
         //Toast.makeText(AddParticipants.this,contactLength,Toast.LENGTH_LONG).show();
-        String checkedList[] = new String[contactLength];
+        checkedList = new String[contactLength];
 
         for(int i=0;i<contactLength;i++){
             String item = emailList[i];
             if (checked.get(i)){
                 checkedList[k]=item;
+
+
+                arrayList2.add(item);
+
                 k++;
             }
         }
+        itemsAdapter2.notifyDataSetChanged ();
 
-        emailListView = (ListView)findViewById(R.id.emailListView);
-        arrayList2 = new ArrayList<> ( Arrays.asList(checkedList) );
-        itemsAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, arrayList2);
-        emailListView.setAdapter(itemsAdapter2);
-        emailListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
 
     }
 
+    //Create Contact Listview
     public void setContacts(){
 
         //get user list from firebase database
@@ -204,12 +242,11 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        FirebaseListAdapter<User> firebaseListAdapter = new FirebaseListAdapter<User>(
+        firebaseListAdapter = new FirebaseListAdapter<User>(
                 this,
                 User.class,
                 android.R.layout.simple_list_item_multiple_choice,
                 databaseReference
-
 
         ) {
             @Override
@@ -231,7 +268,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         //send email
+
         if (view.getId()==R.id.createButton){
+
 
             //get details from Create Meeting
             Bundle bundle = getIntent().getExtras();
@@ -252,7 +291,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             startActivity (Intent.createChooser ( intent,"Send Email" ));
 
 
-            //send notifications
+ //send notifications
             final HashMap<String, String> notificationData = new HashMap<>();
             String CurrntUserId = mAuth.getCurrentUser().getUid();
             //calculate unique number
@@ -262,7 +301,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //notificationData.put("roomID",roomId);
             notificationData.put("type", "meeting creation");
 
-            String[] sendUser = {};
+            String[] sendUser = {"hiru"};
 
 
             //store evey participants deatials
