@@ -303,14 +303,14 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             String[] sendUser = {"Prabhath","arvin","cjw007","sanu","sammani12"};
 
-
+            String shedyldate = Integer.toString((int) System.currentTimeMillis() + 10000);
             //store evey participants deatials
             final HashMap<String, String> meetingData = new HashMap<>();
             meetingData.put(" meetingName", "fdsfsdfds");
             meetingData.put("createdDate", "vdvdsvsd");
             meetingData.put("description", "gdfsdfd");
             meetingData.put("initiator", "dsvdsfd");
-            meetingData.put("sheduleDate", "2323123232");
+            meetingData.put("sheduleDate", shedyldate);
             meetingData.put("roomId", "dfdsfs");
 
             try {
