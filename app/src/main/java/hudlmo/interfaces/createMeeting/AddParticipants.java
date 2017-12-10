@@ -78,6 +78,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     String[] allEmail = {};
 
     private DatabaseReference mNotification;
+    private DatabaseReference usersref;
     private DatabaseReference reqstUser;
     private FirebaseAuth mAuth;
     private DataSnapshot dataSnapshot;
@@ -103,12 +104,22 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_add_participants );
 
+
+
+        //notification refernce
+        mNotification = FirebaseDatabase.getInstance().getReference().child("Notifications");
+        mAuth = FirebaseAuth.getInstance();
+        reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+        usersref = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
         contactsListView1 = (ListView)findViewById ( R.id.contactsListView1 );
         emailListView = (ListView)findViewById(R.id.emailListView);
         inputSearch = (EditText)findViewById(R.id.inputSearch);
         addEmailText = (EditText) findViewById(R.id.addEmailText) ;
 
-        setContacts();
+       setContacts();
+
 
         //Select Button
         selectButton = (Button) findViewById(R.id.selectButton);
@@ -122,6 +133,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         //Add email button
         addEmailButton = (Button)findViewById(R.id.addEmailButton);
         addEmailButton.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String newItem = addEmailText.getText ().toString ();
@@ -157,11 +169,13 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
  /*       //Hide Contact and Email lists
         addEmailText.setOnClickListener ( new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 contactsListView1.setVisibility(View.GONE);
                 emailListView.setVisibility(View.GONE);
             }
+
         } );
 */
         //Add Emails to EmailListView
@@ -188,11 +202,14 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             String item = emailList[i];
             if (checked.get(i)){
                 checkedList[k]=item;
+
                 arrayList2.add(item);
                 k++;
             }
         }
         itemsAdapter2.notifyDataSetChanged ();
+
+      
 
     }
 
@@ -245,7 +262,9 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         //send email
+
         if (view.getId()==R.id.createButton){
+
 
             //get details from Create Meeting
             Bundle bundle = getIntent().getExtras();
@@ -267,11 +286,19 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
 
 
- /*           //send notifications
-            final HashMap<String,String> notificationData = new HashMap<>();
+
+            //send notifications
+            final HashMap<String, String> notificationData = new HashMap<>();
             String CurrntUserId = mAuth.getCurrentUser().getUid();
-            notificationData.put("from",CurrntUserId);
-            notificationData.put("type","meeting creation");
+            //calculate unique number
+            final String roomId = Integer.toString((int) System.currentTimeMillis());
+            notificationData.put("from", CurrntUserId);
+            notificationData.put("roomId", roomId);
+            //notificationData.put("roomID",roomId);
+            notificationData.put("type", "meeting creation");
+
+            String[] sendUser = {"hiru"};
+
 
             final String[] sendUser = {"cjw007","boby","jay007"};
 
@@ -290,15 +317,42 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
                     mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+
+                            final String reqstUid = dataSnapshot.getValue().toString();
+                            usersref.child(reqstUid).child("roomId").setValue(roomId);
+
+
+                            mNotification.child(reqstUid).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //usersref.child(reqstUid).child("roomID").setValue(roomId);
+
+                                }
+                            });
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+
                         }
                     });
-                }
-                @Override
-                public void onCancelled(DatabaseError error) {
+
+                    //set room
+
 
                 }
-            });*/
+
+
+            } catch (Exception e) {
+                Log.d("myTag", "error");
+
+            }
+
         }
     }
 }
