@@ -89,6 +89,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         registerBtn.setOnClickListener(this);
     }
 
+    public boolean isEmailValied(String email){
+        return (!(email.contains("@")));
+    }
 
     private void registerUser(){
         String name = nameTxt.getText().toString().trim();
@@ -118,6 +121,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if(TextUtils.isEmpty(newUser.getEmail())){
             //email is empty
             Toast.makeText(this, "Please enter email",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+        }
+
+        if(isEmailValied(newUser.getEmail())){
+            //email is invalied
+            Toast.makeText(this, "Please enter valied email",Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
 
