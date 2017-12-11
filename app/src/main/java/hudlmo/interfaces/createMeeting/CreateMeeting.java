@@ -97,7 +97,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
         groupName = (EditText)findViewById(R.id.groupNameText);
         description = (EditText)findViewById(R.id.descriptionText);
-        duration = (EditText)findViewById(R.id.durationText);
+
         dateText = (EditText)findViewById(R.id.dateText);
         timeText = (EditText)findViewById(R.id.timeText);
 
@@ -220,6 +220,9 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 //validation
                 if(TextUtils.isEmpty(group_name)/*||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)*/){
                     Toast.makeText(CreateMeeting.this, "Fields are empty",Toast.LENGTH_LONG).show();
+                }
+                if(ShduletimeInMilliseconds <= System.currentTimeMillis()){
+                    Toast.makeText(CreateMeeting.this, "set upcoming time to shedule",Toast.LENGTH_LONG).show();
                 }
 
 
