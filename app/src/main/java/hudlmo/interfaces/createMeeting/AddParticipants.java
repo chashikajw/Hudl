@@ -319,7 +319,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             intent.putExtra(Intent.EXTRA_EMAIL, to);
             intent.putExtra(Intent.EXTRA_SUBJECT, "Meeting Invitation");
-            intent.putExtra(Intent.EXTRA_TEXT, group_name + "\n" + description_ + "\n" + date_text + "\n" + time_text);
+            intent.putExtra(Intent.EXTRA_TEXT, "hudle" + "\n" +  "group meeting" + "\n" + "2017/12/11" + "\n" + "09:30");
             intent.setType("message/rfc822");
             startActivity(Intent.createChooser(intent, "Send Email"));
 

@@ -132,7 +132,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     case 12:months="Dec";break;
 
                 }
-                String date =months + " " + day + " ," + year;
+                String date =months + " " + day + ", " + year;
                 dateText.setText(date);
 
 
@@ -176,7 +176,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 String description_ = description.getText().toString().trim();
                 date_text = dateText.getText().toString().trim();
                 time_text = timeText.getText().toString().trim();
-                String duration_ = duration.getText().toString().trim();
+                //String duration_ = duration.getText().toString().trim();
                 roomId = Integer.toString((int) System.currentTimeMillis());
                 String initatorID = mAuth.getCurrentUser().getUid();
 
@@ -321,26 +321,20 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         }
  /*       if (v==timeButton){
             java.util.Calendar cal = java.util.Calendar.getInstance();
-
             int hour=cal.get(java.util.Calendar.HOUR);
             int miniutes=cal.get(java.util.Calendar.MINUTE);
             //int day=cal.get(java.util.Calendar.DAY_OF_MONTH);
-
             DatePickerDialog dialog=new DatePickerDialog(CreateMeeting.this,android.R.style.Theme_Holo_Dialog_MinWidth,
                     mTimeSetListener,hour,miniutes);
-
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
-
         }
-
 */
 /*        //set calender to find time
         if (v==timeButton){
             final Calendar c = Calendar.getInstance ();
             hour = c.get ( Calendar.HOUR_OF_DAY );
             minutes = c.get(Calendar.MINUTE);
-
             TimePickerDialog timePickerDialog = new TimePickerDialog ( this, new TimePickerDialog.OnTimeSetListener () {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
