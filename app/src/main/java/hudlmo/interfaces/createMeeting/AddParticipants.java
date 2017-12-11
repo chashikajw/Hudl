@@ -340,7 +340,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //store for evey participants deatials
             final HashMap<String, String> meetingData = new HashMap<>();
 
-            //get details from Create Meeting
+            //get details from Create Meeting and aadd set to database
 
 
             Bundle bundle = getIntent().getExtras();

@@ -1,7 +1,9 @@
 package hudlmo.interfaces.loginpage;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,6 +43,8 @@ public class AddContacts extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // ActionBar bar = getActionBar();
+       // bar.setBackgroundDrawable(new ColorDrawable(0x008dc7));
 
 
         emailEt =(EditText)findViewById(R.id.emailText);
@@ -49,11 +53,6 @@ public class AddContacts extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
 
-       /* //set up toolbar
-        mtoolbar = (Toolbar)findViewById(R.id.contacttoolbar);
-        setSupportActionBar(mtoolbar);
-        getSupportActionBar().setTitle("Save Groups");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); */
 
     }
 
