@@ -270,25 +270,10 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                         }
                     });
 
-                    
-                    username_userDB.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String username = dataSnapshot.getValue(String.class);
-                            currnt_userDB.child("initiator").setValue(username);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
 
 
 
-                    mProgress.dismiss();
-
-
+                    //mProgress.dismiss();
 
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
