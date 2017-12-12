@@ -218,7 +218,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
                 //validation
-                if(TextUtils.isEmpty(group_name)/*||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)*/){
+                if(TextUtils.isEmpty(group_name)||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)){
                     Toast.makeText(CreateMeeting.this, "Fields are empty",Toast.LENGTH_LONG).show();
                 }
                 if(ShduletimeInMilliseconds <= System.currentTimeMillis()){
@@ -228,9 +228,9 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
                 //insert data to database
                 else {
-                    mProgress.setMessage("Creating meeting....");
-                    mProgress.show();
-
+                    //mProgress.setMessage("Creating meeting....");
+                    //mProgress.show();
+                    Toast.makeText(CreateMeeting.this, "Creating Meeting",Toast.LENGTH_LONG).show();
 
                     final HashMap<String, String> meetingData = new HashMap<>();
                     meetingData.put("meetingName", group_name);
@@ -256,7 +256,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
 
-                    mProgress.dismiss();
+                    //mProgress.dismiss();
 
                     //startActivity(new Intent(CreateMeeting.this, Mainmenu.class));
 
