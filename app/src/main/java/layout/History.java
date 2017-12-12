@@ -139,11 +139,7 @@ public class History extends Fragment {
 
                                 //Click Event for each item.
                                 if (i == 0) {
-                                    //send meeting data to the conference(participation)
-                                    Intent profileIntent = new Intent(getContext(), VideoCoference.class);
-                                    profileIntent.putExtra("sheduletime", sheduletime);
-                                    profileIntent.putExtra("roomid", roomid);
-                                    startActivity(profileIntent);
+
                                 }
                                 if (i == 1) {
                                     //delete the meeting from database and list view
