@@ -49,19 +49,11 @@ import hudlmo.models.UsersActivity;
 public class Upcoming extends Fragment {
 
     private RecyclerView meetingLIst;
-
     private DatabaseReference mMeetingDatabase;
     private DatabaseReference mUserDatabase;
-
-
     private FirebaseAuth mAuth;
-
     private String mCurrent_user_id;
-
     private View mMainView;
-
-
-
     private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter;
 
 
@@ -76,32 +68,33 @@ public class Upcoming extends Fragment {
 
         mMainView = inflater.inflate(R.layout.fragment_upcoming, container, false);
 
+        //initialise the meeting list
         meetingLIst = (RecyclerView) mMainView.findViewById(R.id.upcoming_list);
-        mAuth = FirebaseAuth.getInstance();
 
+        //get the loged user's id
+        mAuth = FirebaseAuth.getInstance();
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
+
+        //get the reference of Users
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        //get
         String meetingID = Integer.toString((int)System.currentTimeMillis());
 
-        mMeetingDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("meetings").child("upcoming");
+        //get the reference of current users meeting upcoming class
+        mMeetingDatabase = mUserDatabase.child(mCurrent_user_id).child("meetings").child("upcoming");
 
         //offline syncronize
         mMeetingDatabase.keepSynced(true);
 
 
-
-
-
-
         meetingLIst.setHasFixedSize(true);
         meetingLIst.setLayoutManager(new LinearLayoutManager(getContext()));
-
         // Inflate the layout for this fragment
         return mMainView;
     }
 
 
-    //if  shedule time of the meeting is past then it delete from upcoming and added to history
+  /*  //if  shedule time of the meeting is past then it delete from upcoming and added to history
     public void romovePastMeetings(){
 
         mMeetingDatabase.orderByChild("date").addListenerForSingleValueEvent(
@@ -121,17 +114,15 @@ public class Upcoming extends Fragment {
                         Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
                     }
                 });
-    }
-
+    }*/
 
 
 
     @Override
     public void onStart() {
         super.onStart();
-
+        //define the recyle view to store meeting objects
         meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
-
                 Meeting.class,
                 R.layout.users_single_layout,
                 MeetingViewHolder.class,
@@ -142,12 +133,7 @@ public class Upcoming extends Fragment {
             @Override
             protected void populateViewHolder(MeetingViewHolder MeetingViewHolder,Meeting meeting, int position) {
 
-                MeetingViewHolder.setDisplayMeetingname(meeting.getMeetingName());
-                MeetingViewHolder.setDisplayAdminName(meeting.getInitiator());
-                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
-
-
-
+                //get the details of recyleview object
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
@@ -155,14 +141,17 @@ public class Upcoming extends Fragment {
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
+                //display data in one item(in single layout)
+                MeetingViewHolder.setDisplayMeetingname(mName);
+                MeetingViewHolder.setDisplayAdminName(mAdmin);
+                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
+
+
                 MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-
-
+                        //create alert dialog (with two clicks events) when click a meeting item
                         CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
-
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                         builder.setTitle(mName);
@@ -172,17 +161,14 @@ public class Upcoming extends Fragment {
 
                                 //Click Event for each item.
                                 if (i == 0) {
-
+                                    //send meeting data to the conference(participation)
                                     Intent profileIntent = new Intent(getContext(), VideoCoference.class);
                                     profileIntent.putExtra("sheduletime", sheduletime);
                                     profileIntent.putExtra("roomid", roomid);
                                     startActivity(profileIntent);
-
                                 }
-
                                 if (i == 1) {
-
-
+                                    //delete the meeting from database and list view
                                     meetingRecyclerViewAdapter.getRef(positon).removeValue();
 
                                 }
@@ -199,13 +185,12 @@ public class Upcoming extends Fragment {
             }
 
         };
-
+        //set the recycle view for adapter
         meetingLIst.setAdapter(meetingRecyclerViewAdapter);
-
 
     }
 
-
+    //create classs meting view holder to hold data in a item
     public static class MeetingViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
@@ -225,6 +210,7 @@ public class Upcoming extends Fragment {
         }
 
         public void setDisplayAdminName(String admin){
+
 
             TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
             adminName.setText(admin);
@@ -247,26 +233,8 @@ public class Upcoming extends Fragment {
 
         }*/
 
-        public void setUserOnline(String online_status) {
-
-            ImageView userOnlineView = (ImageView) mView.findViewById(R.id.user_single_online_icon);
-
-            if(online_status.equals("true")){
-
-                userOnlineView.setVisibility(View.VISIBLE);
-
-            } else {
-
-                userOnlineView.setVisibility(View.INVISIBLE);
-
-            }
-
-        }
-
 
     }
-
-
 
 
 }
