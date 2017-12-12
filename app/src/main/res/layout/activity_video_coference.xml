@@ -67,9 +67,21 @@
         android:layout_alignParentTop="true">
 
         <TextView
+            android:id="@+id/start_in"
+            android:layout_width="357dp"
+            android:layout_height="341dp"
+            android:gravity="center"
+            android:lineSpacingExtra="12sp"
+            android:text="Starts in "
+            android:textColor="@android:color/holo_green_dark"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+
+            android:textSize="30sp" />
+
+        <TextView
             android:id="@+id/user_single_timer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="474dp"
             android:gravity="center"
             android:text="TextView"
             android:textAlignment="center"
