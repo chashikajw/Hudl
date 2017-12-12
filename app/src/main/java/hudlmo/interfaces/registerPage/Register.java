@@ -51,6 +51,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     //defining db
     private DatabaseReference mDatabase;
 
+    private DatabaseReference mDatabaseEmail;
+
     private DatabaseReference mDatabaseindex;
 
     @Override
@@ -75,6 +77,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         //get the firebase database reference
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         mDatabaseindex = FirebaseDatabase.getInstance().getReference().child("UserIndex");
+        mDatabaseEmail = FirebaseDatabase.getInstance().getReference().child("UniqueID");
 
 
         registerBtn = (Button) findViewById(R.id.registerBtn);
@@ -89,6 +92,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         registerBtn.setOnClickListener(this);
     }
 
+    public boolean isEmailValied(String email){
+        return (!(email.contains("@")));
+    }
 
     private void registerUser(){
         String name = nameTxt.getText().toString().trim();
@@ -118,6 +124,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if(TextUtils.isEmpty(newUser.getEmail())){
             //email is empty
             Toast.makeText(this, "Please enter email",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            return;
+
+        }
+
+        if(isEmailValied(newUser.getEmail())){
+            //email is invalied
+            Toast.makeText(this, "Please enter valied email",Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
 
@@ -169,16 +183,24 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         if (task.isSuccessful()){
                             //user is successfully registered and logged in
 
+
                             if(isValidEmail(email)) {
                                 if( EmailVerification() == true){
 
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
-                                currnt_userDB.child("name").setValue(newUser.getName());
-                                currnt_userDB.child("username").setValue(newUser.getUname());
-                                currnt_userDB.child("email").setValue(newUser.getEmail());
-                                currnt_userDB.child("meetings").setValue("default");
-                                currnt_userDB.child("image").setValue("default");
+                            //EmailVerification();
+
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
+                            currnt_userDB.child("name").setValue(newUser.getName());
+                            currnt_userDB.child("username").setValue(newUser.getUname());
+                            currnt_userDB.child("email").setValue(newUser.getEmail());
+                            currnt_userDB.child("meetings").setValue("default");
+                            currnt_userDB.child("image").setValue("default");
+
+                            String emailID = Integer.toString((int)System.currentTimeMillis());
+                            //mDatabaseEmail = FirebaseDatabase.getInstance().getReference().child("UniqueID");
+                            mDatabaseEmail.child(emailID).setValue(user.getEmail());
+
 
                                 String userId = mAuth.getCurrentUser().getUid();
 

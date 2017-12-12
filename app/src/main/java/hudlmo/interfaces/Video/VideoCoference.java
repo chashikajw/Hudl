@@ -66,7 +66,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
         mAuth = FirebaseAuth.getInstance();
         String userId = mAuth.getCurrentUser().getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("username");
-        token = "cHJvdmlzaW9uAGNqdzAwN0AxOGYwYmQudmlkeW8uaW8ANjM2Nzk5MDg3MjMAAGRlNDg0ZTBmYTIxMTI1YzgzNjg2Yzg3OWUwZThiOTJiMTY3Mjk2YWQzMWViMThhZjIxNTE3NmM2NzNlYTMwNzAwMzJlNzliMDg5MzMxZjFhNDU1NTgxZGVhNmNkN2Q4OA==";
+        token = "cHJvdmlzaW9uAGNoYXNoRmluYWxAMThmMGJkLnZpZHlvLmlvADYzNzMwMTI0NjQ4AAA4M2QwMWY3MGQ3Yjk4YmYyYmY5MjdlMmU2OTFiODliYjQ0OWJkYWNmYzdiYmVjMTY3NzdjNWNiYWY5ZjNlYjAwYmU5ZWRlNGM5OGY5MTMyMmU5MTc1N2VhNDA4YjM0ZTk=";
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override

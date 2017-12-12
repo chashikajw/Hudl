@@ -113,9 +113,7 @@ public class Mainmenu extends AppCompatActivity {
             //startActivity(new Intent(this,login.class));
             startActivity(new Intent(this,login.class));
         }
-        if (id == R.id.action_findusers) {
-            startActivity(new Intent(Mainmenu.this, UsersActivity.class));
-        }
+
 
 
 

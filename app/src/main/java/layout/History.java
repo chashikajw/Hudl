@@ -1,13 +1,9 @@
 package layout;
 
 
-
-import hudlmo.interfaces.History.HistoryView;
-import hudlmo.interfaces.Video.VideoCoference;
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -24,29 +20,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-import hudlmo.interfaces.loginpage.Settings;
-import hudlmo.models.HistoryC;
 import hudlmo.models.Meeting;
+
 
 /**
  * Created by Shalini PC on 12/8/2017.
  */
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class History extends Fragment {
 
-    private RecyclerView meetingList;
-
-    //new database references for hisotry and user
-    private DatabaseReference mHistoryDatabase;
+    private RecyclerView historyMeetingList;
+    private DatabaseReference mMeetingDatabase;
     private DatabaseReference mUserDatabase;
-
-    private FirebaseRecyclerAdapter<Meeting, HistoryViewHolder> HistoryRecyclerViewAdapter;
-
     private FirebaseAuth mAuth;
-
     private String mCurrent_user_id;
-
-    private View mRootView;
+    private View mMainView;
+    private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> hisotryRecyclerViewAdapter;
 
 
     public History() {
@@ -58,67 +51,70 @@ public class History extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //set the main view to history fragment
-        mRootView = inflater.inflate(R.layout.fragment_history, container, false);
+        mMainView = inflater.inflate(R.layout.fragment_history, container, false);
 
-        //add the meeting history summary to main page of history
-        meetingList = (RecyclerView) mRootView.findViewById(R.id.meeting_list);
+        //initialise the meeting list
+        historyMeetingList = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+
+        //get the loged user's id
         mAuth = FirebaseAuth.getInstance();
-
-        //get the current user id and current user's references to the database
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
+
+        //get the reference of Users
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        //get
+        String meetingID = Integer.toString((int)System.currentTimeMillis());
 
-        //get the first conversation history as history
-        //called child("1")
-        mHistoryDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrent_user_id).child("Meeting").child("History");
+        //get the reference of current users meeting History class
+        mMeetingDatabase = mUserDatabase.child(mCurrent_user_id).child("meetings").child("history");
 
-        //offline synchronize
-        mHistoryDatabase.keepSynced(true);
+        //offline syncronize
+        mMeetingDatabase.keepSynced(true);
 
-        //set the list wiev to the device sizes
-        meetingList.setHasFixedSize(true);
-        meetingList.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        historyMeetingList.setHasFixedSize(true);
+        historyMeetingList.setLayoutManager(new LinearLayoutManager(getContext()));
         // Inflate the layout for this fragment
-        return mRootView;
+        return mMainView;
     }
+
+
 
 
     @Override
     public void onStart() {
         super.onStart();
-
-        HistoryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,HistoryViewHolder>(
-
+        //define the recyle view to store meeting objects
+        hisotryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
                 Meeting.class,
-                R.layout.history_single_layout,
-                HistoryViewHolder.class,
-                mHistoryDatabase
+                R.layout.users_single_layout,
+                MeetingViewHolder.class,
+                mMeetingDatabase
 
 
         ) {
             @Override
-            protected void populateViewHolder(HistoryViewHolder historyViewHolder,Meeting meeting, int position) {
+            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder,Meeting meeting, int position) {
 
-                //create inner class "HistoryViewHolder" to hold the data
-                historyViewHolder.setDisplayMeetingname(meeting.getMeetingName());
-                historyViewHolder.setDisplayDate(meeting.getSheduleDate());
-
-                //set the data to variables
+                //get the details of recyleview object
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
-                final String scheduledate = meeting.getSheduleDate();
+                final long scheduletime = Long.parseLong(meeting.getSheduleDate());
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
+                //display data in one item(in single layout)
+                MeetingViewHolder.setDisplayMeetingname(mName);
+                MeetingViewHolder.setDisplayAdminName(mAdmin);
+                MeetingViewHolder.setDisplayScheduleTime(scheduletime);
 
-                historyViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
+                MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"View","Delete"};
-
+                        //create alert dialog (with two clicks events) when click a meeting item
+                        CharSequence options[] = new CharSequence[]{"Delete"};
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                         builder.setTitle(mName);
@@ -126,17 +122,10 @@ public class History extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
+                                //Click Event for each item.
                                 if (i == 0) {
-                                    // if user clicks View, all details will be shown : i = 0 = "View"
-                                    Intent profileIntent = new Intent(getContext(), HistoryView.class);
-                                    profileIntent.putExtra("groupName", mName);
-                                    profileIntent.putExtra("date", scheduledate);
-                                    startActivity(profileIntent);
-
-                                }
-                                if (i == 1) {
-                                    // if user clicks Delete, the item will be delete : i = 1 = "Delete"
-                                    HistoryRecyclerViewAdapter.getRef(positon).removeValue();
+                                    //delete the meeting from database and list view
+                                    hisotryRecyclerViewAdapter.getRef(positon).removeValue();
                                 }
                             }
                         });
@@ -151,32 +140,44 @@ public class History extends Fragment {
 
         };
 
-        meetingList.setAdapter(HistoryRecyclerViewAdapter);
+        //set the recycle view for adapter
+        historyMeetingList.setAdapter(hisotryRecyclerViewAdapter);
+
     }
 
-
-    //Inner class to hold data
-    public static class HistoryViewHolder extends RecyclerView.ViewHolder {
+    //create classs meting view holder to hold data in a item
+    public static class MeetingViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
 
-        public HistoryViewHolder(View itemView) {
+        public MeetingViewHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
+
         }
 
         public void setDisplayMeetingname(String groupname){
 
-            TextView meetingNameView = (TextView) mView.findViewById(R.id.convo_name_layout);
+            TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_name);
             meetingNameView.setText(groupname);
 
         }
 
-        public void setDisplayDate(String sdate){
-            TextView conDate = (TextView) mView.findViewById(R.id.date_layout);
-            conDate.setText(sdate);
+        public void setDisplayAdminName(String admin){
+
+
+            TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
+            adminName.setText(admin);
+
 
         }
+
+        public void setDisplayScheduleTime(long sheduletime) {
+            TextView meetingScheduletime = (TextView) mView.findViewById(R.id.user_single_timer);
+            meetingScheduletime.setText((int) sheduletime);
+        }
     }
+
+
 }
