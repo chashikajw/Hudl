@@ -386,7 +386,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
                             String meetingId = Integer.toString((int) System.currentTimeMillis());
 
 
-                            DatabaseReference storemeeting = usersref.child(reqstUid).child("meetings").child("upcoming");
+                            DatabaseReference storemeeting = usersref.child(reqstUid).child("meetings").child("history");
 
                             storemeeting.child(MroomID).setValue(meetingData).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
