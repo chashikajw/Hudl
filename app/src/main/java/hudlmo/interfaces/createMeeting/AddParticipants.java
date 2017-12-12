@@ -330,6 +330,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             //calculate unique number
             final String roomId = Integer.toString((int) System.currentTimeMillis());
             notificationData.put("from", CurrntUserId);
+            notificationData.put("initiator", CurrntUserId);
             notificationData.put("roomId", roomId);
             //notificationData.put("roomID",roomId);
             notificationData.put("type", "meeting creation");
