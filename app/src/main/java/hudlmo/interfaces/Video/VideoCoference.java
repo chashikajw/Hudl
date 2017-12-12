@@ -29,6 +29,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
     private VidyoConnector vc;
     private FrameLayout videoFrame;
     private TextView timerCountdown;
+    private TextView start_in;
 
     //show timer
     private long timeInMilliseconds;
@@ -84,6 +85,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
 
 
         timerCountdown = (TextView)findViewById(R.id.user_single_timer);
+        start_in =  (TextView)findViewById(R.id.start_in);
 
         //countdown to start meeting
         //setcountdown to show
@@ -109,6 +111,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
             }
             public void onFinish() {
                 timerCountdown.setVisibility(View.INVISIBLE);
+                start_in.setVisibility(View.INVISIBLE);
 
                 //button enabled when time is up
                 startBtn.setEnabled(true);
