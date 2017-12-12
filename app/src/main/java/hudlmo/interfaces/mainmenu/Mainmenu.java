@@ -60,6 +60,7 @@ public class Mainmenu extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.drawable.main_icon);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -254,14 +255,13 @@ public class Mainmenu extends AppCompatActivity {
                     Upcoming upcomingFragment = new Upcoming();
                     return upcomingFragment;
 
-
                 case 1:
-                    Contacts contactsFragment = new Contacts();
-                    return contactsFragment;
-
-                case 2:
                     History historyFragment = new History();
                     return  historyFragment;
+
+                case 2:
+                    Contacts contactsFragment = new Contacts();
+                    return contactsFragment;
 
 
 

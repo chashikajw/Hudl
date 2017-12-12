@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="hudlmo.interfaces.loginpage">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.INTERNET" />
 
     <!-- Set custom default icon. This is used when no icon is set for incoming notification messages. -->
     <meta-data
@@ -16,22 +18,30 @@
         android:name="com.google.firebase.messaging.default_notification_color"
         android:resource="@color/colorAccent" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.CAMERA" />
     "
-    <service android:name=".MyFirebaseMessagingService">
+    <service
+        android:name=".MyFirebaseMessagingService">
         <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            <action
+                android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter>
     </service>
-    <service android:name=".FirebaseMessagingService">
+    <service
+        android:name=".FirebaseMessagingService">
         <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            <action
+                android:name="com.google.firebase.INSTANCE_ID_EVENT" />
         </intent-filter>
     </service>
-    <service android:name=".MyFirebaseMessagingService">
+    <service
+        android:name=".MyFirebaseMessagingService">
         <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            <action
+                android:name="com.google.firebase.MESSAGING_EVENT" />
         </intent-filter>
     </service>
 
@@ -42,13 +52,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <uses-sdk android:minSdkVersion="18" />
+        <uses-sdk
+            android:minSdkVersion="18" />
 
-        <activity android:name=".login" android:screenOrientation="portrait">
+        <activity
+            android:name=".login"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action
+                    android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category
+                    android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -78,17 +93,29 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Settings" android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="hudlmo.interfaces.loginpage.Settings" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+
+        <activity
+            android:name=".Settings"
+            android:label="Settings"
+            android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="hudlmo.interfaces.mainmenu.Mainmenu"
+                android:screenOrientation="portrait"/>
+            <intent-filter>
+                <action
+                    android:name="hudlmo.interfaces.loginpage.Settings" />
+
+                <category
+                    android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
 
 
-        <activity android:name="hudlmo.interfaces.createMeeting.CreateMeeting"
+        <activity
+            android:name="hudlmo.interfaces.createMeeting.CreateMeeting"
             android:label="Create Meeting"
             android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu" >
             <meta-data
@@ -101,11 +128,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <activity android:name="hudlmo.interfaces.VideoMain" android:screenOrientation="portrait">
+            <activity
+                android:name="hudlmo.interfaces.VideoMain"
+                android:screenOrientation="portrait">
                 <intent-filter>
-                    <action android:name="hudlmo.interfaces.VideoMain" />
+                    <action
+                        android:name="hudlmo.interfaces.VideoMain" />
 
-                    <category android:name="android.intent.category.DEFAULT" />
+                    <category
+                        android:name="android.intent.category.DEFAULT" />
                 </intent-filter>
             </activity>
         </activity>
@@ -130,6 +161,7 @@
 
 
 
+
         <activity
             android:name="hudlmo.models.UsersActivity"
             android:label="Find Users"
@@ -141,15 +173,19 @@
         </activity>
 
 
-        <activity android:name="hudlmo.interfaces.Video.VideoCoference">
+        <activity
+            android:name="hudlmo.interfaces.Video.VideoCoference">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action
+                    android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category
+                    android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ProfileView"></activity>
+        <activity
+            android:name=".ProfileView"></activity>
     </application>
 
 </manifest>

@@ -52,8 +52,8 @@
 
     <EditText
         android:id="@+id/usernameText"
-        android:layout_width="232dp"
-        android:layout_height="43dp"
+        android:layout_width="229dp"
+        android:layout_height="57dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="username"
@@ -64,8 +64,11 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="113dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveContact" />
+        android:layout_marginBottom="103dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveContact"
+        android:layout_marginStart="85dp"
+        android:layout_marginEnd="8dp"
+        tools:layout_editor_absoluteY="297dp" />
 
     <EditText
         android:id="@+id/emailText"
@@ -85,12 +88,15 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/saveContact"
         app:layout_constraintVertical_bias="0.269"
-        tools:layout_editor_absoluteY="348dp" />
+        android:layout_marginStart="85dp"
+        android:layout_marginEnd="8dp" />
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:id="@+id/appBarLayout">
+        android:id="@+id/appBarLayout"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <include layout="@layout/app_bar_layout" android:id="@+id/main_page_toolbar" />
     </android.support.design.widget.AppBarLayout>
