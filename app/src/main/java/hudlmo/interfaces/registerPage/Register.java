@@ -241,13 +241,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private boolean isValidEmail(String email) {
         boolean isValidEmail = false;
 
-        String regExpn = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String expression = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        CharSequence inputStr = email;
+        CharSequence input_email = email;
 
-        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (email.matches(regExpn))
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(input_email);
+        if (email.matches(expression))
         {
             isValidEmail = true;
         }
