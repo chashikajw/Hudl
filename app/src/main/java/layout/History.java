@@ -1,6 +1,11 @@
 package layout;
 
 
+
+import hudlmo.interfaces.loginpage.R;
+
+import android.content.DialogInterface;
+
 import hudlmo.interfaces.Video.VideoCoference;
 import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
@@ -8,6 +13,7 @@ import hudlmo.interfaces.loginpage.R;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -19,7 +25,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -38,9 +43,17 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hudlmo.interfaces.loginpage.Settings;
+
 import hudlmo.models.Meeting;
 import hudlmo.models.User;
 import hudlmo.models.UsersActivity;
+
+
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+
 
 
 /**
@@ -48,13 +61,16 @@ import hudlmo.models.UsersActivity;
  */
 public class History extends Fragment {
 
-    private RecyclerView meetingLIst;
+    private RecyclerView historyMeetingList;
+
     private DatabaseReference mMeetingDatabase;
     private DatabaseReference mUserDatabase;
     private FirebaseAuth mAuth;
     private String mCurrent_user_id;
     private View mMainView;
-    private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> meetingRecyclerViewAdapter;
+
+    private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> hisotryRecyclerViewAdapter;
+
 
 
     public History() {
@@ -69,7 +85,9 @@ public class History extends Fragment {
         mMainView = inflater.inflate(R.layout.fragment_history, container, false);
 
         //initialise the meeting list
-        meetingLIst = (RecyclerView) mMainView.findViewById(R.id.history_meeting_list);
+
+        historyMeetingList = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+
 
         //get the loged user's id
         mAuth = FirebaseAuth.getInstance();
@@ -87,8 +105,10 @@ public class History extends Fragment {
         mMeetingDatabase.keepSynced(true);
 
 
-        meetingLIst.setHasFixedSize(true);
-        meetingLIst.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        historyMeetingList.setHasFixedSize(true);
+        historyMeetingList.setLayoutManager(new LinearLayoutManager(getContext()));
+
         // Inflate the layout for this fragment
         return mMainView;
     }
@@ -100,7 +120,9 @@ public class History extends Fragment {
     public void onStart() {
         super.onStart();
         //define the recyle view to store meeting objects
-        meetingRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
+
+        hisotryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
+
                 Meeting.class,
                 R.layout.users_single_layout,
                 MeetingViewHolder.class,
@@ -115,21 +137,27 @@ public class History extends Fragment {
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
-                final long sheduletime = Long.parseLong(meeting.getSheduleDate());
+
+                final long scheduletime = Long.parseLong(meeting.getSheduleDate());
+
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
                 //display data in one item(in single layout)
-                MeetingViewHolder.setDisplayMeetingname(mAdmin);
-                MeetingViewHolder.setDisplayAdminName(mDescription);
-                // usersViewHolder.setUserImage(users.getThumb_image(), getApplicationContext());
+
+                MeetingViewHolder.setDisplayMeetingname(mName);
+                MeetingViewHolder.setDisplayAdminName(mAdmin);
+                MeetingViewHolder.setDisplayScheduleTime(scheduletime);
+
 
 
                 MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //create alert dialog (with two clicks events) when click a meeting item
-                        CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
+
+                        CharSequence options[] = new CharSequence[]{"Delete"};
+
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                         builder.setTitle(mName);
@@ -140,11 +168,8 @@ public class History extends Fragment {
                                 //Click Event for each item.
                                 if (i == 0) {
 
-                                }
-                                if (i == 1) {
                                     //delete the meeting from database and list view
-                                    meetingRecyclerViewAdapter.getRef(positon).removeValue();
-
+                                    hisotryRecyclerViewAdapter.getRef(positon).removeValue();
                                 }
 
                             }
@@ -161,7 +186,9 @@ public class History extends Fragment {
         };
 
         //set the recycle view for adapter
-        meetingLIst.setAdapter(meetingRecyclerViewAdapter);
+
+        historyMeetingList.setAdapter(hisotryRecyclerViewAdapter);
+
 
     }
 
@@ -193,16 +220,16 @@ public class History extends Fragment {
 
         }
 
-        public void setCountdown(String countdownTostart){
 
-            TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_timer);
-            meetingNameView.setText(countdownTostart);
+        public void setDisplayScheduleTime(long sheduletime) {
+            TextView meetingScheduletime = (TextView) mView.findViewById(R.id.user_single_timer);
+            meetingScheduletime.setText((int) sheduletime);
 
         }
+    }
 
 
 
     }
-
 
 }
