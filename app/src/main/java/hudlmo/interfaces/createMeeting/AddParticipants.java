@@ -72,6 +72,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     private String roomId;
     private String initiator;
     private String sheduleDate;
+    private String countCheck;
 
     String[] check = new String[8];
     String[] emailList = new String[8];
@@ -288,6 +289,8 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 count = (int) dataSnapshot.getChildrenCount();
+
+
             }
 
             @Override
@@ -323,6 +326,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         //send email
 
         if (view.getId() == R.id.createButton) {
+           // Toast.makeText(AddParticipants.this, count,Toast.LENGTH_LONG).show();
 
 
             //get details from Create Meeting

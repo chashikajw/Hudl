@@ -1,6 +1,7 @@
 package layout;
 
 
+import hudlmo.interfaces.History.HistoryView;
 import hudlmo.interfaces.Video.VideoCoference;
 import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
@@ -129,7 +130,7 @@ public class History extends Fragment {
                     @Override
                     public void onClick(View view) {
                         //create alert dialog (with two clicks events) when click a meeting item
-                        CharSequence options[] = new CharSequence[]{"Participate", "Reject"};
+                        CharSequence options[] = new CharSequence[]{"Show","Delete"};
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                         builder.setTitle(mName);
@@ -139,6 +140,10 @@ public class History extends Fragment {
 
                                 //Click Event for each item.
                                 if (i == 0) {
+                                    Intent profileIntent = new Intent(getContext(), HistoryView.class);
+                                    profileIntent.putExtra("sheduletime", sheduletime);
+                                    profileIntent.putExtra("roomid", roomid);
+                                    startActivity(profileIntent);
 
                                 }
                                 if (i == 1) {
