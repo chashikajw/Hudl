@@ -62,7 +62,7 @@
         android:id="@+id/profile_name"
         android:layout_width="380dp"
         android:layout_height="46dp"
-        android:text="user name"
+        android:text="User name"
         android:textAlignment="center"
         android:textColorLink="@color/authui_colorPrimaryDark"
         android:textScaleX="1"

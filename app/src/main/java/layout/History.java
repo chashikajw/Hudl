@@ -2,15 +2,30 @@ package layout;
 
 
 
+import hudlmo.interfaces.History.HistoryView;
+
+
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.DialogInterface;
 
+
+import hudlmo.interfaces.Video.VideoCoference;
+import hudlmo.interfaces.loginpage.ProfileView;
+import hudlmo.interfaces.loginpage.R;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +33,29 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import hudlmo.interfaces.loginpage.Settings;
 
 import hudlmo.models.Meeting;
+import hudlmo.models.User;
+import hudlmo.models.UsersActivity;
+
+
 
 /**
- * Created by Shalini PC on 12/6/2017.
+ * A simple {@link Fragment} subclass.
  */
 
 
@@ -43,6 +74,7 @@ public class History extends Fragment {
     private View mMainView;
 
     private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> hisotryRecyclerViewAdapter;
+
 
 
     public History() {
@@ -68,13 +100,14 @@ public class History extends Fragment {
         //get the reference of Users
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
         //get
-        String meetingID = Integer.toString((int) System.currentTimeMillis());
+        String meetingID = Integer.toString((int)System.currentTimeMillis());
 
         //get the reference of current users meeting History class
         mMeetingDatabase = mUserDatabase.child(mCurrent_user_id).child("meetings").child("history");
 
         //offline syncronize
         mMeetingDatabase.keepSynced(true);
+
 
 
         historyMeetingList.setHasFixedSize(true);
@@ -85,12 +118,14 @@ public class History extends Fragment {
     }
 
 
+
+
     @Override
     public void onStart() {
         super.onStart();
         //define the recyle view to store meeting objects
 
-        hisotryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting, MeetingViewHolder>(
+        hisotryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
 
                 Meeting.class,
                 R.layout.users_single_layout,
@@ -100,7 +135,7 @@ public class History extends Fragment {
 
         ) {
             @Override
-            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder, Meeting meeting, int position) {
+            protected void populateViewHolder(MeetingViewHolder MeetingViewHolder,Meeting meeting, int position) {
 
                 //get the details of recyleview object
                 final String mName = meeting.getMeetingName();
@@ -116,7 +151,8 @@ public class History extends Fragment {
 
                 MeetingViewHolder.setDisplayMeetingname(mName);
                 MeetingViewHolder.setDisplayAdminName(mAdmin);
-                MeetingViewHolder.setDisplayScheduleTime(scheduletime);
+                //MeetingViewHolder.setDisplayScheduleTime(scheduletime);
+
 
 
                 MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +160,9 @@ public class History extends Fragment {
                     public void onClick(View view) {
                         //create alert dialog (with two clicks events) when click a meeting item
 
-                        CharSequence options[] = new CharSequence[]{"Delete"};
+                        CharSequence options[] = new CharSequence[]{"Show","Delete"};
+
+
 
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -135,10 +173,17 @@ public class History extends Fragment {
 
                                 //Click Event for each item.
                                 if (i == 0) {
+                                    Intent profileIntent = new Intent(getContext(), HistoryView.class);
+                                    profileIntent.putExtra("sheduletime", scheduletime);
+                                    profileIntent.putExtra("roomid", roomid);
+                                    startActivity(profileIntent);
+
+                                }
+                                if(i == 1){
+
                                     //delete the meeting from database and list view
                                     hisotryRecyclerViewAdapter.getRef(positon).removeValue();
                                 }
-
                             }
                         });
 
@@ -171,19 +216,22 @@ public class History extends Fragment {
 
         }
 
-        public void setDisplayMeetingname(String groupname) {
+        public void setDisplayMeetingname(String groupname){
 
             TextView meetingNameView = (TextView) mView.findViewById(R.id.user_single_name);
             meetingNameView.setText(groupname);
 
         }
 
-        public void setDisplayAdminName(String admin) {
+        public void setDisplayAdminName(String admin){
+
 
             TextView adminName = (TextView) mView.findViewById(R.id.user_single_status);
             adminName.setText(admin);
 
+
         }
+
 
         public void setDisplayScheduleTime(long sheduletime) {
             TextView meetingScheduletime = (TextView) mView.findViewById(R.id.user_single_timer);
@@ -191,4 +239,8 @@ public class History extends Fragment {
 
         }
     }
+
+
+
 }
+

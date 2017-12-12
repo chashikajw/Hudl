@@ -93,7 +93,11 @@ public class AddContacts extends AppCompatActivity {
             mDatabase.child("username").setValue(username);
             mDatabase.child("email").setValue(email);
 
-            //mProgress.dismiss();
+            //mProgres
+            mProgress.setMessage("Saving...");
+            mProgress.show();
+
+
         }catch(Exception e){
             Toast.makeText(AddContacts.this, "connction error",Toast.LENGTH_LONG).show();
         }
