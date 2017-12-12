@@ -65,11 +65,12 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference Usernamedatabase;
     private ProgressDialog mProgress;
 
     private Toolbar mToolbar;
 
-    private String iniatorUsername;
+    private String username;
     private String  roomId;
     private String date_text;
     private String time_text;
@@ -104,6 +105,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         dateButton.setOnClickListener ( this );
         timeButton.setOnClickListener ( this );
 
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
         mProgress = new ProgressDialog(this);
@@ -126,7 +128,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     case 6:months="Jun";break;
                     case 7:months="Jul";break;
                     case 8:months="Aug";break;
-                    case 9:months="Sept";break;
+                    case 9:months="Sep";break;
                     case 10:months="Oct";break;
                     case 11:months="Nov";break;
                     case 12:months="Dec";break;
@@ -176,20 +178,21 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 String description_ = description.getText().toString().trim();
                 date_text = dateText.getText().toString().trim();
                 time_text = timeText.getText().toString().trim();
-                //String duration_ = duration.getText().toString().trim();
+
                 roomId = Integer.toString((int) System.currentTimeMillis());
-                String initatorID = mAuth.getCurrentUser().getUid();
+
 
                 //get initator userrname
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child("initatorID");
+                String initatorID = mAuth.getCurrentUser().getUid();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(initatorID);
 
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        iniatorUsername = dataSnapshot.getValue(String.class);
+                        //username = dataSnapshot.getValue(String.class);
                         //create unique id for room
-                        roomId =  roomId + iniatorUsername;
+                        roomId =  roomId + username;
 
                     }
 
@@ -218,9 +221,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
 
 
                 //validation
-                if(TextUtils.isEmpty(group_name)||TextUtils.isEmpty(duration_)||TextUtils.isEmpty(description_)){
-                    Toast.makeText(CreateMeeting.this, "Fields are empty",Toast.LENGTH_LONG).show();
-                }
+
                 if(ShduletimeInMilliseconds <= System.currentTimeMillis()){
                     Toast.makeText(CreateMeeting.this, "set upcoming time to shedule",Toast.LENGTH_LONG).show();
                 }
@@ -236,15 +237,23 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     meetingData.put("meetingName", group_name);
                     meetingData.put("createdDate", roomId);
                     meetingData.put("description", description_);
-                    meetingData.put("initiator",  iniatorUsername);
+                    //meetingData.put("initiator",  username);
                     meetingData.put("sheduleDate", Long.toString(ShduletimeInMilliseconds));
                     meetingData.put("roomId", roomId);
 
 
                     String reqstUid = mAuth.getCurrentUser().getUid();
 
-
                     DatabaseReference storemeeting =  FirebaseDatabase.getInstance().getReference().child("Users").child(reqstUid).child("meetings").child("upcoming");
+
+                    storemeeting.child(roomId).setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+
+
 
                     storemeeting.child(roomId).setValue(meetingData ).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -264,7 +273,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     detail.putExtra("MeetingName", group_name);
                     detail.putExtra("CreatedDate",roomId);
                     detail.putExtra("Description", description_);
-                    detail.putExtra("Initiator", iniatorUsername);
+                    detail.putExtra("Initiator", username);
                     detail.putExtra("SheduleDate", Long.toString(ShduletimeInMilliseconds));
                     detail.putExtra("RoomId", roomId);
 
