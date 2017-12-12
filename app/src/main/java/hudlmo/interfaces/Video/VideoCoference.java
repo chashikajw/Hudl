@@ -69,6 +69,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("username");
         token = "cHJvdmlzaW9uAGNoYXNoRmluYWxAMThmMGJkLnZpZHlvLmlvADYzNzMwMTI0NjQ4AAA4M2QwMWY3MGQ3Yjk4YmYyYmY5MjdlMmU2OTFiODliYjQ0OWJkYWNmYzdiYmVjMTY3NzdjNWNiYWY5ZjNlYjAwYmU5ZWRlNGM5OGY5MTMyMmU5MTc1N2VhNDA4YjM0ZTk=";
 
+        //get the username of current user to participate meeting
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -95,8 +96,10 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
         System.out.println(sdf.format(resultdate));
 
 
+
         timeInMilliseconds = bundle.getLong("sheduletime");
 
+        //get the left time comparing current time
         long times = timeInMilliseconds - yourmilliseconds;
 
         CountDownTimer timer=new CountDownTimer(times, 1000) {
@@ -109,6 +112,7 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
                 connectBtn.setEnabled(false);
                 disconnctBtn.setEnabled(false);
             }
+            //when timer finish enable uttons and invisible texts
             public void onFinish() {
                 timerCountdown.setVisibility(View.INVISIBLE);
                 start_in.setVisibility(View.INVISIBLE);
@@ -120,14 +124,15 @@ public class VideoCoference extends AppCompatActivity implements VidyoConnector.
             }
         };
 
-
         timer.start();
 
 
     }
-    //
+
+    //start the call
     public void Start(View v) {
         vc = new VidyoConnector(videoFrame, VidyoConnector.VidyoConnectorViewStyle.VIDYO_CONNECTORVIEWSTYLE_Default, 16, "", "", 0);
+
         vc.ShowViewAt(videoFrame, 0, 0, videoFrame.getWidth(), videoFrame.getHeight());
     }
 
