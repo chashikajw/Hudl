@@ -67,7 +67,11 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
     int count;
     int contactLength;
     private String meetingName;
-    String group_name, description_, date_text, time_text;
+    private String description;
+    private String created_date;
+    private String roomId;
+    private String initiator;
+    private String sheduleDate;
 
     String[] check = new String[8];
     String[] emailList = new String[8];
@@ -116,6 +120,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
         mAuth = FirebaseAuth.getInstance();
         reqstUser = FirebaseDatabase.getInstance().getReference().child("UserIndex");
         usersref = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        //get meeting details from previous activity
+        Bundle bundle = getIntent().getExtras();
+        MroomID = bundle.getString("RoomId");
+        meetingName = bundle.getString("MeetingName");
+        created_date = bundle.getString("CreatedDate");
+        description = bundle.getString("Description");
+        initiator = bundle.getString("Initiator");
+        sheduleDate = bundle.getString("SheduleDate");
+        roomId = bundle.getString("RoomId");
+
 
 
         contactsListView1 = (ListView) findViewById(R.id.contactsListView1);
@@ -319,7 +334,7 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             intent.putExtra(Intent.EXTRA_EMAIL, to);
             intent.putExtra(Intent.EXTRA_SUBJECT, "Meeting Invitation");
-            intent.putExtra(Intent.EXTRA_TEXT, group_name + "\n" + description_ + "\n" + date_text + "\n" + time_text);
+            intent.putExtra(Intent.EXTRA_TEXT, meetingName + "\n" + description + "\n" + "Dec 12, 2017");
             intent.setType("message/rfc822");
             startActivity(Intent.createChooser(intent, "Send Email"));
 
@@ -337,23 +352,17 @@ public class AddParticipants extends AppCompatActivity implements View.OnClickLi
 
             String[] sendUser = {"sanu", "sha"};
 
-            String shedyldate = Integer.toString((int) System.currentTimeMillis() + 10000);
+
+
             //store for evey participants deatials
             final HashMap<String, String> meetingData = new HashMap<>();
 
-            //get details from Create Meeting and aadd set to database
-
-
-            Bundle bundle = getIntent().getExtras();
-            MroomID = bundle.getString("RoomId");
-
-
-            meetingData.put("meetingName", bundle.getString("MeetingName"));
-            meetingData.put("createdDate", bundle.getString("CreatedDate"));
-            meetingData.put("description", bundle.getString("Description"));
-            meetingData.put("initiator", bundle.getString("Initiator"));
-            meetingData.put("sheduleDate", bundle.getString("SheduleDate"));
-            meetingData.put("roomId", bundle.getString("RoomId"));
+            meetingData.put("meetingName", meetingName);
+            meetingData.put("createdDate", created_date);
+            meetingData.put("description", description);
+            meetingData.put("initiator", initiator);
+            meetingData.put("sheduleDate", sheduleDate);
+            meetingData.put("roomId", roomId);
 
             try {
 
