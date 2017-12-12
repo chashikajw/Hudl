@@ -193,7 +193,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //username = (String)dataSnapshot.child("name").getValue();
                         username = (String)dataSnapshot.getValue();
-                        
+
 
                         //create unique id for room
                         roomId =  roomId + username;
