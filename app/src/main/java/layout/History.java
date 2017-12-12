@@ -1,14 +1,27 @@
 package layout;
 
 
+
 import hudlmo.interfaces.loginpage.R;
 
 import android.content.DialogInterface;
+
+import hudlmo.interfaces.Video.VideoCoference;
+import hudlmo.interfaces.loginpage.ProfileView;
+import hudlmo.interfaces.loginpage.R;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +29,31 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import hudlmo.interfaces.loginpage.Settings;
 
 import hudlmo.models.Meeting;
+import hudlmo.models.User;
+import hudlmo.models.UsersActivity;
+
 
 
 /**
- * Created by Shalini PC on 12/8/2017.
+ * A simple {@link Fragment} subclass.
  */
+
 
 
 /**
@@ -34,12 +62,15 @@ import hudlmo.models.Meeting;
 public class History extends Fragment {
 
     private RecyclerView historyMeetingList;
+
     private DatabaseReference mMeetingDatabase;
     private DatabaseReference mUserDatabase;
     private FirebaseAuth mAuth;
     private String mCurrent_user_id;
     private View mMainView;
+
     private FirebaseRecyclerAdapter<Meeting, MeetingViewHolder> hisotryRecyclerViewAdapter;
+
 
 
     public History() {
@@ -54,7 +85,9 @@ public class History extends Fragment {
         mMainView = inflater.inflate(R.layout.fragment_history, container, false);
 
         //initialise the meeting list
+
         historyMeetingList = (RecyclerView) mMainView.findViewById(R.id.meeting_list);
+
 
         //get the loged user's id
         mAuth = FirebaseAuth.getInstance();
@@ -72,8 +105,10 @@ public class History extends Fragment {
         mMeetingDatabase.keepSynced(true);
 
 
+
         historyMeetingList.setHasFixedSize(true);
         historyMeetingList.setLayoutManager(new LinearLayoutManager(getContext()));
+
         // Inflate the layout for this fragment
         return mMainView;
     }
@@ -85,7 +120,9 @@ public class History extends Fragment {
     public void onStart() {
         super.onStart();
         //define the recyle view to store meeting objects
+
         hisotryRecyclerViewAdapter = new FirebaseRecyclerAdapter<Meeting,MeetingViewHolder>(
+
                 Meeting.class,
                 R.layout.users_single_layout,
                 MeetingViewHolder.class,
@@ -100,21 +137,27 @@ public class History extends Fragment {
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
+
                 final long scheduletime = Long.parseLong(meeting.getSheduleDate());
+
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
                 //display data in one item(in single layout)
+
                 MeetingViewHolder.setDisplayMeetingname(mName);
                 MeetingViewHolder.setDisplayAdminName(mAdmin);
                 MeetingViewHolder.setDisplayScheduleTime(scheduletime);
+
 
 
                 MeetingViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //create alert dialog (with two clicks events) when click a meeting item
+
                         CharSequence options[] = new CharSequence[]{"Delete"};
+
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                         builder.setTitle(mName);
@@ -124,9 +167,11 @@ public class History extends Fragment {
 
                                 //Click Event for each item.
                                 if (i == 0) {
+
                                     //delete the meeting from database and list view
                                     hisotryRecyclerViewAdapter.getRef(positon).removeValue();
                                 }
+
                             }
                         });
 
@@ -141,7 +186,9 @@ public class History extends Fragment {
         };
 
         //set the recycle view for adapter
+
         historyMeetingList.setAdapter(hisotryRecyclerViewAdapter);
+
 
     }
 
@@ -173,11 +220,16 @@ public class History extends Fragment {
 
         }
 
+
         public void setDisplayScheduleTime(long sheduletime) {
             TextView meetingScheduletime = (TextView) mView.findViewById(R.id.user_single_timer);
             meetingScheduletime.setText((int) sheduletime);
+
         }
     }
 
+
+
+    }
 
 }
