@@ -55,7 +55,7 @@ public class HistoryView extends AppCompatActivity {
         String mCurrentUser = FirebaseAuth.getInstance().getUid();
 
         // Instance of firebase database
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(mCurrentUser).child("Meeting").child("History");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(mCurrentUser).child("meetings").child("history");
         
         mAuth = FirebaseAuth.getInstance();
 

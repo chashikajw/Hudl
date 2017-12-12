@@ -109,7 +109,7 @@ public class History extends Fragment {
                 final String mName = meeting.getMeetingName();
                 final String mAdmin = meeting.getInitiator();
                 final String mDescription = meeting.getDescription();
-                final String sheduletime = meeting.getSheduleDate();
+                final String scheduledate = meeting.getSheduleDate();
                 final String roomid = meeting.getRoomId();
                 final int positon = position;
 
@@ -129,8 +129,8 @@ public class History extends Fragment {
                                 if (i == 0) {
                                     // if user clicks View, all details will be shown : i = 0 = "View"
                                     Intent profileIntent = new Intent(getContext(), HistoryView.class);
-                                    profileIntent.putExtra("sheduletime", sheduletime);
-                                    profileIntent.putExtra("roomid", roomid);
+                                    profileIntent.putExtra("groupName", mName);
+                                    profileIntent.putExtra("date", scheduledate);
                                     startActivity(profileIntent);
 
                                 }

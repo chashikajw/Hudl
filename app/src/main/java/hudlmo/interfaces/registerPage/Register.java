@@ -190,7 +190,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                                 finish();
                                 startActivity(new Intent(getApplicationContext(),login.class));
+
                                 }
+
 
 
                             }else{
@@ -213,6 +215,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    //validate the email
     private boolean isValidEmail(String email) {
         boolean isValidEmail = false;
 
@@ -245,7 +248,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         Toast.makeText(Register.this,"Check your Email for Verification", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
 
+                    }else{
+                        Toast.makeText(Register.this,"Email Verification is not sent",Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(),Register.class));
                     }
+
                 }
             });
         }
