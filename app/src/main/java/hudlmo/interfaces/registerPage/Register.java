@@ -22,6 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import hudlmo.interfaces.loginpage.R;
 import hudlmo.interfaces.loginpage.login;
 import hudlmo.interfaces.mainmenu.Mainmenu;
@@ -96,7 +99,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void registerUser(){
         String name = nameTxt.getText().toString().trim();
         final String uname = usernameTxt.getText().toString().trim();
-        String email = emailTxt.getText().toString().trim();
+        final String email = emailTxt.getText().toString().trim();
         String password = passwordTxt.getText().toString().trim();
         String confirm_pw = confirmPasswordTxt.getText().toString().trim();
 
@@ -167,6 +170,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         }
 
+
         //if validations are ok a progress bar will be shown
         mProgress.setMessage("Registering User...");
         mProgress.show();
@@ -178,6 +182,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             //user is successfully registered and logged in
+
+
+                            if(isValidEmail(email)) {
+                                if( EmailVerification() == true){
 
                             //EmailVerification();
 
@@ -194,29 +202,33 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             mDatabaseEmail.child(emailID).setValue(user.getEmail());
 
 
+                                String userId = mAuth.getCurrentUser().getUid();
 
-                            String userId = mAuth.getCurrentUser().getUid();
+                                mDatabaseindex.child(newUser.getUname()).setValue(userId);
 
-                            mDatabaseindex.child(newUser.getUname()).setValue(userId);
+                                //to notifications
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                                currnt_userDB.child("device_token").setValue(deviceToken);
 
+                                finish();
+                                startActivity(new Intent(getApplicationContext(),login.class));
 
-
-
-
-                            //to notifications
-                            String deviceToken = FirebaseInstanceId.getInstance().getToken();
-                            currnt_userDB.child("device_token").setValue(deviceToken);
-
+                                }
 
 
-                            finish();
 
-                            startActivity(new Intent(getApplicationContext(),Mainmenu.class));
+                            }else{
+                                Toast.makeText(Register.this,"Invalid Email! Please try again with valid email",Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(getApplicationContext(),Register.class));
+                            }
+                            //start main menu
+
                         }
-
                         else
                         {
                             Toast.makeText(Register.this,"Registration Failed! Please try again.",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),login.class));
                         }
 
                     }
@@ -225,22 +237,49 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     }
 
+    //validate the email
+    private boolean isValidEmail(String email) {
+        boolean isValidEmail = false;
+
+        String regExpn = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (email.matches(regExpn))
+        {
+            isValidEmail = true;
+        }
+        return isValidEmail;
+
+    }
+
     //when a newly registered user have to confirm their email address using the verification email
     //this code implements to send that verification email.
     //once the user click that link their email address is verified.
-    private void EmailVerification() {
+    private boolean EmailVerification() {
+        final boolean[] sendVerification = {false};
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
             user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()){
+                        sendVerification[0] = true;
                         Toast.makeText(Register.this,"Check your Email for Verification", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
+
+                    }else{
+                        Toast.makeText(Register.this,"Email Verification is not sent",Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(getApplicationContext(),Register.class));
                     }
+
                 }
             });
         }
+        return sendVerification[0];
     }
 
 

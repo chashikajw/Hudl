@@ -254,14 +254,13 @@ public class Mainmenu extends AppCompatActivity {
                     Upcoming upcomingFragment = new Upcoming();
                     return upcomingFragment;
 
-
                 case 1:
-                    Contacts contactsFragment = new Contacts();
-                    return contactsFragment;
-
-                case 2:
                     History historyFragment = new History();
                     return  historyFragment;
+
+                case 2:
+                    Contacts contactsFragment = new Contacts();
+                    return contactsFragment;
 
 
 

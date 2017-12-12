@@ -160,10 +160,7 @@ public class Contacts extends Fragment {
                                 }
 
                                 if (i == 1) {
-
-
                                     meetingRecyclerViewAdapter.getRef(positon).removeValue();
-
                                 }
 
                             }
