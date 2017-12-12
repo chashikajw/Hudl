@@ -111,6 +111,29 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Meeting");
         mProgress = new ProgressDialog(this);
 
+        //get initator userrname
+        initatorID = mAuth.getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(initatorID).child("username");
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //username = (String)dataSnapshot.child("name").getValue();
+                username = (String)dataSnapshot.getValue();
+
+
+                //create unique id for room
+                roomId =  roomId + username;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         init ();
 
         //Date Picker
@@ -183,28 +206,7 @@ public class CreateMeeting extends AppCompatActivity implements View.OnClickList
                 roomId = Integer.toString((int) System.currentTimeMillis());
 
 
-                //get initator userrname
-                initatorID = mAuth.getCurrentUser().getUid();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(initatorID).child("username");
 
-
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //username = (String)dataSnapshot.child("name").getValue();
-                        username = (String)dataSnapshot.getValue();
-                        
-
-                        //create unique id for room
-                        roomId =  roomId + username;
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
 
 
                 //convert shedule date time to timemills
