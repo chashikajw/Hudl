@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:screenOrientation="portrait"
     android:layout_height="match_parent"
-    tools:context="hudlmo.interfaces.loginpage.ProfileView">
+    tools:context="hudlmo.interfaces.loginpage.hudlmo.interfaces.mainmenu.ProfileView">
 
     <TextView
         android:id="@+id/emaltxt"

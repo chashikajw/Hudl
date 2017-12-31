@@ -1,4 +1,4 @@
-package hudlmo.interfaces.loginpage;
+package hudlmo.interfaces.mainmenu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,8 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
-import java.util.Map;
+import hudlmo.interfaces.loginpage.R;
 
 public class Settings extends AppCompatActivity {
 
