@@ -1,14 +1,11 @@
 package layout;
 
 
-import hudlmo.interfaces.loginpage.ProfileView;
 import hudlmo.interfaces.loginpage.R;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,10 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import hudlmo.interfaces.loginpage.Settings;
+import hudlmo.interfaces.mainmenu.Settings;
 import hudlmo.models.User;
-import hudlmo.models.UsersActivity;
 
 
 /**

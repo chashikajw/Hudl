@@ -185,9 +185,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
 
                             if(isValidEmail(email)) {
-                                if( EmailVerification() == true){
+                              {
 
-                            //EmailVerification();
+
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             DatabaseReference currnt_userDB = mDatabase.child(user.getUid());
@@ -209,6 +209,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                 //to notifications
                                 String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 currnt_userDB.child("device_token").setValue(deviceToken);
+                                  //EmailVerification();
 
                                 finish();
                                 startActivity(new Intent(getApplicationContext(),login.class));
@@ -227,9 +228,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         }
                         else
                         {
+
                             Toast.makeText(Register.this,"Registration Failed! Please try again.",Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),login.class));
                         }
+
+
+
+
 
                     }
                 });
@@ -258,15 +264,15 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     //when a newly registered user have to confirm their email address using the verification email
     //this code implements to send that verification email.
     //once the user click that link their email address is verified.
-    private boolean EmailVerification() {
-        final boolean[] sendVerification = {false};
+    private void EmailVerification() {
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
             user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()){
-                        sendVerification[0] = true;
+
                         Toast.makeText(Register.this,"Check your Email for Verification", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
 
@@ -279,7 +285,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 }
             });
         }
-        return sendVerification[0];
+
     }
 
 

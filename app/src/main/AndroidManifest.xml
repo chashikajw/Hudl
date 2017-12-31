@@ -96,7 +96,7 @@
 
 
         <activity
-            android:name=".Settings"
+            android:name="hudlmo.interfaces.mainmenu.Settings"
             android:label="Settings"
             android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu" >
             <meta-data
@@ -150,7 +150,7 @@
             />
 
         <activity
-            android:name=".AddContacts"
+            android:name="hudlmo.interfaces.mainmenu.AddContacts"
             android:label="Add Contact"
             android:parentActivityName="hudlmo.interfaces.mainmenu.Mainmenu" >
         <meta-data
@@ -185,7 +185,7 @@
         </activity>
 
         <activity
-            android:name=".ProfileView"></activity>
+            android:name="hudlmo.interfaces.mainmenu.ProfileView"></activity>
     </application>
 
 </manifest>

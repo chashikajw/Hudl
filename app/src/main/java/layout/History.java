@@ -10,22 +10,13 @@ import hudlmo.interfaces.loginpage.R;
 import android.content.DialogInterface;
 
 
-import hudlmo.interfaces.Video.VideoCoference;
-import hudlmo.interfaces.loginpage.ProfileView;
-import hudlmo.interfaces.loginpage.R;
-
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,25 +24,14 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import hudlmo.interfaces.loginpage.Settings;
-
 import hudlmo.models.Meeting;
-import hudlmo.models.User;
-import hudlmo.models.UsersActivity;
-
 
 
 /**
@@ -234,8 +214,12 @@ public class History extends Fragment {
 
 
         public void setDisplayScheduleTime(long sheduletime) {
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+            Date resultdate = new Date(sheduletime);
+
             TextView meetingScheduletime = (TextView) mView.findViewById(R.id.user_single_timer);
-            meetingScheduletime.setText((int) sheduletime);
+            meetingScheduletime.setText(sdf.format(resultdate));
 
         }
     }

@@ -25,11 +25,11 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106"
+        app:layout_constraintVertical_bias="0.117"
 
         android:background="@drawable/colorbutton"
         android:onClick="check"
@@ -45,8 +45,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:layout_marginStart="70dp"
-        android:layout_marginBottom="521dp"
-        tools:layout_editor_absoluteX="31dp" />
+        android:layout_marginBottom="589dp"
+        tools:layout_editor_absoluteX="26dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 

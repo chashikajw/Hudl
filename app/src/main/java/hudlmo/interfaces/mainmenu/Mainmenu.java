@@ -19,11 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 import hudlmo.interfaces.createMeeting.CreateMeeting;
-import hudlmo.interfaces.loginpage.AddContacts;
 import hudlmo.interfaces.loginpage.R;
-import hudlmo.interfaces.loginpage.Settings;
 import hudlmo.interfaces.loginpage.login;
-import hudlmo.models.UsersActivity;
 import layout.Contacts;
 
 import layout.Upcoming;
@@ -282,9 +279,9 @@ public class Mainmenu extends AppCompatActivity {
                 case 0:
                     return "Upcoming";
                 case 1:
-                    return "Contacts";
-                case 2:
                     return "History";
+                case 2:
+                    return "Contacts";
 
             }
             return null;
